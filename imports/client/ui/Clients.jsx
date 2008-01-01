@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 // La col·lecció de les resolucions
-import '../../api/collections/Clients.js';
-import '../../api/collections/GrupsMusculars.js';
+//import '../../api/collections/Clients.js';
+//import '../../api/collections/GrupsMusculars.js';
 
 import {createContainer} from 'meteor/react-meteor-data';
 import ClientsForm from './ClientsForm.jsx';
@@ -12,15 +12,15 @@ import ClientSingle from './ClientSingle.jsx';
 import { check, Match } from 'meteor/check';
 /*import ReactCSSTransitionGroup from 'react-addons-css-transition-group';*/
 
-class App extends Component{
+class ClientsNoData extends Component{
   constructor(props){
     super(props);
 
     this.state = {
-      subscription: {
-        clients: Meteor.subscribe("userClients"),
-        grups_musculars: Meteor.subscribe("userGrupsMusculars")
-      }
+    //   subscription: {
+    //     clients: Meteor.subscribe("userClients"),
+    //     grups_musculars: Meteor.subscribe("userGrupsMusculars")
+    //   }
     }
   }
 
@@ -54,12 +54,20 @@ class App extends Component{
     );
   }
 }
-App.propTypes = {
+
+Clients.propTypes = {
 //  clients: PropTypes.array.isRequired
 };
-export default createContainer(()=>{
-  return {
-    clients: Clients.find().fetch(),
-    grups_musculars: GrupsMusculars.find().fetch()
-  }
-}, App);
+
+export default createContainer(() => {
+    const
+        clientsHandler = Meteor.subscribe("userClients"),
+        grups_muscularsHandler = Meteor.subscribe("userGrupsMusculars"),
+        imatgesHandler = Meteor.subscribe("userImatges");
+
+    return {
+        clients: Clients.find().fetch(),
+        grups_musculars: GrupsMusculars.find().fetch(),
+        imatges: Imatges.find().fetch()
+    }
+}, ClientsNoData);
