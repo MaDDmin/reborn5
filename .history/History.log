@@ -1,0 +1,5 @@
+2016-09-10 13:40
+  Nova metodologia de treball. Sense presoners. Ara ja controlem Git. Els malaïts "untracked" m'amargaven l'existència. I és que costa averiguar-ho tot. No l'utilitzava bé.
+  A banda dels nous poders que Git ens brindarà vaig a incloure un fitxer independent de Git (aquest) en el qual explicaré de forma prosàica cada pas del procés evolutiu.
+
+  De moment tenim el projecte encara a estrenar. Farem un commit explicatiu per cada canvi seguit per un altre amb els canvis als arxius reals. D'aquesta manera dilatarem els punts de control.
