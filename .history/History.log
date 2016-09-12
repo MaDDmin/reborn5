@@ -3,3 +3,6 @@
   A banda dels nous poders que Git ens brindarà vaig a incloure un fitxer independent de Git (aquest) en el qual explicaré de forma prosàica cada pas del procés evolutiu.
 
   De moment tenim el projecte encara a estrenar. Farem un commit explicatiu per cada canvi seguit per un altre amb els canvis als arxius reals. D'aquesta manera dilatarem els punts de control.
+
+2016-09-12 12:28
+  Anem a deixar-ho tot netet. Borrem l'aplicació inicial de Meteor i ho deixem tot a zero.
