@@ -33,3 +33,8 @@
     "react-dom": "^15.3.1",
     "react-komposer": "^1.13.1",
     "react-mounter": "^1.2.0"
+
+2016-09-17 23:25
+  Una vegada ja preparat l'entorn, podem començar a definir els nostres components. Tractarem de seguir els episodis de Meteor + React For Everyone de LevelUpTuts.
+
+  
