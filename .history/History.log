@@ -39,4 +39,9 @@
 
 2016-09-19 19:11
   Sempre passa algo. He canviat el sistema operatiu. Ara estic a un Mint18. Volia provar-lo. Vaig salvar una còpia del progrés, però el procés va tardar molt més del compte. Haig de refer bon tros del fet ahir.
-  
+
+2016-09-20 11:02
+  Anem a avançar com si funcionara perquè ara no recorde si vaig trobar la solució a aquest problema en les altres ocaasions. Sí que ho he vist funcionar, en aquesta vegada mateixa, però és completament inconsistent i
+  sols funciona rares vegades.
+
+  Continuem a veure el que passa. Anem a començar a separar components i a iterar els resultats amb la funció map.
