@@ -45,3 +45,10 @@
   sols funciona rares vegades.
 
   Continuem a veure el que passa. Anem a començar a separar components i a iterar els resultats amb la funció map.
+
+2016-09-21 23:28
+  Ara resulta que si me quedava bloquejat era per burror meua. Clar, el xaval gasta TrackerReact i no funciona igual que createContainer. Misteriosament, els seus exemples funcionen com és d'esperar, però
+  amb la nostra configuració, es queixava de props buides, bàsicament. Al final, resulta que si deixes continuar el video, t'explica cóm solucionar eixe problema i obtindre les dades (bé, suposse, perquè
+  no vaig a fer enrere ni un poc més en aquest clot. Ni que siga per analitzar-ho millor, al menys, no per ara). I és que al final he optat per seguir el camí pel meu compte fins que he fet rodar
+  les dades amb separació per components inclosa. Iteració amb map etc. Ara faré el commit en aquesta branca experimental i faré el meu primer rebase. Se supossa que això farà un merge a la branca destí i
+  eliminarà aquesta. Pos allà que vaig. 
