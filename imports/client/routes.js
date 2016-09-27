@@ -10,3 +10,12 @@ FlowRouter.route('/', {
     });
   }
 });
+FlowRouter.route('/about', {
+  action(){
+    mount(MainLayout, {
+      content: (
+        <h2>Un altre contingut. :)))</h2>
+      )
+    });
+  }
+});

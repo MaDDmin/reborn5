@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
+import {Meteor} from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 
 export default class ResolutionsForm extends Component{
   addResolution(event){
     event.preventDefault();
     let text = this.refs.resolution.value.trim();
-    Resolutions.insert({
-      text,
-      completed: false,
-      createdAt: new Date()
+
+    Meteor.call('resolutions.insert', text, ()=>{
+      this.refs.resolution.value = "";
     });
-    this.refs.resolution.value = "";
   }
   render(){
     return (

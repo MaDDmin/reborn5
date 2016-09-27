@@ -20,10 +20,13 @@ class App extends Component{
     //console.log(resol);
     return (
       <div>
-        <h1>Reborn 5: POCA BROMA JA!</h1>
         <ResolutionsForm />
         <ul>
-          {this.renderResolutions()}
+          {//this.renderResolutions()}
+            this.props.resolutions.map((resolution)=>(
+              <ResolutionSingle key={resolution._id} resolution={resolution} />
+            ))
+          }
         </ul>
       </div>
     );
