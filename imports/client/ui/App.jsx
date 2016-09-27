@@ -8,6 +8,12 @@ import { check, Match } from 'meteor/check';
 class App extends Component{
   constructor(props){
     super(props);
+
+    this.state = {
+      subscription: {
+        resolutions: Meteor.subscribe("allResolutions")
+      }
+    }
   }
   renderResolutions(){
     return this.props.resolutions.map((resolution)=>(
