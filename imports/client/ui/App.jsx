@@ -15,6 +15,10 @@ class App extends Component{
       }
     }
   }
+
+  componentWillUnmount(){
+    this.state.subscription.resolutions.stop();
+  }
   renderResolutions(){
     return this.props.resolutions.map((resolution)=>(
       <ResolutionSingle key={resolution._id} resolution={resolution} />
@@ -27,7 +31,7 @@ class App extends Component{
     return (
       <div>
         <ResolutionsForm />
-        <ul>
+        <ul className="ulResolutions">
           {//this.renderResolutions()}
             this.props.resolutions.map((resolution)=>(
               <ResolutionSingle key={resolution._id} resolution={resolution} />

@@ -8,7 +8,19 @@ Meteor.methods({
       text,
       completed: false,
       createdAt: new Date()
-    })
+    });
+  },
+
+  'resolutions.update'(id, status){
+    Resolutions.update(id, {
+      $set: {
+        completed: !status
+      }
+    });
+  },
+
+  'resolutions.delete'(id){
+    Resolutions.remove(id);
   }
 });
 
