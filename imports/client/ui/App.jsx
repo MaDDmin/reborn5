@@ -11,7 +11,7 @@ class App extends Component{
 
     this.state = {
       subscription: {
-        resolutions: Meteor.subscribe("allResolutions")
+        resolutions: Meteor.subscribe("userResolutions")
       }
     }
   }
