@@ -3,10 +3,10 @@ import {Meteor} from 'meteor/meteor';
 
 export default class ResolutionSingle extends Component{
   toggleChecked(){
-    Meteor.call('resolutions.update', this.props.resolution._id, this.props.resolution.completed);
+    Meteor.call('resolutions.update', this.props.resolution);
   }
   deleteResolution(){
-    Meteor.call('resolutions.delete', this.props.resolution._id);
+    Meteor.call('resolutions.delete', this.props.resolution);
   }
   render(){
     return (

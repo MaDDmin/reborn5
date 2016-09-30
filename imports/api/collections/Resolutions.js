@@ -15,16 +15,22 @@ Meteor.methods({
     });
   },
 
-  'resolutions.update'(id, status){
-    Resolutions.update(id, {
+  'resolutions.update'(resolution){
+    if (Meteor.userId() !== resolution.user){
+      throw new Meteor.Error('not-authorized');
+    }
+    Resolutions.update(resolution._id, {
       $set: {
-        completed: !status
+        completed: !resolution.completed
       }
     });
   },
 
-  'resolutions.delete'(id){
-    Resolutions.remove(id);
+  'resolutions.delete'(resolution){
+    if (Meteor.userId() !== resolution.user){
+      throw new Meteor.Error('not-authorized');
+    }
+    Resolutions.remove(resolution._id);
   }
 });
 
