@@ -16,9 +16,14 @@ class App extends Component{
     }
   }
 
+  componentDidMount(){
+    
+  }
+
   componentWillUnmount(){
     this.state.subscription.resolutions.stop();
   }
+
   renderResolutions(){
     return this.props.resolutions.map((resolution)=>(
       <ResolutionSingle key={resolution._id} resolution={resolution} />

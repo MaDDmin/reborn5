@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
+//import Bert from 'meteor/themeteorchef:bert';
 
 export default class ResolutionsForm extends Component{
   addResolution(event){
     event.preventDefault();
     let text = this.refs.resolution.value.trim();
-
-    Meteor.call('resolutions.insert', text, ()=>{
-      this.refs.resolution.value = "";
-    });
+    
+    if (text){
+      Meteor.call('resolutions.insert', text, (error, data)=>{
+        if (error){
+          Bert.alert("Logueja't abans d'escriure una resolució.", "danger", "fixed-top", "fa-frown-o");
+        }else{
+          this.refs.resolution.value = "";
+        }
+      });
+    }
   }
   render(){
     return (
