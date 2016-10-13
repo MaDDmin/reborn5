@@ -12,3 +12,61 @@ body{
 .ulResolutions{
   list-style: none;
 }
+
+@keyframes slideIn {
+  0%{
+    opacity: 0;
+    transform: translate3d(-50px, 0, 0);
+  }
+  100%{
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideOut {
+  0%{
+    opacity: 0;
+    transform: translate3d(0, 0, 0);
+  }
+  100%{
+    opacity: 1;
+    transform: translate3d(50px, 0, 0);
+  }
+}
+
+@keyframes slideUp {
+  0%{
+    opacity: 0;
+    transform: translate3d(0, 60px, 0);
+  }
+  100%{
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+
+.resolutionLoad-enter{
+  animation: slideIn .6s cubic-bezier(.165, .84, .44, 1);
+}
+
+.resolutionLoad-leave{
+  animation: slideOut .4s cubic-bezier(.165, .84, .44, 1);
+  opacity: 0;
+}
+
+.route-enter, .route-appear{
+  opacity: 0;
+  animation: slideIn .6s cubic-bezier(.165, .84, .44, 1);
+}
+
+.route-leave{
+  animation: slideOut .4s cubic-bezier(.165, .84, .44, 1);
+  opacity: 0;
+}
+
+.route-appear{
+  opacity: 0;
+  animation: slideUp .6s cubic-bezier(.165, .84, .44, 1);
+}

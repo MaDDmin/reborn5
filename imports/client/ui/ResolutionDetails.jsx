@@ -30,7 +30,6 @@ class ResolutionDetails extends Component{
         <h4>Text: {this.props.res[0].text}</h4>
         <h4>Completed: {this.props.res[0].completed.toString()}</h4>
         <h5>res: {this.props.res.toString()}</h5>
-        <h5>iii: {this.props.iii}</h5>
         <h5>eee: {this.props.eee}</h5>
         </div>
       );
@@ -53,7 +52,6 @@ export default createContainer(({params})=>{
     //res: Resolutions.find({_id: this.props.id}).fetch()
     //res: "Algo per dir algo..."
     res: Resolutions.find({_id: id}).fetch(),
-    id: id,
     eee: "tio"
   }
 }, ResolutionDetails);
