@@ -6,6 +6,8 @@ import ResolutionDetails from './ui/ResolutionDetails.jsx';
 import About from './ui/About.jsx';
 
 
+import ReactAtellier from 'react-atellier';
+
 FlowRouter.route('/', {
   action(){
     mount(MainLayout, {
@@ -28,6 +30,20 @@ FlowRouter.route('/resolution/:id', {
   action(params){
     mount(MainLayout, {
       content: (<ResolutionDetails params={{id: params.id}} />)
+    });
+  }
+});
+
+FlowRouter.route('/atellier', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <ReactAtellier
+          components={[{
+            componentName: "Component App",
+            component: App
+          }]}
+        />)
     });
   }
 });

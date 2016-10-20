@@ -7,8 +7,9 @@ export const MainLayout = ({content}) => (
       <h1>Reborn 5: POCA BROMA JA!</h1>
       <LoginButtons />
       <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
+        <a className="aNav" href="/">Home</a>
+        <a className="aNav" href="/atellier">Atellier</a>
+        <a className="aNav" href="/about">About</a>
       </nav>
     </header>
     <main>
