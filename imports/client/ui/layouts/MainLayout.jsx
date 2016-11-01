@@ -9,6 +9,7 @@ export const MainLayout = ({content}) => (
       <nav>
         <a className="aNav" href="/">Home</a>
         <a className="aNav" href="/atellier">Atellier</a>
+        <a className="aNav" href="/uploader">Uploader</a>
         <a className="aNav" href="/about">About</a>
       </nav>
     </header>

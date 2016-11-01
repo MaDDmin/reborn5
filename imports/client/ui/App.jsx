@@ -25,11 +25,11 @@ class App extends Component{
     this.state.subscription.resolutions.stop();
   }
 
-  renderResolutions(){
+  /*renderResolutions(){
     return this.props.resolutions.map((resolution)=>(
       <ResolutionSingle key={resolution._id} resolution={resolution} />
     ));
-  }
+  }*/
 
   render(){
     let resol = this.props.resolutions;
@@ -42,19 +42,22 @@ class App extends Component{
         transitionAppear={true}
         transitionAppearTimeout={600}
         transitionEnterTimeout={600}
-        transitionLeaveTimeout={400}>
+        transitionLeaveTimeout={400}
+      >
         <ResolutionsForm />
-          <ReactCSSTransitionGroup
-            component="ul"
-            className="ulResolutions"
-            transitionName="resolutionLoad"
-            transitionEnterTimeout={600}
-            transitionLeaveTimeout={400}>
-            {//this.renderResolutions()}
-              this.props.resolutions.map((resolution)=>(
-                <ResolutionSingle key={resolution._id} resolution={resolution} />
-              ))
-            }
+        <ReactCSSTransitionGroup
+          component="ul"
+          className="ulResolutions"
+          transitionName="resolutionLoad"
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={400}
+        >
+                                  {/*this.renderResolutions()*/}
+          {
+            this.props.resolutions.map((resolution)=>(
+              <ResolutionSingle key={resolution._id} resolution={resolution} />
+            ))
+          }
         </ReactCSSTransitionGroup>
       </ReactCSSTransitionGroup>
     );
