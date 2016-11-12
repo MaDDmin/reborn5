@@ -7,27 +7,9 @@ import About from './ui/About.jsx';
 
 import ReactAtellier from 'react-atellier';
 
-import FineUploaderTraditional from 'react-fine-uploader';
-import Gallery from 'react-fine-uploader/components/gallery';
-
-const uploader = new FineUploaderTraditional({
-    options: {
-        chunking: {
-            enabled: true
-        },
-        deleteFile: {
-            enabled: true,
-            endpoint: '/uploads'
-        },
-        request: {
-            endpoint: '/uploads'
-        },
-        retry: {
-            enableAuto: true
-        }
-    }
-});
-
+import { FilesCollection } from 'meteor/ostrio:files';
+import FileIndividualFile from './ui/components/uploader/FileIndividualFile.jsx';
+import FileUploadComponent from './ui/components/uploader/FileUpload.jsx';
 
 FlowRouter.route('/', {
   action(){
@@ -74,7 +56,21 @@ FlowRouter.route('/uploader', {
     mount(MainLayout, {
       content: (
         <div>
-          <Gallery uploader={uploader} />
+      {/*    <FileIndividualFile />
+          <FileUploadComponent />
+      */}
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/aux', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+
         </div>
       )
     });
