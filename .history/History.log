@@ -60,3 +60,6 @@
 
 2016-11-30 13:58
   Un paró important. Els sistemes caigueren. Catàstrofes passaràn... També m'he parat a investigar Docker en una certa profunditat... veurem cóm ens-ho farem...
+  Obrirem una nova branca per començar a modificar el projecte i encarar-lo a alguna cosa que puga ser útil mentre avancem amb Meteor, React, Mongo, JS i demés...
+  Les branques anteriors les anem a deixar intactes de moment.
+  La nova branca, "NewBreeze".
