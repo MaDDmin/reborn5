@@ -1,4 +1,7 @@
+// React
 import React, {Component, PropTypes} from 'react';
+
+// La col·lecció de les resolucions
 import '../../api/collections/Resolutions.js';
 import {createContainer} from 'meteor/react-meteor-data';
 import ResolutionsForm from './ResolutionsForm.jsx';
