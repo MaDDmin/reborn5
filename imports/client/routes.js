@@ -1,14 +1,23 @@
+// React
 import React from 'react';
-import {mount} from 'react-mounter';
-import {MainLayout} from './ui/layouts/MainLayout.jsx';
-import App from './ui/App.jsx';
-import ResolutionDetails from './ui/ResolutionDetails.jsx';
-import About from './ui/About.jsx';
+
+// Renderitzador d'Arunoda per a React
+import { mount } from 'react-mounter';
+
+// L'estructura bàsica comuna de la web sobre la que renderitzem els continguts que canvien
+import { MainLayout } from './ui/layouts/MainLayout';
+
+import App from './ui/App';
+import ResolutionDetails from './ui/ResolutionDetails';
+import About from './ui/About';
 
 import ReactAtellier from 'react-atellier';
 
 import FineUploaderTraditional from 'react-fine-uploader';
 import Gallery from 'react-fine-uploader/components/gallery';
+
+
+import Game from './ui/components/reacteaster/TicTacToe';
 
 const uploader = new FineUploaderTraditional({
     options: {
@@ -61,10 +70,15 @@ FlowRouter.route('/atellier', {
       content: (
         <ReactAtellier
           components={[{
-            componentName: "Component App",
-            component: App
-          }]}
-        />)
+              componentName: "Component App",
+              component: App
+            }, {
+              componentName: "TicTacToe Game",
+              component: Game
+            }
+          ]}
+        />
+      )
     });
   }
 });
@@ -75,6 +89,19 @@ FlowRouter.route('/uploader', {
       content: (
         <div>
           <Gallery uploader={uploader} />
+        </div>
+      )
+    });
+  }
+});
+
+
+FlowRouter.route('/ttt', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <Game />
         </div>
       )
     });
