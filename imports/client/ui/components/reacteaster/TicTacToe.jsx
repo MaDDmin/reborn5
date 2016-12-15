@@ -1,14 +1,31 @@
 import React from 'react';
 import './ttt.scss';
-
+/*
+███████  ██████  ██    ██  █████  ██████  ███████
+██      ██    ██ ██    ██ ██   ██ ██   ██ ██
+███████ ██    ██ ██    ██ ███████ ██████  █████
+     ██ ██ ▄▄ ██ ██    ██ ██   ██ ██   ██ ██
+███████  ██████   ██████  ██   ██ ██   ██ ███████
+            ▀▀
+*/
 const Square = (props) =>
   <button className="square" onClick={() => props.onClick()}>
     {props.value}
   </button>;
 
+  /*
+  ██████   ██████   █████  ██████  ██████
+  ██   ██ ██    ██ ██   ██ ██   ██ ██   ██
+  ██████  ██    ██ ███████ ██████  ██   ██
+  ██   ██ ██    ██ ██   ██ ██   ██ ██   ██
+  ██████   ██████  ██   ██ ██   ██ ██████
+  */
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
+    return (
+      <Square
+        value={this.props.squares[i]}
+        onClick={() => this.props.onClick(i)} />);
   }
 
   render() {
@@ -34,6 +51,13 @@ class Board extends React.Component {
   }
 }
 
+/*
+ ██████   █████  ███    ███ ███████
+██       ██   ██ ████  ████ ██
+██   ███ ███████ ██ ████ ██ █████
+██    ██ ██   ██ ██  ██  ██ ██
+ ██████  ██   ██ ██      ██ ███████
+*/
 export default class Game extends React.Component {
   constructor() {
     super();
@@ -74,23 +98,33 @@ export default class Game extends React.Component {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const stepNum = this.state.stepNumber;
     const moves = history.map((step, move) => {
       const desc = move ?
         'Move #' + move :
         'Game start';
+    const classes = (move === stepNum)?"activeMove":"";
+
       return (
         <li key={move}>
-          <a href="#" onClick={() => this.jumpTo(move)}>{desc}</a>
+          <a
+            className={classes}
+            href="#"
+            onClick={(e)=>{this.jumpTo(move);}}>
+            {desc}
+          </a>
         </li>
       );
     });
 
     let status;
+
     if (winner) {
       status = 'Winner: ' + winner;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
+
     return (
       <div className="game">
         <div className="game-board">
@@ -114,6 +148,13 @@ export default class Game extends React.Component {
 //   document.getElementById('container')
 // );
 
+ /*
+ █████  ██    ██ ██   ██ ██ ██      ██  █████  ██████  ███████
+██   ██ ██    ██  ██ ██  ██ ██      ██ ██   ██ ██   ██ ██
+███████ ██    ██   ███   ██ ██      ██ ███████ ██████  ███████
+██   ██ ██    ██  ██ ██  ██ ██      ██ ██   ██ ██   ██      ██
+██   ██  ██████  ██   ██ ██ ███████ ██ ██   ██ ██   ██ ███████
+*/
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],

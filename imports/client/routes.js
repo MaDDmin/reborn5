@@ -19,6 +19,8 @@ import Gallery from 'react-fine-uploader/components/gallery';
 
 import Game from './ui/components/reacteaster/TicTacToe';
 
+import EasyTaken from './ui/components/easytaken/EasyTaken';
+
 const uploader = new FineUploaderTraditional({
     options: {
         chunking: {
@@ -102,6 +104,18 @@ FlowRouter.route('/ttt', {
       content: (
         <div>
           <Game />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/et', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <EasyTaken />
         </div>
       )
     });

@@ -11,6 +11,8 @@ export const MainLayout = ({content}) => (
         <a className="aNav" href="/atellier">Atellier</a>
         <a className="aNav" href="/uploader">Uploader</a>
         <a className="aNav" href="/about">About</a>
+        <a className="aNav" href="/ttt">TicTacToe</a>
+        <a className="aNav" href="/et">EasyTaken</a>
       </nav>
     </header>
     <main>
