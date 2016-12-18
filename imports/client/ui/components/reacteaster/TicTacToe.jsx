@@ -82,8 +82,11 @@ export default class Game extends React.Component {
   }
 
   handleClick(i, j) {
+  		// history és la col.lecció de moviments fins l'actual sense incloure'l
     const history = this.state.history.slice(0, this.state.stepNumber+1);
+    // current és l'últim moviment {squares:[[a,b,c],[d,e,f],[g,h,i]]}
     const current = history[history.length - 1];
+    // squares és una còpia de l'últim moviment
     const squares = current.squares.slice();
 
     if (calculateWinner(squares) || squares[i][j]) { // Si el quadre ja té un valor o s'ha guanyat la partida, no es continua amb la jugada.
@@ -142,7 +145,7 @@ export default class Game extends React.Component {
         <div className="game-board">
           <Board
             squares={current.squares}
-            onClick={(i, j) => this.handleClick(i, j)}/>
+            onClick={(i, j) => this.handleClick.bind(this, i, j)}/>
         </div>
         <div className="game-info">
           <div>{status}</div>
