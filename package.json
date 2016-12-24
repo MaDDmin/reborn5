@@ -7,6 +7,8 @@
   "dependencies": {
     "bcrypt": "^0.8.7",
     "classnames": "^2.2.5",
+    "immutable": "^3.8.1",
+    "lodash": "^4.17.2",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.3.2",
     "react-addons-css-transition-group": "^15.3.2",

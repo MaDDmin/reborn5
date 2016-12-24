@@ -9,10 +9,12 @@ export const MainLayout = ({content}) => (
       <nav>
         <a className="aNav" href="/">Home</a>
         <a className="aNav" href="/atellier">Atellier</a>
-        <a className="aNav" href="/uploader">Uploader</a>
+        {/*<a className="aNav" href="/uploader">Uploader</a>*/}
         <a className="aNav" href="/about">About</a>
         <a className="aNav" href="/ttt">TicTacToe</a>
         <a className="aNav" href="/et">EasyTaken</a>
+        <a className="aNav" href="/imm">IMMUTABLE</a>
+        <a className="aNav" href="/JSexp">Experiment_0</a>
       </nav>
     </header>
     <main>

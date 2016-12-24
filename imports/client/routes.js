@@ -13,31 +13,33 @@ import About from './ui/About';
 
 import ReactAtellier from 'react-atellier';
 
-import FineUploaderTraditional from 'react-fine-uploader';
-import Gallery from 'react-fine-uploader/components/gallery';
+//import FineUploaderTraditional from 'react-fine-uploader';
+//import Gallery from 'react-fine-uploader/components/gallery';
 
 
-import Game from './ui/components/reacteaster/TicTacToe';
+import Game from './ui/components/tictactoe/TicTacToe';
 
 import EasyTaken from './ui/components/easytaken/EasyTaken';
 
-const uploader = new FineUploaderTraditional({
-    options: {
-        chunking: {
-            enabled: true
-        },
-        deleteFile: {
-            enabled: true,
-            endpoint: '/uploads'
-        },
-        request: {
-            endpoint: '/uploads'
-        },
-        retry: {
-            enableAuto: true
-        }
-    }
-});
+import Immutable from './ui/components/immutable/Immutable';
+
+// const uploader = new FineUploaderTraditional({
+//     options: {
+//         chunking: {
+//             enabled: true
+//         },
+//         deleteFile: {
+//             enabled: true,
+//             endpoint: '/uploads'
+//         },
+//         request: {
+//             endpoint: '/uploads'
+//         },
+//         retry: {
+//             enableAuto: true
+//         }
+//     }
+// });
 
 
 FlowRouter.route('/', {
@@ -85,17 +87,17 @@ FlowRouter.route('/atellier', {
   }
 });
 
-FlowRouter.route('/uploader', {
-  action(params){
-    mount(MainLayout, {
-      content: (
-        <div>
-          <Gallery uploader={uploader} />
-        </div>
-      )
-    });
-  }
-});
+// FlowRouter.route('/uploader', {
+//   action(params){
+//     mount(MainLayout, {
+//       content: (
+//         <div>
+//           <Gallery uploader={uploader} />
+//         </div>
+//       )
+//     });
+//   }
+// });
 
 
 FlowRouter.route('/ttt', {
@@ -116,6 +118,30 @@ FlowRouter.route('/et', {
       content: (
         <div>
           <EasyTaken />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/imm', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <Immutable />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/JSexp', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <Experiment_0 />
         </div>
       )
     });
