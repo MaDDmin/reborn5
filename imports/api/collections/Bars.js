@@ -1,13 +1,13 @@
 import {Meteor} from 'meteor/meteor';
 
-Resolutions = new Mongo.Collection("resolutions");
+Bars = new Mongo.Collection("bars");
 
 Meteor.methods({
-  'resolutions.insert'(text){
+  'bars.insert'(text){
     if (!Meteor.userId()){
       throw new Meteor.Error('not-authorized');
     }
-    Resolutions.insert({
+    Bars.insert({
       text,
       completed: false,
       createdAt: new Date(),
@@ -15,22 +15,22 @@ Meteor.methods({
     });
   },
 
-  'resolutions.update'(resolution){
-    if (Meteor.userId() !== resolution.user){
+  'bars.update'(bar){
+    if (Meteor.userId() !== bar.user){
       throw new Meteor.Error('not-authorized');
     }
-    Resolutions.update(resolution._id, {
+    Bars.update(bar._id, {
       $set: {
-        completed: !resolution.completed
+        completed: !bar.completed
       }
     });
   },
 
-  'resolutions.delete'(resolution){
-    if (Meteor.userId() !== resolution.user){
+  'bars.delete'(bar){
+    if (Meteor.userId() !== bar.user){
       throw new Meteor.Error('not-authorized');
     }
-    Resolutions.remove(resolution._id);
+    Bars.remove(bar._id);
   }
 });
 
