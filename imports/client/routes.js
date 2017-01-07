@@ -22,6 +22,9 @@ import Game from './ui/components/tictactoe/TicTacToe';
 import EasyTaken from './ui/components/easytaken/EasyTaken';
 
 import Immutable from './ui/components/immutable/Immutable';
+import D3Select from './ui/components/d3/D3Select.jsx';
+import D3SelectAll from './ui/components/d3/D3SelectAll.jsx';
+import D3Bars1 from './ui/components/d3/D3Bars1.jsx';
 
 // const uploader = new FineUploaderTraditional({
 //     options: {
@@ -142,6 +145,42 @@ FlowRouter.route('/JSexp', {
       content: (
         <div>
           <Experiment_0 />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3select', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3Select />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3selectAll', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3SelectAll />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3TotsAUna', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3Bars1 />
         </div>
       )
     });

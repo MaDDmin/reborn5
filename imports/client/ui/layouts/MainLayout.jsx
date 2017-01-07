@@ -15,6 +15,9 @@ export const MainLayout = ({content}) => (
         <a className="aNav" href="/et">EasyTaken</a>
         <a className="aNav" href="/imm">IMMUTABLE</a>
         <a className="aNav" href="/JSexp">Experiment_0</a>
+        <a className="aNav" href="/d3select">D3_select</a>
+        <a className="aNav" href="/d3selectAll">D3_selectAll</a>
+        <a className="aNav" href="/d3TotsAUna">D3_TotsAUna</a>
       </nav>
     </header>
     <main>
