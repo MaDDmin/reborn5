@@ -17,7 +17,8 @@ export const MainLayout = ({content}) => (
         <a className="aNav" href="/JSexp">Experiment_0</a>
         <a className="aNav" href="/d3select">D3_select</a>
         <a className="aNav" href="/d3selectAll">D3_selectAll</a>
-        <a className="aNav" href="/d3TotsAUna">D3_TotsAUna</a>
+        <a className="aNav" href="/d3bars1">D3_Bars1</a>
+        <a className="aNav" href="/d3bars2">D3_Bars2</a>
       </nav>
     </header>
     <main>

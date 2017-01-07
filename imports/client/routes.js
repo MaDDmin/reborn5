@@ -25,6 +25,7 @@ import Immutable from './ui/components/immutable/Immutable';
 import D3Select from './ui/components/d3/D3Select.jsx';
 import D3SelectAll from './ui/components/d3/D3SelectAll.jsx';
 import D3Bars1 from './ui/components/d3/D3Bars1.jsx';
+import D3Bars2 from './ui/components/d3/D3Bars2.jsx';
 
 // const uploader = new FineUploaderTraditional({
 //     options: {
@@ -175,12 +176,24 @@ FlowRouter.route('/d3selectAll', {
   }
 });
 
-FlowRouter.route('/d3TotsAUna', {
+FlowRouter.route('/d3bars1', {
   action(params){
     mount(MainLayout, {
       content: (
         <div>
           <D3Bars1 />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3bars2', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3Bars2 />
         </div>
       )
     });
