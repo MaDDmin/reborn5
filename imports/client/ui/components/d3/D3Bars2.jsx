@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import * as d3 from 'd3';
 import './D3Bars2.scss';
+import _ from 'lodash';
 
 export default class D3Bars2 extends Component {
   constructor(){
@@ -11,10 +12,14 @@ export default class D3Bars2 extends Component {
   }
 
   barsUpdate() {
+    let x = d3.scaleLinear()
+      .domain([0, d3.max(this.data)])
+      .range([0, 420]);
+
     // Perform the data join
-    var selection = d3.select('.chart')
+    let selection = d3.select('.chart')
       .selectAll('div')
-      .data(this.data);
+      .data(_.sortBy(this.data));
 
     // Remove surplus elements
     selection.exit()
@@ -23,12 +28,12 @@ export default class D3Bars2 extends Component {
     // Add new elements
     selection.enter()
       .append('div')
-      .style("width", d => d * 10 + "px")
+      .style("width", d => x(d) +"px")
       .text(d => d);
 
     // Update existing AND new elements
     selection
-      .style("width", d => d * 10 + "px")
+      .style("width", d => x(d) +"px")
       .text(d => d);
   }
 
