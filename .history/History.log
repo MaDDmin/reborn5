@@ -1,3 +1,14 @@
+2016-12-21 08:39 - Nova branca: IMMUTABLE
+  A partir d'ara escriuré les notes en la part més alta d'aquest document.
+  Obric una nova pestanya al projecte per experimentar amb IMMUTABLE.JS.
+  Els exercicis Extra es queden en les seues respectives branques a l'espera de més treball. No quedaràn així. La intenció és aconseguir acabar-los.
+
+
+
+
+
+
+
 2016-09-10 13:40
   Nova metodologia de treball. Sense presoners. Ara ja controlem Git. Els malaïts "untracked" m'amargaven l'existència. I és que costa averiguar-ho tot. No l'utilitzava bé.
   A banda dels nous poders que Git ens brindarà vaig a incloure un fitxer independent de Git (aquest) en el qual explicaré de forma prosàica cada pas del procés evolutiu.
@@ -57,3 +68,9 @@
   Hem eliminat el paquet insecure i hem posat Meteor.methods per insertar dades a la col·lecció.
   Ara li toca a autopublish i les publicacions/suscripcions... Amb els comptes d'usuari...
   Un altre canvi que no havia comentat és que ja no restringim la versió del paquet de fourseven:scss per compilar Sass.
+
+2016-11-30 13:58
+  Un paró important. Els sistemes caigueren. Catàstrofes passaràn... També m'he parat a investigar Docker en una certa profunditat... veurem cóm ens-ho farem...
+  Obrirem una nova branca per començar a modificar el projecte i encarar-lo a alguna cosa que puga ser útil mentre avancem amb Meteor, React, Mongo, JS i demés...
+  Les branques anteriors les anem a deixar intactes de moment.
+  La nova branca, "NewBreeze".

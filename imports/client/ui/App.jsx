@@ -1,9 +1,13 @@
+// React
 import React, {Component, PropTypes} from 'react';
+
+// La col·lecció de les resolucions
 import '../../api/collections/Resolutions.js';
 import {createContainer} from 'meteor/react-meteor-data';
 import ResolutionsForm from './ResolutionsForm.jsx';
 import ResolutionSingle from './ResolutionSingle.jsx';
 import { check, Match } from 'meteor/check';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 class App extends Component{
   constructor(props){
@@ -17,33 +21,48 @@ class App extends Component{
   }
 
   componentDidMount(){
-    
+
   }
 
   componentWillUnmount(){
     this.state.subscription.resolutions.stop();
   }
 
-  renderResolutions(){
+  /*renderResolutions(){
     return this.props.resolutions.map((resolution)=>(
       <ResolutionSingle key={resolution._id} resolution={resolution} />
     ));
-  }
+  }*/
 
   render(){
     let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <div>
+      <ReactCSSTransitionGroup
+        id="divApp"
+        component="div"
+        transitionName="route"
+        transitionAppear={true}
+        transitionAppearTimeout={600}
+        transitionEnterTimeout={600}
+        transitionLeaveTimeout={400}
+      >
         <ResolutionsForm />
-        <ul className="ulResolutions">
-          {//this.renderResolutions()}
+        <ReactCSSTransitionGroup
+          component="ul"
+          className="ulResolutions"
+          transitionName="resolutionLoad"
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={400}
+        >
+                                  {/*this.renderResolutions()*/}
+          {
             this.props.resolutions.map((resolution)=>(
               <ResolutionSingle key={resolution._id} resolution={resolution} />
             ))
           }
-        </ul>
-      </div>
+        </ReactCSSTransitionGroup>
+      </ReactCSSTransitionGroup>
     );
   }
 }
