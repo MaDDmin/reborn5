@@ -14,31 +14,67 @@ export default class D3Bars3 extends Component {
   }
 
   barsUpdate() {
+
+
+
+
     let x = d3.scaleLinear()
-      .domain([0, d3.max(this.data)])
+      //.domain([0, d3.max(this.data)])
       .range([0, this.width]);
 
 
     var chart = d3.select(".chart")
-      .attr("width", this.width)
-      .attr("height", this.barHeight * this.data.length);
+      .attr("width", this.width);
+      //.attr("height", this.barHeight * this.data.length);
 
     // Data join and Enter
-    var bar = chart.selectAll("g")
-        .data(this.data)
-      .enter().append("g")
-        .attr("transform", (d, i) => "translate(0," + i * this.barHeight + ")");
+    // var bar = chart.selectAll("g")
+    //     .data(this.data)
+    //   .enter().append("g")
+    //     .attr("transform", (d, i) => "translate(0," + i * this.barHeight + ")");
 
     // Update
-    bar.append("rect")
-        .attr("width", x)
-        .attr("height", this.barHeight - 1);
+    // bar.append("rect")
+    //     .attr("width", d => x(d))
+    //     .attr("height", this.barHeight - 1);
 
-    bar.append("text")
-        .attr("x", d => x(d) - 3)
-        .attr("y", this.barHeight / 2)
-        .attr("dy", ".35em")
-        .text(d => d);
+    // bar.append("text")
+    //     .attr("x", d => x(d) - 3)
+    //     .attr("y", this.barHeight / 2)
+    //     .attr("dy", ".35em")
+    //     .text(d => d);
+
+    // Exit
+  //  bar.exit().remove();
+
+    function type(d) {
+      d.value = Number(d.value); // coerce to number
+      return d;
+    }
+
+    d3.tsv("Bars2data.tsv", type,
+    (error, data) => {
+      //console.log(`${JSON.stringify(data)}`);
+      x.domain([0, d3.max(data, d => d.value)]);
+
+      chart.attr("height", this.barHeight * data.length);
+
+      var bar = chart.selectAll("g")
+          .data(data)
+        .enter().append("g")
+          .attr("transform", (d, i) => "translate(0," + i * this.barHeight + ")");
+
+      bar.append("rect")
+          .attr("width", d => x(d.value))
+          .attr("height", this.barHeight - 1);
+
+      bar.append("text")
+          .attr("x", d => x(d.value) - 3)
+          .attr("y", this.barHeight / 2)
+          .attr("dy", ".35em")
+          .text(d => d.value);
+    });
+
 
     //
     //
@@ -80,7 +116,7 @@ export default class D3Bars3 extends Component {
   render() {
     return (
         <div className="D3Bars3">
-          <svg className="chart" width="420" height="120">
+          <svg className="chart" width="666" height="120">
             {/* <g transform="translate(0,0)">
               <rect width="40" height="19"></rect>
               <text x="37" y="9.5" dy=".35em">4</text>
