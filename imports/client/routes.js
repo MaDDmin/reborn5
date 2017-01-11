@@ -27,6 +27,7 @@ import D3SelectAll from './ui/components/d3/D3SelectAll.jsx';
 import D3Bars1 from './ui/components/d3/D3Bars1.jsx';
 import D3Bars2 from './ui/components/d3/D3Bars2.jsx';
 import D3Bars3 from './ui/components/d3/D3Bars3.jsx';
+import D3BarsFinal from './ui/components/d3/D3BarsFinal.jsx';
 
 // const uploader = new FineUploaderTraditional({
 //     options: {
@@ -207,6 +208,18 @@ FlowRouter.route('/d3bars3', {
       content: (
         <div>
           <D3Bars3 />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3barsFinal', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3BarsFinal />
         </div>
       )
     });
