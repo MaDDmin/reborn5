@@ -21,6 +21,8 @@ export const MainLayout = ({content}) => (
         <a className="aNav" href="/d3bars2">D3_Bars2</a>
         <a className="aNav" href="/d3bars3">D3_Bars3</a>
         <a className="aNav" href="/d3barsFinal">D3BarsFinal</a>
+        <a className="aNav" href="/d3circles">D3Circles</a>
+        <a className="aNav" href="/d3ObjectConstancy">D3ObjectConstancy</a>
       </nav>
     </header>
     <main>

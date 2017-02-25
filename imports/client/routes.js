@@ -28,6 +28,8 @@ import D3Bars1 from './ui/components/d3/D3Bars1.jsx';
 import D3Bars2 from './ui/components/d3/D3Bars2.jsx';
 import D3Bars3 from './ui/components/d3/D3Bars3.jsx';
 import D3BarsFinal from './ui/components/d3/D3BarsFinal.jsx';
+import D3Circles from './ui/components/d3/3Circles.jsx';
+import D3ObjectConstancy from './ui/components/d3/ObjectConstancy.jsx';
 
 // const uploader = new FineUploaderTraditional({
 //     options: {
@@ -220,6 +222,30 @@ FlowRouter.route('/d3barsFinal', {
       content: (
         <div>
           <D3BarsFinal />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3circles', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3Circles />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/d3ObjectConstancy', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <D3ObjectConstancy />
         </div>
       )
     });
