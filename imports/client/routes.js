@@ -13,8 +13,8 @@ import About from './ui/About';
 
 import ReactAtellier from 'react-atellier';
 
-//import FineUploaderTraditional from 'react-fine-uploader';
-//import Gallery from 'react-fine-uploader/components/gallery';
+import FineUploaderTraditional from 'react-fine-uploader';
+import Gallery from 'react-fine-uploader/components/gallery';
 
 
 import Game from './ui/components/tictactoe/TicTacToe';
@@ -31,23 +31,23 @@ import D3BarsFinal from './ui/components/d3/D3BarsFinal.jsx';
 import D3Circles from './ui/components/d3/3Circles.jsx';
 import D3ObjectConstancy from './ui/components/d3/ObjectConstancy.jsx';
 
-// const uploader = new FineUploaderTraditional({
-//     options: {
-//         chunking: {
-//             enabled: true
-//         },
-//         deleteFile: {
-//             enabled: true,
-//             endpoint: '/uploads'
-//         },
-//         request: {
-//             endpoint: '/uploads'
-//         },
-//         retry: {
-//             enableAuto: true
-//         }
-//     }
-// });
+const uploader = new FineUploaderTraditional({
+    options: {
+        chunking: {
+            enabled: true
+        },
+        deleteFile: {
+            enabled: true,
+            endpoint: '/uploads'
+        },
+        request: {
+            endpoint: '/uploads'
+        },
+        retry: {
+            enableAuto: true
+        }
+    }
+});
 
 
 FlowRouter.route('/', {
@@ -95,17 +95,17 @@ FlowRouter.route('/atellier', {
   }
 });
 
-// FlowRouter.route('/uploader', {
-//   action(params){
-//     mount(MainLayout, {
-//       content: (
-//         <div>
-//           <Gallery uploader={uploader} />
-//         </div>
-//       )
-//     });
-//   }
-// });
+FlowRouter.route('/uploader', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <Gallery uploader={uploader} />
+        </div>
+      )
+    });
+  }
+});
 
 
 FlowRouter.route('/ttt', {
@@ -246,6 +246,18 @@ FlowRouter.route('/d3ObjectConstancy', {
       content: (
         <div>
           <D3ObjectConstancy />
+        </div>
+      )
+    });
+  }
+});
+
+FlowRouter.route('/productes', {
+  action(params){
+    mount(MainLayout, {
+      content: (
+        <div>
+          <Productes />
         </div>
       )
     });

@@ -9,7 +9,7 @@ export const MainLayout = ({content}) => (
       <nav>
         <a className="aNav" href="/">Home</a>
         <a className="aNav" href="/atellier">Atellier</a>
-        {/*<a className="aNav" href="/uploader">Uploader</a>*/}
+        <a className="aNav" href="/uploader">Uploader</a>
         <a className="aNav" href="/about">About</a>
         <a className="aNav" href="/ttt">TicTacToe</a>
         <a className="aNav" href="/et">EasyTaken</a>
@@ -23,6 +23,8 @@ export const MainLayout = ({content}) => (
         <a className="aNav" href="/d3barsFinal">D3BarsFinal</a>
         <a className="aNav" href="/d3circles">D3Circles</a>
         <a className="aNav" href="/d3ObjectConstancy">D3ObjectConstancy</a>
+        <a className="aNav" href="/productes">Productes</a>
+
       </nav>
     </header>
     <main>
