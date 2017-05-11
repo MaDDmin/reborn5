@@ -5,8 +5,8 @@ Meteor.publish("allResolutions", function(){
   return Resolutions.find();
 });
 
-Meteor.publish("userResolutions", function(){
-  return Resolutions.find({
+Meteor.publish("userClients", function(){
+  return Clients.find({
     user: this.userId
   });
 });

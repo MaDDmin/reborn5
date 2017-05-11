@@ -2,10 +2,10 @@
 import React, {Component, PropTypes} from 'react';
 
 // La col·lecció de les resolucions
-import '../../api/collections/Resolutions.js';
+import '../../api/collections/Clients.js';
 import {createContainer} from 'meteor/react-meteor-data';
-import ResolutionsForm from './ResolutionsForm.jsx';
-import ResolutionSingle from './ResolutionSingle.jsx';
+import ClientsForm from './ClientsForm.jsx';
+import ClientSingle from './ClientSingle.jsx';
 import { check, Match } from 'meteor/check';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -15,7 +15,7 @@ class App extends Component{
 
     this.state = {
       subscription: {
-        resolutions: Meteor.subscribe("userResolutions")
+        clients: Meteor.subscribe("userClients")
       }
     }
   }
@@ -47,7 +47,7 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <ResolutionsForm />
+        <ClientsForm />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"
@@ -57,8 +57,8 @@ class App extends Component{
         >
                                   {/*this.renderResolutions()*/}
           {
-            this.props.resolutions.map((resolution)=>(
-              <ResolutionSingle key={resolution._id} resolution={resolution} />
+            this.props.clients.map((client)=>(
+              <ClientSingle key={client._id} client={client} />
             ))
           }
         </ReactCSSTransitionGroup>
@@ -71,6 +71,6 @@ App.propTypes = {
 };
 export default createContainer(()=>{
   return {
-    resolutions: Resolutions.find().fetch()
+    clients: Clients.find().fetch()
   }
 }, App);
