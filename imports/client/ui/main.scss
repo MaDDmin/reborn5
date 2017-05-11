@@ -1,8 +1,18 @@
 /* CSS declarations go here */
-$bg_color: fuchsia;
+$bg_color: lightsteelblue;
 
 *{
   transition: all .3s;
+}
+
+#aH1{
+  border: none;
+  text-decoration: none;
+}
+
+#aH1:active{
+  border: none;
+  outline: none;
 }
 
 body{

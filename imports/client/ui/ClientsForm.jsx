@@ -6,10 +6,14 @@ import Bert from 'meteor/themeteorchef:bert';
 export default class ClientsForm extends Component{
   addClient(event){
     event.preventDefault();
-    let text = this.refs.client.value.trim();
+    let clientNom = this.refs.clientNom.value.trim(),
+      clientCognoms = this.refs.clientCognoms.value.trim(),
+      clientMobil = this.refs.clientMobil.value.trim(),
+      clientEmail = this.refs.clientEmail.value.trim(),
+      clientAddress = this.refs.clientAddress.value.trim();
 
-    if (text){
-      Meteor.call('clients.insert', text, (error, data)=>{
+    if (clientNom){
+      Meteor.call('clients.insert', clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, (error, data)=>{
         if (error){
           Bert.alert("Logueja't abans d'escriure una resolució.", "danger", "fixed-top", "fa-frown-o");
         }else{
@@ -25,27 +29,32 @@ export default class ClientsForm extends Component{
         <form className="new-client" onSubmit={this.addClient.bind(this)}>
           <input
             type="text"
-            ref="nomClient"
+            ref="clientNom"
             placeholder="Nom"
           />
           <input
             type="text"
-            ref="cognomsClient"
+            ref="clientCognoms"
             placeholder="Cognoms"
           />
           <input
             type="text"
-            ref="mobilClient"
+            ref="clientMobil"
             placeholder="Mòbil"
           />
           <input
             type="text"
-            ref="emailClient"
+            ref="clientEmail"
             placeholder="eMail"
           />
           <textarea
-            ref="adressClient"
+            ref="clientAddress"
             placeholder="Adreça domiciliar"
+          />
+          <input
+            type="submit"
+            ref="clientSubmit"
+            value="Introduir"
           />
         </form>
       </div>

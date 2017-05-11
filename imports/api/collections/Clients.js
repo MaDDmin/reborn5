@@ -3,19 +3,19 @@ import {Meteor} from 'meteor/meteor';
 Clients = new Mongo.Collection("clients");
 
 Meteor.methods({
-  'clients.insert'(text){
+  'clients.insert'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress){
     if (!Meteor.userId()){
       throw new Meteor.Error('not-authorized');
     }
     Clients.insert({
-      text,
+      clientNom, clientCognoms, clientMobil, clientEmail, clientAddress,
       completed: false,
       createdAt: new Date(),
       user: Meteor.userId()
     });
   },
 
-  'clients.update'(bar){
+  'clients.update'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress){
     if (Meteor.userId() !== client.user){
       throw new Meteor.Error('not-authorized');
     }

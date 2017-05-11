@@ -37,7 +37,33 @@ class App extends Component{
   render(){
   //  let resol = this.props.resolutions;
     //console.log(resol);
-    return (<div id="app"></div>);
+    return (
+      <ReactCSSTransitionGroup
+        id="divApp"
+        component="div"
+        transitionName="route"
+        transitionAppear={true}
+        transitionAppearTimeout={600}
+        transitionEnterTimeout={600}
+        transitionLeaveTimeout={400}
+      >
+        <ClientsForm />
+        <ReactCSSTransitionGroup
+          component="ul"
+          className="ulResolutions"
+          transitionName="resolutionLoad"
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={400}
+        >
+                                  {/*this.renderResolutions()*/}
+          {
+            this.props.clients.map((client)=>(
+              <ClientSingle key={client._id} client={client} />
+            ))
+          }
+        </ReactCSSTransitionGroup>
+      </ReactCSSTransitionGroup>
+    );
   }
 }
 App.propTypes = {

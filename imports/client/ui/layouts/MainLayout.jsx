@@ -4,13 +4,13 @@ import { LoginButtons } from 'meteor/okgrow:accounts-ui-react';
 export const MainLayout = ({content}) => (
   <div className="main-layout">
     <header>
-      <h1>GYM Train Manager</h1>
+      <a id="aH1" href="../"><h1>GYM Train Manager</h1></a>
       <LoginButtons />
       <nav>
         <a className="aNav" href="/clients">Clients</a>
-        <a className="aNav" href="/grup_muscular">Grup Muscular</a>
-        <a className="aNav" href="/exercici">Exercici</a>
-        <a className="aNav" href="/rutina">Rutina</a>
+        <a className="aNav" href="/grups_musculars">Grup Muscular</a>
+        <a className="aNav" href="/exercicis">Exercici</a>
+        <a className="aNav" href="/rutines">Rutina</a>
       </nav>
     </header>
     <main>
