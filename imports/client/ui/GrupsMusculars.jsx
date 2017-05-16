@@ -2,7 +2,9 @@
 import React, {Component, PropTypes} from 'react';
 
 // La col·lecció de les resolucions
+import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
+
 import {createContainer} from 'meteor/react-meteor-data';
 import GrupsMuscularsForm from './GrupsMuscularsForm.jsx';
 import GrupMuscularSingle from './GrupMuscularSingle.jsx';
@@ -15,6 +17,7 @@ class App extends Component{
 
     this.state = {
       subscription: {
+        clients: Meteor.subscribe("userClients"),
         grups_musculars: Meteor.subscribe("userGrupsMusculars")
       }
     }
@@ -71,6 +74,7 @@ App.propTypes = {
 };
 export default createContainer(()=>{
   return {
+    clients: Clients.find().fetch(),
     grups_musculars: GrupsMusculars.find().fetch()
   }
 }, App);

@@ -4,10 +4,11 @@ import React, {Component, PropTypes} from 'react';
 // La col·lecció de les resolucions
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
+import '../../api/collections/Exercicis.js';
 
 import {createContainer} from 'meteor/react-meteor-data';
-import ClientsForm from './ClientsForm.jsx';
-import ClientSingle from './ClientSingle.jsx';
+import ExercicisForm from './ExercicisForm.jsx';
+import ExercicisSingle from './ExercicisSingle.jsx';
 import { check, Match } from 'meteor/check';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -18,7 +19,8 @@ class App extends Component{
     this.state = {
       subscription: {
         clients: Meteor.subscribe("userClients"),
-        grups_musculars: Meteor.subscribe("userGrupsMusculars")
+        grups_musculars: Meteor.subscribe("userGrupsMusculars"),
+        exercicis: Meteor.subscribe("userExercicis")
       }
     }
   }
@@ -28,7 +30,7 @@ class App extends Component{
   }
 
   componentWillUnmount(){
-    this.state.subscription.clients.stop();
+    this.state.subscription.exercicis.stop();
   }
 
   /*renderResolutions(){
@@ -50,7 +52,7 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <ClientsForm />
+        <ExercicisForm />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"
@@ -60,8 +62,8 @@ class App extends Component{
         >
                                   {/*this.renderResolutions()*/}
           {
-            this.props.clients.map((client)=>(
-              <ClientSingle key={client._id} client={client} />
+            this.props.exercicis.map((exercici)=>(
+              <ExerciciSingle key={exercicis._id} exercici={exercici} />
             ))
           }
         </ReactCSSTransitionGroup>
@@ -75,6 +77,7 @@ App.propTypes = {
 export default createContainer(()=>{
   return {
     clients: Clients.find().fetch(),
-    grups_musculars: GrupsMusculars.find().fetch()
+    grups_musculars: GrupsMusculars.find().fetch(),
+    exercicis: Exercicis.find().fetch()
   }
 }, App);

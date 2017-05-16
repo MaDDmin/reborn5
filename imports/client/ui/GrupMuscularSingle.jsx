@@ -10,7 +10,7 @@ export default class GrupMuscularSingle extends Component{
     Meteor.call('grups_musculars.delete', this.props.grup_muscular);
   }
   render(){
-    //const grupMuscularClass = this.props.grup_muscular.completed ? "checked" : "";
+    const grupMuscularClass = this.props.grup_muscular.completed ? "checked" : "";
     //const status = this.props.client.completed ? <span className="spnCompleted">Completed</span> : "";
 
     return (

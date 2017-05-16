@@ -15,6 +15,7 @@ export default class GrupsMuscularsForm extends Component{
           Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");
         }else{
           this.refs.grupMuscularNom.value = "";
+          this.refs.grupMuscularDescripcio.value = "";
         }
       });
     }
@@ -23,7 +24,7 @@ export default class GrupsMuscularsForm extends Component{
     return (
       <div id="divGrupsMuscularsForm">
         <h2>Nou Grup Muscular</h2>
-        <form className="nou_grup_muscular" onSubmit={this.addGrupMuscular.bind(this)}>
+        <form className="nougrupmuscular" onSubmit={this.addGrupMuscular.bind(this)}>
           <input
             type="text"
             ref="grupMuscularNom"

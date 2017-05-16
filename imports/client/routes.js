@@ -12,8 +12,6 @@ import ClientDetails from './ui/ClientDetails.jsx';
 import Clients from './ui/Clients.jsx';
 import GrupsMusculars from './ui/GrupsMusculars.jsx';
 
-
-
 FlowRouter.route('/', {
   action(){
     mount(MainLayout, {
@@ -43,7 +41,18 @@ FlowRouter.route('/client/:id', {
 FlowRouter.route('/grups_musculars', {
   action(){
     mount(MainLayout, {
-      content: (<GrupsMusculars />)
+      content: (
+        <GrupsMusculars />
+      )
     });
   }
 });
+
+FlowRouter.notFound = {
+    // Subscriptions registered here don't have Fast Render support.
+    subscriptions: function() {
+    },
+    action: function() {
+      FlowRouter.go('/');
+    }
+};

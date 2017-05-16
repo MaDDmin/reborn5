@@ -2,10 +2,12 @@
 import React, {Component, PropTypes} from 'react';
 
 // La col·lecció de les resolucions
-import '../../api/collections/Clients.js';
+//import '../../api/collections/Clients.js';
+//import '../../api/collections/GrupsMusculars.js';
+
 import {createContainer} from 'meteor/react-meteor-data';
-import ClientsForm from './ClientsForm.jsx';
-import ClientSingle from './ClientSingle.jsx';
+//import ClientsForm from './ClientsForm.jsx';
+//import ClientSingle from './ClientSingle.jsx';
 import { check, Match } from 'meteor/check';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -13,11 +15,12 @@ class App extends Component{
   constructor(props){
     super(props);
 
-    this.state = {
-      subscription: {
-        clients: Meteor.subscribe("userClients")
-      }
-    }
+    // this.state = {
+    //   subscription: {
+    //     clients: Meteor.subscribe("userClients"),
+    //     grups_musculars: Meteor.subscribe("userGrupsMusculars")
+    //   }
+    //}
   }
 
   componentDidMount(){
@@ -25,7 +28,7 @@ class App extends Component{
   }
 
   componentWillUnmount(){
-    this.state.subscription.clients.stop();
+  //  this.state.subscription.clients.stop();
   }
 
   /*renderResolutions(){
@@ -45,6 +48,7 @@ App.propTypes = {
 };
 export default createContainer(()=>{
   return {
-    clients: Clients.find().fetch()
+    clients: Clients.find().fetch(),
+    grups_musculars: GrupsMusculars.find().fetch()
   }
 }, App);
