@@ -2,8 +2,10 @@
 import React, {Component, PropTypes} from 'react';
 
 // La col·lecció de les resolucions
-//import '../../api/collections/Clients.js';
-//import '../../api/collections/GrupsMusculars.js';
+import '../../api/collections/Clients.js';
+import '../../api/collections/GrupsMusculars.js';
+import '../../api/collections/Exercicis.js';
+import '../../api/collections/Rutines.js';
 
 import {createContainer} from 'meteor/react-meteor-data';
 //import ClientsForm from './ClientsForm.jsx';
@@ -49,6 +51,8 @@ App.propTypes = {
 export default createContainer(()=>{
   return {
     clients: Clients.find().fetch(),
-    grups_musculars: GrupsMusculars.find().fetch()
+    grups_musculars: GrupsMusculars.find().fetch(),
+    exercicis: Exercicis.find().fetch(),
+    rutines: Rutines.find().fetch(),
   }
 }, App);

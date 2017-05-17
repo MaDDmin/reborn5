@@ -14,6 +14,20 @@ Meteor.publish("userClients", function(){
   });
 });
 
+// Publish Exercicis
+Meteor.publish("userExercicis", function(){
+  return Exercicis.find({
+    user: this.userId
+  });
+});
+
+// Publish Rutines
+Meteor.publish("userRutines", function(){
+  return Rutines.find({
+    user: this.userId
+  });
+});
+
 // //===============
 // // Publish Bars
 // Meteor.publish("allBars", function(){

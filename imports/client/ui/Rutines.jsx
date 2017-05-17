@@ -5,10 +5,11 @@ import React, {Component, PropTypes} from 'react';
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
 import '../../api/collections/Exercicis.js';
+import '../../api/collections/Rutines.js';
 
 import {createContainer} from 'meteor/react-meteor-data';
-import ExercicisForm from './ExercicisForm.jsx';
-import ExerciciSingle from './ExerciciSingle.jsx';
+import RutinesForm from './RutinesForm.jsx';
+import RutinaSingle from './RutinaSingle.jsx';
 import { check, Match } from 'meteor/check';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -20,7 +21,8 @@ class App extends Component{
       subscription: {
         clients: Meteor.subscribe("userClients"),
         grups_musculars: Meteor.subscribe("userGrupsMusculars"),
-        exercicis: Meteor.subscribe("userExercicis")
+        exercicis: Meteor.subscribe("userExercicis"),
+        rutines: Meteor.subscribe("userRutines")
       }
     }
   }
@@ -30,7 +32,7 @@ class App extends Component{
   }
 
   componentWillUnmount(){
-    this.state.subscription.exercicis.stop();
+    this.state.subscription.rutines.stop();
   }
 
   /*renderResolutions(){
@@ -52,7 +54,7 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <ExercicisForm />
+        <RutinesForm />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"
@@ -62,8 +64,8 @@ class App extends Component{
         >
                                   {/*this.renderResolutions()*/}
           {
-            this.props.exercicis.map((exercici)=>(
-              <ExerciciSingle key={exercici._id} exercici={exercici} />
+            this.props.rutines.map((rutina)=>(
+              <RutinaSingle key={rutina._id} rutina={rutina} />
             ))
           }
         </ReactCSSTransitionGroup>
