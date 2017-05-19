@@ -28,9 +28,18 @@ export default class ClientsForm extends Component{
         <h2>Nou Client</h2>
         <form className="new-client" onSubmit={this.addClient.bind(this)}>
           <input
+            type="file"
+            ref="clientImatge"
+          />
+          <input
             type="text"
             ref="clientNom"
             placeholder="Nom"
+          />
+          <input
+            type="text"
+            ref="clientAlias"
+            placeholder="Alias"
           />
           <input
             type="text"
@@ -38,18 +47,62 @@ export default class ClientsForm extends Component{
             placeholder="Cognoms"
           />
           <input
+            type="radio"
+            name="clientSexe"
+            ref="clientSexe"
+            value="home"
+          />
+          <span> Home</span>
+          <input
+            type="radio"
+            name="clientSexe"
+            ref="clientSexe"
+            value="dona"
+          /><span> Dona</span>
+          <input
+            type="radio"
+            name="clientSexe"
+            ref="clientSexe"
+            value="altre"
+          />
+          <span> Altre</span>
+          <input
             type="text"
             ref="clientMobil"
             placeholder="Mòbil"
           />
           <input
             type="text"
+            ref="clientDayOfBirth"
+            placeholder="Dia de naixement"
+          />
+          <input
+            type="text"
+            ref="clientMonthOfBirth"
+            placeholder="Mes de naixement"
+          />
+          <input
+            type="text"
+            ref="clientYearOfBirth"
+            placeholder="Any de naixement"
+          />
+          <input
+            type="email"
             ref="clientEmail"
             placeholder="eMail"
           />
+          {/*<input
+            type="text"
+            ref="clientTags"
+            placeholder="Etiquetes (separades per comes)"
+          />*/}
           <textarea
             ref="clientAddress"
             placeholder="Adreça domiciliar"
+          />
+          <textarea
+            ref="clientObservacions"
+            placeholder="Observacions"
           />
           <input
             type="submit"

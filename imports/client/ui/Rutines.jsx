@@ -11,7 +11,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import RutinesForm from './RutinesForm.jsx';
 import RutinaSingle from './RutinaSingle.jsx';
 import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class App extends Component{
   constructor(props){
@@ -45,7 +45,7 @@ class App extends Component{
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <ReactCSSTransitionGroup
+      <CSSTransitionGroup
         id="divApp"
         component="div"
         transitionName="route"
@@ -55,7 +55,7 @@ class App extends Component{
         transitionLeaveTimeout={400}
       >
         <RutinesForm />
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
           component="ul"
           className="ulResolutions"
           transitionName="resolutionLoad"
@@ -68,8 +68,8 @@ class App extends Component{
               <RutinaSingle key={rutina._id} rutina={rutina} />
             ))
           }
-        </ReactCSSTransitionGroup>
-      </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
+      </CSSTransitionGroup>
     );
   }
 }

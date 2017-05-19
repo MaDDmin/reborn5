@@ -11,7 +11,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 //import ClientsForm from './ClientsForm.jsx';
 //import ClientSingle from './ClientSingle.jsx';
 import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class App extends Component{
   constructor(props){

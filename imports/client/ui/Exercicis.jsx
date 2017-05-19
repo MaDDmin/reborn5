@@ -10,7 +10,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import ExercicisForm from './ExercicisForm.jsx';
 import ExerciciSingle from './ExerciciSingle.jsx';
 import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 class App extends Component{
   constructor(props){
@@ -43,7 +43,7 @@ class App extends Component{
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <ReactCSSTransitionGroup
+      <CSSTransitionGroup
         id="divApp"
         component="div"
         transitionName="route"
@@ -53,7 +53,7 @@ class App extends Component{
         transitionLeaveTimeout={400}
       >
         <ExercicisForm />
-        <ReactCSSTransitionGroup
+        <CSSTransitionGroup
           component="ul"
           className="ulResolutions"
           transitionName="resolutionLoad"
@@ -66,8 +66,8 @@ class App extends Component{
               <ExerciciSingle key={exercici._id} exercici={exercici} />
             ))
           }
-        </ReactCSSTransitionGroup>
-      </ReactCSSTransitionGroup>
+        </CSSTransitionGroup>
+      </CSSTransitionGroup>
     );
   }
 }

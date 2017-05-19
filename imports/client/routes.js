@@ -70,6 +70,16 @@ FlowRouter.route('/rutines', {
   }
 });
 
+FlowRouter.route('/client_example', {
+  action(){
+    mount(MainLayout, {
+      content: (
+        <client_example />
+      )
+    });
+  }
+});
+
 FlowRouter.notFound = {
     // Subscriptions registered here don't have Fast Render support.
     subscriptions: function() {

@@ -31,4 +31,7 @@ fourseven:scss
 practicalmeteor:mocha
 meteortoys:allthings
 themeteorchef:bert
-ostrio:files
+# ostrio:files
+
+cfs:standard-packages
+cfs:gridfs
