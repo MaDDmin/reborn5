@@ -6,7 +6,7 @@ export const MainLayout = ({content}) => (
     <header>
       <a id="aH1" href="../"><h1>GYM Training Manager</h1></a>
       <LoginButtons />
-      <nav>
+      <nav id="navMain">
         <a className="aNav" href="/clients">Clients</a>
         <a className="aNav" href="/grups_musculars">Grups Musculars</a>
         <a className="aNav" href="/exercicis">Exercicis</a>

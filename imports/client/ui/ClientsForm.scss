@@ -2,3 +2,25 @@ input,
 textarea{
   display: block;
 }
+
+#divInNomClient,
+#divInGender{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.inNomClient,
+.divGenderOption {
+  flex-grow: 2;
+  display: inline-block;
+  width: 31%;
+}
+
+.divGenderOption{
+  text-align: right;
+}
+
+.divGenderOption input[type="radio"]{
+  display: inline;
+}

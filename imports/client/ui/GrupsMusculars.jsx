@@ -1,5 +1,6 @@
 // React
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 // La col·lecció de les resolucions
 import '../../api/collections/Clients.js';
