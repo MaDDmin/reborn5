@@ -25,7 +25,7 @@ class ClientDetails extends Component{
     if (this.state.subscription.clients.ready()){
       return (
         <div id="divClientsForm">
-        <h2>Res</h2>
+        <h2>El Client >>> </h2>
         <h4>ID: {this.props.res[0]._id}</h4>
         <h6>Created at: {this.props.res[0].createdAt.toString()}</h6>
         <h4>Text: {this.props.res[0].text}</h4>
