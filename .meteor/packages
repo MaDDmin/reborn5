@@ -31,5 +31,8 @@ fourseven:scss
 practicalmeteor:mocha
 meteortoys:allthings
 themeteorchef:bert
-ostrio:files
+
+# static-html
+
+# ostrio:files
 # meson:electron

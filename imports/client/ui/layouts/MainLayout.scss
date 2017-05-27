@@ -22,8 +22,10 @@
   padding: .2em;
   text-decoration: none;
   border: 1px solid black;
-  margin: 1px;
+  margin: 0 .3em;
+  padding: 1em;
   text-align: center;
+  transform: skewX(-12deg);
 }
 header{
   margin-bottom: 1em;
