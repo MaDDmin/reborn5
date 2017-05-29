@@ -35,12 +35,7 @@ export default class ClientsForm extends Component{
           <legend>Nou client </legend>
 
           <form className="new-client" onSubmit={this.addClient.bind(this)}>
-<<<<<<< HEAD
             {/* <input type="file" ref="clientImatge" /> */}
-=======
-
-            <input type="file" ref="clientImatge" />
->>>>>>> refs/heads/GymCQ
             <div id="divInNomClient">
               <input id="clientNom" className="inNomClient" type="text" ref="clientNom" placeholder="Nom" />
               <input id="clientCognoms" className="inNomClient" type="text" ref="clientCognoms" placeholder="Cognoms" />
