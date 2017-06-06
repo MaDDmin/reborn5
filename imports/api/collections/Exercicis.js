@@ -3,19 +3,19 @@ import {Meteor} from 'meteor/meteor';
 Exercicis = new Mongo.Collection("exercicis");
 
 Meteor.methods({
-  'exercicis.insert'(exerciciNom, exerciciDescripcio){
+  'exercicis.insert'(exerciciNom, exerciciGrupMuscular, exerciciDescripcio){
     if (!Meteor.userId()){
       throw new Meteor.Error('not-authorized');
     }
     Exercicis.insert({
-      exerciciNom, exerciciDescripcio,
+      exerciciNom, exerciciGrupMuscular, exerciciDescripcio,
       completed: false,
       createdAt: new Date(),
       user: Meteor.userId()
     });
   },
 
-  'exercicis.update'(exerciciNom, exerciciDescripcio){
+  'exercicis.update'(exerciciNom, exerciciGrupMuscular, exerciciDescripcio){
     if (Meteor.userId() !== exercici.user){
       throw new Meteor.Error('not-authorized');
     }
