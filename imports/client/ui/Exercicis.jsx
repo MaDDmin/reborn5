@@ -53,7 +53,7 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <ExercicisForm />
+        <ExercicisForm grups_musculars={this.props.grups_musculars} />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"

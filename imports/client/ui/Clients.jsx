@@ -10,7 +10,7 @@ import {createContainer} from 'meteor/react-meteor-data';
 import ClientsForm from './ClientsForm.jsx';
 import ClientSingle from './ClientSingle.jsx';
 import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+/*import ReactCSSTransitionGroup from 'react-addons-css-transition-group';*/
 
 class App extends Component{
   constructor(props){
@@ -42,31 +42,15 @@ class App extends Component{
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <ReactCSSTransitionGroup
-        id="divApp"
-        component="div"
-        transitionName="route"
-        transitionAppear={true}
-        transitionAppearTimeout={600}
-        transitionEnterTimeout={600}
-        transitionLeaveTimeout={400}
-      >
+      <div id="divClientsContainer" ref="divClientsContainer">
+        <button id="btCientsFormTrigger" ref="btClientsFormTrigger"> Nou Client</button>
         <ClientsForm />
-        <ReactCSSTransitionGroup
-          component="ul"
-          className="ulResolutions"
-          transitionName="resolutionLoad"
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={400}
-        >
-                                  {/*this.renderResolutions()*/}
-          {
-            this.props.clients.map((client)=>(
-              <ClientSingle key={client._id} client={client} />
-            ))
-          }
-        </ReactCSSTransitionGroup>
-      </ReactCSSTransitionGroup>
+        {
+          this.props.clients.map((client)=>(
+            <ClientSingle key={client._id} client={client} />
+          ))
+        }
+      </div>
     );
   }
 }

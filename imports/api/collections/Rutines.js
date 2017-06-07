@@ -3,19 +3,18 @@ import {Meteor} from 'meteor/meteor';
 Rutines = new Mongo.Collection("rutines");
 
 Meteor.methods({
-  'rutines.insert'(rutinaNom, rutinaDescripcio){
+  'rutines.insert'(rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio){
     if (!Meteor.userId()){
       throw new Meteor.Error('not-authorized');
     }
-    Rutines.insert({
-      rutinaNom, rutinaDescripcio,
+    Rutines.insert({rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio,
       completed: false,
       createdAt: new Date(),
       user: Meteor.userId()
     });
   },
 
-  'rutines.update'(rutinaNom, rutinaDescripcio){
+  'rutines.update'(rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio){
     if (Meteor.userId() !== rutina.user){
       throw new Meteor.Error('not-authorized');
     }
