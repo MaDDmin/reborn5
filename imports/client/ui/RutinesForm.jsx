@@ -252,6 +252,10 @@ export default class RutinesForm extends Component{
               </div>
             </div>
           </div>
+          <fieldset>
+          	<legend>Llista d'exercicis: </legend>
+          	<LlistaEx />
+          </fieldset>
           <textarea
             ref="rutinaDescripcio"
             placeholder="Descripció de la rutina"
