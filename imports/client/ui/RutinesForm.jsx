@@ -16,17 +16,45 @@ class LiniaExercici extends Component{
     };
   }
 
+  actualitzaDefaultsExercici(event){
+    event.preventDefault();
+
+    // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
+
+    let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
+      defaultRepeticions = this.props.exercicis.find({})
+
+
+  }
+
   actualitzaLiniaExercici(event){
     event.preventDefault();
+
+    // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
 
     let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
       repeticions;
   }
 
+  liniaUp(event){
+    event.preventDefault();
+
+  }
+
+  liniaDown(event){
+    event.preventDefault();
+
+  }
+
+  liniaDelete(event){
+    event.preventDefault();
+
+  }
+
   render () {
     return (
       <li className="liSelEx">
-        <select ref="selExercici" onChange={this.actualitzaLiniaExercici.bind(this)}>
+        <select ref="selExercici" onChange={this.actualitzaDefaultsExercici.bind(this)}>
           {
             this.props.exercicis.map(exercici=>
               <option key={exercici.exerciciNom} value={exercici._id}>
@@ -35,21 +63,21 @@ class LiniaExercici extends Component{
             )
           }
         </select>
-        <input type="text" placeholder="Repeticions" value={this.state.repeticions} />
-        <input type="text" placeholder="Series" value={this.state.series} />
-        <input type="text" placeholder="Descans" value={this.state.descans} />
-        <input type="text" placeholder="Minuts" value={this.state.minuts} />
+        <input type="text" placeholder="Repeticions" value={this.state.repeticions} onChange={this.actualitzaLiniaExercici.bind(this)} />
+        <input type="text" placeholder="Series" value={this.state.series} onChange={this.actualitzaLiniaExercici.bind(this)} />
+        <input type="text" placeholder="Descans" value={this.state.descans} onChange={this.actualitzaLiniaExercici.bind(this)} />
+        <input type="text" placeholder="Minuts" value={this.state.minuts} onChange={this.actualitzaLiniaExercici.bind(this)} />
         <table>
           <tr>
-            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
-            <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
-            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
-            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
+            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
+            <td><input type="radio" name="tipusLinia" title="Super" value="Super" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
+            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
+            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
           </tr>
         </table>
-        <button ref="btLiniaUp"></button>
-        <button ref="btLiniaDown"></button>
-        <button ref="btLiniaDelete"></button>
+        <button ref="btLiniaUp" onClick={this.liniaUp.bind(this)} ></button>
+        <button ref="btLiniaDown" onClick={this.liniaDown.bind(this)} ></button>
+        <button ref="btLiniaDelete" onClick={this.liniaDelete.bind(this)} ></button>
       </li>
     );
   }
@@ -355,8 +383,17 @@ export default class RutinesForm extends Component{
           <fieldset>
             <legend>Llista d'exercicis: </legend>
 
-            <LlistaExercicis addSelEx={this.onAddSelEx.bind(this)}>
-              <LiniaExercici />
+            <LlistaExercicis
+              addSelEx={this.onAddSelEx.bind(this)}
+              clients={this.props.clients}
+              grups_musculars={this.props.grups_musculars}
+              exercicis={this.props.exercicis}
+            >
+              <LiniaExercici
+                clients={this.props.clients}
+                grups_musculars={this.props.grups_musculars}
+                exercicis={this.props.exercicis}
+              />
             </LlistaExercicis>
 
           </fieldset>
