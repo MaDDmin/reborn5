@@ -55,7 +55,11 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <RutinesForm clients={this.props.clients}  grups_musculars={this.props.grups_musculars}/>
+        <RutinesForm
+          clients={this.props.clients}
+          grups_musculars={this.props.grups_musculars}
+          exercicis={this.props.exercicis}
+        />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"

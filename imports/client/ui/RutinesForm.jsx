@@ -3,7 +3,25 @@ import {Meteor} from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
+class LlistaEx extends Component{
+    render () {
+        return (
+          <div>
+            <ol id="olSelEx" ref="olSelEx">
+              {this.props.children}
+            </ol>
+            <button id="btAddEx" ref="btAddEx" onClick={this.props.addSelEx}>+</button>
+          </div>
+        );
+    }
+}
+
 export default class RutinesForm extends Component{
+  constructor(){
+    this.state = {
+      numEx: 1
+    };
+  }
   addRutina(event){
     event.preventDefault();
     let rutinaNom = this.refs.rutinaNom.value.trim(),
@@ -27,6 +45,23 @@ export default class RutinesForm extends Component{
         }
       });
     }
+  }
+  addSelEx(event){
+    event.preventDefault();
+    let olSelEx = this.refs.olSelEx,
+      newSelEx = ()=>(<li className="liSelEx">
+        <select ref="selExercici">
+          {
+            this.props.exercicis.map(exercici=>
+              <option key={exercici.exerciciNom} value={exercici._id}>
+                { exercici.exerciciNom }
+              </option>
+            )
+          }
+        </select>
+      </li>);
+
+    olSelEx.appendChild(newSelEx);
   }
   render(){
     return (
@@ -254,7 +289,19 @@ export default class RutinesForm extends Component{
           </div>
           <fieldset>
             <legend>Llista d'exercicis: </legend>
-            {/*<LlistaEx />*/}
+            <LlistaEx>
+                <li className="liSelEx">
+                  <select ref="selExercici">
+                    {
+                      this.props.exercicis.map(exercici=>
+                        <option key={exercici.exerciciNom} value={exercici._id}>
+                          { exercici.exerciciNom }
+                        </option>
+                      )
+                    }
+                  </select>
+                </li>
+            </LlistaEx>
           </fieldset>
           <textarea
             ref="rutinaDescripcio"
