@@ -24,6 +24,7 @@ class LlistaEx extends Component{
 
 export default class RutinesForm extends Component{
   constructor(){
+    super();
     this.state = {
       nombreExercicis: 1
     };
