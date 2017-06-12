@@ -3,14 +3,60 @@ import {Meteor} from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
-class LlistaEx extends Component{
-  render () {
-    const children = [];
-
-    for (var i = 0; i < this.state.numChildren; i += 1) {
-        children.push(<ChildComponent number={i} />);
+class LiniaExercici extends Component{
+  constructor(){
+    super();
+    this.state = {
+      ordre: 0,
+      repeticions: 0,
+      series: 0,
+      descans: 0,
+      minuts: 0,
+      tipus: "Normal"
     };
+  }
 
+  actualitzaLiniaExercici(event){
+    event.preventDefault();
+
+    let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
+      repeticions;
+  }
+
+  render () {
+    return (
+      <li className="liSelEx">
+        <select ref="selExercici" onChange={this.actualitzaLiniaExercici.bind(this)}>
+          {
+            this.props.exercicis.map(exercici=>
+              <option key={exercici.exerciciNom} value={exercici._id}>
+                { exercici.exerciciNom }
+              </option>
+            )
+          }
+        </select>
+        <input type="text" placeholder="Repeticions" value={this.state.repeticions} />
+        <input type="text" placeholder="Series" value={this.state.series} />
+        <input type="text" placeholder="Descans" value={this.state.descans} />
+        <input type="text" placeholder="Minuts" value={this.state.minuts} />
+        <table>
+          <tr>
+            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
+            <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
+            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
+            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
+          </tr>
+        </table>
+        <button ref="btLiniaUp"></button>
+        <button ref="btLiniaDown"></button>
+        <button ref="btLiniaDelete"></button>
+      </li>
+    );
+  }
+}
+
+class LlistaExercicis extends Component{
+  render () {
     return (
       <div>
         <ol id="olSelEx" ref="olSelEx">
@@ -74,6 +120,14 @@ export default class RutinesForm extends Component{
   }
 
   render(){
+    const children = [];
+
+    for (let i = 0; i < this.state.nombreExercicis; i += 1) {
+      children.push(<LiniaExercici
+        number={i}
+      />);
+    };
+
     return (
       <div id="divRutinesForm">
         <h2>Nova Rutina</h2>
@@ -90,6 +144,7 @@ export default class RutinesForm extends Component{
                 <option key={client.clientNom} value={client._id}>
                   { client.clientCognoms+", "+client.clientNom }
                 </option>
+
               )
             }
           </select>
@@ -299,19 +354,11 @@ export default class RutinesForm extends Component{
           </div>
           <fieldset>
             <legend>Llista d'exercicis: </legend>
-            <LlistaEx addSelEx={this.onAddSelEx.bind(this)}>
-                <li className="liSelEx">
-                  <select ref="selExercici">
-                    {
-                      this.props.exercicis.map(exercici=>
-                        <option key={exercici.exerciciNom} value={exercici._id}>
-                          { exercici.exerciciNom }
-                        </option>
-                      )
-                    }
-                  </select>
-                </li>
-            </LlistaEx>
+
+            <LlistaExercicis addSelEx={this.onAddSelEx.bind(this)}>
+              <LiniaExercici />
+            </LlistaExercicis>
+
           </fieldset>
           <textarea
             ref="rutinaDescripcio"
