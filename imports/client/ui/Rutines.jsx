@@ -18,23 +18,23 @@ class App extends Component{
   constructor(props){
     super(props);
 
-    this.state = {
-      subscription: {
-        clients: Meteor.subscribe("userClients"),
-        grups_musculars: Meteor.subscribe("userGrupsMusculars"),
-        exercicis: Meteor.subscribe("userExercicis"),
-        rutines: Meteor.subscribe("userRutines")
-      }
-    }
+    // this.state = {
+    //   subscription: {
+    //     clients: Meteor.subscribe("userClients"),
+    //     grups_musculars: Meteor.subscribe("userGrupsMusculars"),
+    //     exercicis: Meteor.subscribe("userExercicis"),
+    //     rutines: Meteor.subscribe("userRutines")
+    //   }
+    // }
   }
 
-  componentDidMount(){
-
-  }
-
-  componentWillUnmount(){
-    this.state.subscription.rutines.stop();
-  }
+  // componentDidMount(){
+  //
+  // }
+  //
+  // componentWillUnmount(){
+  //   this.state.subscription.rutines.stop();
+  // }
 
   /*renderResolutions(){
     return this.props.resolutions.map((resolution)=>(

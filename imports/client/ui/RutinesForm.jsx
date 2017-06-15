@@ -4,57 +4,58 @@ import {Meteor} from 'meteor/meteor';
 import Bert from 'meteor/themeteorchef:bert';
 
 class LiniaExercici extends Component{
-  constructor(){
-    super();
-    this.state = {
-      ordre: 0,
-      repeticions: 0,
-      series: 0,
-      descans: 0,
-      minuts: 0,
-      tipus: "Normal"
-    };
+  constructor(props){
+    super(props);
+
+    // this.state = {
+    //   ordre: 0,
+    //   repeticions: 0,
+    //   series: 0,
+    //   descans: 0,
+    //   minuts: 0,
+    //   tipus: "Normal"
+    // };
   }
 
-  actualitzaDefaultsExercici(event){
-    event.preventDefault();
-
-    // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
-
-    let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
-      defaultRepeticions = this.props.exercicis.find({})
-
-
-  }
-
-  actualitzaLiniaExercici(event){
-    event.preventDefault();
-
-    // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
-
-    let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
-      repeticions;
-  }
-
-  liniaUp(event){
-    event.preventDefault();
-
-  }
-
-  liniaDown(event){
-    event.preventDefault();
-
-  }
-
-  liniaDelete(event){
-    event.preventDefault();
-
-  }
+  // actualitzaDefaultsExercici(event){
+  //   event.preventDefault();
+  //
+  //   // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
+  //
+  //   let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
+  //     defaultRepeticions = this.props.exercicis.find({})
+  //
+  //
+  // }
+  //
+  // actualitzaLiniaExercici(event){
+  //   event.preventDefault();
+  //
+  //   // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
+  //
+  //   let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
+  //     repeticions;
+  // }
+  //
+  // liniaUp(event){
+  //   event.preventDefault();
+  //
+  // }
+  //
+  // liniaDown(event){
+  //   event.preventDefault();
+  //
+  // }
+  //
+  // liniaDelete(event){
+  //   event.preventDefault();
+  //
+  // }
 
   render () {
     return (
       <li className="liSelEx">
-        <select ref="selExercici" onChange={this.actualitzaDefaultsExercici.bind(this)}>
+        <select ref="selExercici" >
           {
             this.props.exercicis.map(exercici=>
               <option key={exercici.exerciciNom} value={exercici._id}>
@@ -63,21 +64,21 @@ class LiniaExercici extends Component{
             )
           }
         </select>
-        <input type="text" placeholder="Repeticions" value={this.state.repeticions} onChange={this.actualitzaLiniaExercici.bind(this)} />
-        <input type="text" placeholder="Series" value={this.state.series} onChange={this.actualitzaLiniaExercici.bind(this)} />
-        <input type="text" placeholder="Descans" value={this.state.descans} onChange={this.actualitzaLiniaExercici.bind(this)} />
-        <input type="text" placeholder="Minuts" value={this.state.minuts} onChange={this.actualitzaLiniaExercici.bind(this)} />
+        <input type="text" placeholder="Repeticions" />
+        <input type="text" placeholder="Series" />
+        <input type="text" placeholder="Descans" />
+        <input type="text" placeholder="Minuts" />
         <table>
           <tr>
-            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
-            <td><input type="radio" name="tipusLinia" title="Super" value="Super" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
-            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
-            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" onChange={this.actualitzaLiniaExercici.bind(this)} /></td>
+            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
+            <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
+            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
+            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
           </tr>
         </table>
-        <button ref="btLiniaUp" onClick={this.liniaUp.bind(this)} ></button>
-        <button ref="btLiniaDown" onClick={this.liniaDown.bind(this)} ></button>
-        <button ref="btLiniaDelete" onClick={this.liniaDelete.bind(this)} ></button>
+        <button ref="btLiniaUp" ></button>
+        <button ref="btLiniaDown" ></button>
+        <button ref="btLiniaDelete" ></button>
       </li>
     );
   }
@@ -90,18 +91,18 @@ class LlistaExercicis extends Component{
         <ol id="olSelEx" ref="olSelEx">
           {this.props.children}
         </ol>
-        <button id="btAddEx" ref="btAddEx" onClick={this.props.addSelEx}>+</button>
+        <button id="btAddEx" ref="btAddEx" >+</button>
       </div>
     );
   }
 }
 
 export default class RutinesForm extends Component{
-  constructor(){
-    super();
-    this.state = {
-      nombreExercicis: 1
-    };
+  constructor(props){
+    super(props);
+    // this.state = {
+    //   nombreExercicis: 1
+    // };
   }
 
   onAddSelEx(event){
@@ -148,13 +149,13 @@ export default class RutinesForm extends Component{
   }
 
   render(){
-    const children = [];
-
-    for (let i = 0; i < this.state.nombreExercicis; i += 1) {
-      children.push(<LiniaExercici
-        number={i}
-      />);
-    };
+    // const children = [];
+    //
+    // for (let i = 0; i < this.state.nombreExercicis; i += 1) {
+    //   children.push(<LiniaExercici
+    //     number={i}
+    //   />);
+    // };
 
     return (
       <div id="divRutinesForm">
