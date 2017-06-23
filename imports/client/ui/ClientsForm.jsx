@@ -4,6 +4,10 @@ import {Meteor} from 'meteor/meteor';
 import Bert from 'meteor/themeteorchef:bert';
 
 export default class ClientsForm extends Component{
+  constructor(props){
+    super(props);
+  }
+  
   addClient(event){
     event.preventDefault();
     let clientNom = this.refs.clientNom.value.trim(),
