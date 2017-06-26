@@ -46,15 +46,7 @@ class App extends Component{
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <ReactCSSTransitionGroup
-        id="divApp"
-        component="div"
-        transitionName="route"
-        transitionAppear={true}
-        transitionAppearTimeout={600}
-        transitionEnterTimeout={600}
-        transitionLeaveTimeout={400}
-      >
+      <div>
         <RutinesForm
           clients={this.props.clients}
           grups_musculars={this.props.grups_musculars}
@@ -67,14 +59,13 @@ class App extends Component{
           transitionEnterTimeout={600}
           transitionLeaveTimeout={400}
         >
-                                  {/*this.renderResolutions()*/}
           {
             this.props.rutines.map((rutina)=>(
               <RutinaSingle key={rutina._id} rutina={rutina} />
             ))
           }
         </ReactCSSTransitionGroup>
-      </ReactCSSTransitionGroup>
+      </div>
     );
   }
 }

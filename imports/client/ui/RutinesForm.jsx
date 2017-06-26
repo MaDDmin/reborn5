@@ -52,16 +52,20 @@ class LiniaExercici extends Component{
   //
   // }
 
-  render () {
+  selExerciciChange(ev){
+    //
+  }
+
+  render() {
     return (
       <li className="liSelEx">
-        <select ref="selExercici" >
+        <select ref="selExercici" onChange={this.selExerciciChange.bind(this)} >
           {
-            this.props.exercicis.map(exercici=>
+            this.props.exercicis.map(exercici=>(
               <option key={exercici.exerciciNom} value={exercici._id}>
                 { exercici.exerciciNom }
               </option>
-            )
+            ))
           }
         </select>
         <input type="text" placeholder="Repeticions" />
@@ -85,6 +89,10 @@ class LiniaExercici extends Component{
 }
 
 class LlistaExercicis extends Component{
+  constructor(props){
+    super(props);
+  }
+
   render () {
     return (
       <div>
