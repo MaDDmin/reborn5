@@ -2,6 +2,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
+import {Meteor} from 'meteor/meteor';
+
 // La col·lecció de les resolucions
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
@@ -18,14 +20,8 @@ class App extends Component{
   constructor(props){
     super(props);
 
-    // this.state = {
-    //   subscription: {
-    //     clients: Meteor.subscribe("userClients"),
-    //     grups_musculars: Meteor.subscribe("userGrupsMusculars"),
-    //     exercicis: Meteor.subscribe("userExercicis"),
-    //     rutines: Meteor.subscribe("userRutines")
-    //   }
-    // }
+    this.state = {
+    }
   }
 
   // componentDidMount(){
@@ -72,11 +68,25 @@ class App extends Component{
 App.propTypes = {
 //  clients: PropTypes.array.isRequired
 };
-export default createContainer(()=>{
+export default AppContainer = createContainer(()=>{
+  //const dataHandle = Meteor.subscribe('totesDades');
+  const clientsHandle = Meteor.subscribe("userClients");
+  const grups_muscularsHandle = Meteor.subscribe("userGrupsMusculars");
+  const exercicisHandle = Meteor.subscribe("userExercicis");
+  const rutinesHandle = Meteor.subscribe("userRutines");
+
+  const loading = ! (clientsHandle.ready() && grups_muscularsHandle.ready() && exercicisHandle.ready() && rutinesHandle.ready());
+
+  const clients = clientsHandle.ready() ? Clients.find().fetch() : [];
+  const grups_musculars = grups_muscularsHandle.ready() ? GrupsMusculars.find().fetch() : [];
+  const exercicis = exercicisHandle.ready() ? Exercicis.find().fetch() : [];
+  const rutines = rutinesHandle.ready() ? Rutines.find().fetch() : [];
+
   return {
-    clients: Clients.find().fetch(),
-    grups_musculars: GrupsMusculars.find().fetch(),
-    exercicis: Exercicis.find().fetch(),
-    rutines: Rutines.find().fetch()
+    clients,
+    grups_musculars,
+    exercicis,
+    rutines,
+    loading
   }
 }, App);
