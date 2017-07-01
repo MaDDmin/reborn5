@@ -3,18 +3,20 @@ import {Meteor} from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
+
 class LiniaExercici extends Component{
   constructor(props){
     super(props);
 
-    // this.state = {
-    //   ordre: 0,
-    //   repeticions: 0,
-    //   series: 0,
-    //   descans: 0,
-    //   minuts: 0,
-    //   tipus: "Normal"
-    // };
+    this.state = {
+      exerciciSel: "",
+      ordre: 0,
+      repeticions: 0,
+      series: 0,
+      descans: 0,
+      minuts: 0,
+      tipus: "Normal"
+    };
   }
 
   // actualitzaDefaultsExercici(event){
@@ -52,26 +54,39 @@ class LiniaExercici extends Component{
   //
   // }
 
-  selExerciciChange(ev){
-    //
+  componentDidMount(){
   }
+
+  selExerciciChange(ev){
+    let exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
+      exer = JSON.parse(exerStringified);
+
+    this.refs.inRepeticions.value = exer.exerciciRepeticionsDefault;
+    this.refs.inSeries.value = exer.exerciciSeriesDefault;
+    this.refs.inDescans.value = exer.exerciciDescansDefault;
+    this.refs.inMinuts.value = exer.exerciciMinutsDefault;
+
+    alert(`Exercici ${exer.exerciciNom} canviat!`);
+  }
+
+
 
   render() {
     return (
       <li className="liSelEx">
-        <select ref="selExercici" onChange={this.selExerciciChange.bind(this)} >
+        <select className="selExercici" ref="selExercici" onChange={this.selExerciciChange.bind(this)} >
           {
             this.props.exercicis.map(exercici=>(
-              <option key={exercici.exerciciNom} value={exercici._id}>
+              <option key={exercici.exerciciNom} value={exercici._id} data-exercici={JSON.stringify(exercici)} >
                 { exercici.exerciciNom }
               </option>
             ))
           }
         </select>
-        <input type="text" placeholder="Repeticions" />
-        <input type="text" placeholder="Series" />
-        <input type="text" placeholder="Descans" />
-        <input type="text" placeholder="Minuts" />
+        <input type="text" placeholder="Repeticions" ref="inRepeticions" />
+        <input type="text" placeholder="Series" ref="inSeries" />
+        <input type="text" placeholder="Descans" ref="inDescans" />
+        <input type="text" placeholder="Minuts" ref="inMinuts" />
         <table>
           <tr>
             <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
