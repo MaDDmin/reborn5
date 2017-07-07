@@ -13,6 +13,7 @@ import Clients from './ui/Clients.jsx';
 import GrupsMusculars from './ui/GrupsMusculars.jsx';
 import Exercicis from './ui/Exercicis.jsx';
 import Rutines from './ui/Rutines.jsx';
+import MobX from './ui/MobX.jsx';
 
 FlowRouter.route('/', {
   action(){
@@ -65,6 +66,16 @@ FlowRouter.route('/rutines', {
     mount(MainLayout, {
       content: (
         <Rutines />
+      )
+    });
+  }
+});
+
+FlowRouter.route('/mobx', {
+  action(){
+    mount(MainLayout, {
+      content: (
+        <MobX />
       )
     });
   }
