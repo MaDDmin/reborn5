@@ -1,118 +1,130 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { observable } from 'mobx';
+import { observable, autorun, toJS } from 'mobx';
 import { observer } from 'mobx-react';
 
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
 
-  const LiniaExercici = observer(class LiniaExercici extends Component{
-    constructor(props){
-      super(props);
+const LiniaExercici = observer(class LiniaExercici extends Component{
+  constructor(props){
+    super(props);
 
-      this.state = observable({
-        exerciciSel: "",
-        ordre: 0,
-        repeticions: 0,
-        series: 0,
-        descans: 0,
-        minuts: 0,
-        tipus: "Normal"
-      });
-    }
+    this.state = extendObservable(this, {
+      exerciciSel: "",
+      ordre: 0,
+      repeticions: 0,
+      series: 0,
+      descans: 0,
+      minuts: 0,
+      tipus: "Normal"
+    });
+  }
 
-    // actualitzaDefaultsExercici(event){
-    //   event.preventDefault();
-    //
-    //   // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
-    //
-    //   let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
-    //     defaultRepeticions = this.props.exercicis.find({})
-    //
-    //
-    // }
-    //
-    // actualitzaLiniaExercici(event){
-    //   event.preventDefault();
-    //
-    //   // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
-    //
-    //   let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
-    //     repeticions;
-    // }
-    //
-    // liniaUp(event){
-    //   event.preventDefault();
-    //
-    // }
-    //
-    // liniaDown(event){
-    //   event.preventDefault();
-    //
-    // }
-    //
-    // liniaDelete(event){
-    //   event.preventDefault();
-    //
-    // }
+  // actualitzaDefaultsExercici(event){
+  //   event.preventDefault();
+  //
+  //   // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
+  //
+  //   let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
+  //     defaultRepeticions = this.props.exercicis.find({})
+  //
+  //
+  // }
+  //
+  // actualitzaLiniaExercici(event){
+  //   event.preventDefault();
+  //
+  //   // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
+  //
+  //   let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
+  //     repeticions;
+  // }
+  //
+  // liniaUp(event){
+  //   event.preventDefault();
+  //
+  // }
+  //
+  // liniaDown(event){
+  //   event.preventDefault();
+  //
+  // }
+  //
+  // liniaDelete(event){
+  //   event.preventDefault();
+  //
+  // }
 
-    componentDidMount(){
-    }
+  componentDidMount(){
+    // if (!this.refs.selExercici.selectedOptions[0]){
+    //   this.refs.selExercici.options[0].setAttribute("selected", true);
+    // }
+    this.selExerciciChange();
+  }
 
-    selExerciciChange(ev){
+  selExerciciChange(ev){
+    if (!!this.refs.selExercici.selectedOptions.length) {
       let exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
         exer = JSON.parse(exerStringified);
-      // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
-      this.state.exerciciSel = exer;
-      // Ara actualitzem l'objecte d'estat de la línia amb els valors per defecte de l'exercici seleccionat.
-      this.state.repeticions =
-        this.refs.inRepeticions.value = exer.exerciciRepeticionsDefault;
-      this.state.series =
-        this.refs.inSeries.value = exer.exerciciSeriesDefault;
-      this.state.descans =
-        this.refs.inDescans.value = exer.exerciciDescansDefault;
-      this.state.minuts =
-        this.refs.inMinuts.value = exer.exerciciMinutsDefault;
-
-      alert(`Exercici ${exer.exerciciNom} canviat!`);
+        // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
+        this.state.exerciciSel = exer;
+    }else{
+      this.refs.selExercici.options[0].setAttribute("selected", "selected");
     }
 
-
-
-    render() {
-      return (
-        <li className="liSelEx">
-          <select className="selExercici" ref="selExercici" onChange={this.selExerciciChange.bind(this)} >
-            {
-              this.props.exercicis.map(exercici=>(
-                <option key={exercici.exerciciNom} value={exercici._id} data-exercici={JSON.stringify(exercici)} >
-                  { exercici.exerciciNom }
-                </option>
-              ))
-            }
-          </select>
-          <input type="text" placeholder="Repeticions" ref="inRepeticions" readonly={false} />
-          <input type="text" placeholder="Series" ref="inSeries" readonly={false} />
-          <input type="text" placeholder="Descans" ref="inDescans" readonly={false} />
-          <input type="text" placeholder="Minuts" ref="inMinuts" readonly={false} />
-          <table>
-            <tr>
-              <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
-              <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
-              <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
-              <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
-            </tr>
-          </table>
-          <button ref="btLiniaUp" ></button>
-          <button ref="btLiniaDown" ></button>
-          <button ref="btLiniaDelete" ></button>
-        </li>
-      );
-    }
+    this.refs.inRepeticions.value = this.state.repeticions;
+    this.refs.inSeries.value = this.state.series;
+    this.refs.inDescans.value = this.state.descans;
+    this.refs.inMinuts.value = this.state.minuts;
   }
-);
+
+   ---------------------------------------(){
+    this.state.repeticions = this.refs.inRepeticions.value;
+    this.state.series = this.refs.inSeries.value;
+    this.state.descans = this.refs.inDescans.value;
+    this.state.minuts = this.refs.inMinuts.value;
+
+    this.selExerciciChange();
+
+    console.log(`State: ${JSON.stringify(this.state)}`);
+    console.dir(toJS(this.state));
+  }
+
+
+  render() {
+    return (
+      <li className="liSelEx">
+        <select className="selExercici" ref="selExercici" onChange={this.liniaChange.bind(this)} >
+          {
+            this.props.exercicis.map(exercici=>(
+              <option key={exercici.exerciciNom} value={exercici._id} data-exercici={JSON.stringify(exercici)} >
+                { exercici.exerciciNom }
+              </option>
+            ))
+          }
+        </select>
+        <input type="text" placeholder="Repeticions" ref="inRepeticions" onChange={this.liniaChange.bind(this)} />
+        <input type="text" placeholder="Series" ref="inSeries" onChange={this.liniaChange.bind(this)} />
+        <input type="text" placeholder="Descans" ref="inDescans" onChange={this.liniaChange.bind(this)} />
+        <input type="text" placeholder="Minuts" ref="inMinuts" onChange={this.liniaChange.bind(this)} />
+        <table>
+          <tr>
+            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
+            <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
+            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
+            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
+          </tr>
+        </table>
+        <button ref="btLiniaUp" ></button>
+        <button ref="btLiniaDown" ></button>
+        <button ref="btLiniaDelete" ></button>
+      </li>
+    );
+  }
+});
 
 class LlistaExercicis extends Component{
   constructor(props){
