@@ -1,6 +1,61 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-Exercicis = new Mongo.Collection("exercicis");
+export default Exercicis = new Mongo.Collection("exercicis");
+
+Exercicis.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; }
+})
+
+Exercicis.schema = new SimpleSchema({
+  createdAt: {
+    type: Date,
+    optional: false
+  },
+  exerciciNom: {
+    type: String,
+    optional: false
+  },
+  exerciciGrupMuscular: {
+    type: String,
+    optional: false
+  },
+  exerciciDescripcio: {
+    type: String,
+    optional: true
+  },
+  exerciciSeriesDefault: {
+    type: String,
+    optional: false,
+    defaultValue: "1"
+  },
+  exerciciRepeticionsDefault: {
+    type: String,
+    optional: false,
+    defaultValue: "1"
+  },
+  exerciciDescansDefault: {
+    type: String,
+    optional: false,
+    defaultValue: "0"
+  },
+  exerciciMinutsDefault: {
+    type: String,
+    optional: false,
+    defaultValue: "1"
+  },
+  completed: {
+    type: Boolean,
+    optional: false
+  },
+  user: {
+    type: String,
+    optional: false
+  }
+})
 
 Meteor.methods({
   'exercicis.insert'(exerciciNom, exerciciGrupMuscular, exerciciDescripcio, exerciciSeriesDefault, exerciciRepeticionsDefault, exerciciDescansDefault, exerciciMinutsDefault){

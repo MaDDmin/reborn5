@@ -1,6 +1,69 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-Rutines = new Mongo.Collection("rutines");
+export default Rutines = new Mongo.Collection("rutines");
+
+Rutines.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; }
+});
+
+Rutines.schema = new SimpleSchema({
+  createdAt: {
+    type: Date,
+    optional: false
+  },
+  rutinaNom: {
+    type: String,
+    optional: false
+  },
+  rutinaClient: {
+    type: String,
+    optional: false
+  },
+  rutinaGrupMuscular: {
+    type: String,
+    optional: true
+  },
+  rutinaDiaInici: {
+    type: String,
+    optional: true
+  },
+  rutinaMesInici: {
+    type: String,
+    optional: true
+  },
+  rutinaAnyInici: {
+    type: Number,
+    optional: true
+  },
+  rutinaDiaFi: {
+    type: String,
+    optional: true
+  },
+  rutinaMesFi: {
+    type: Number,
+    optional: true
+  },
+  rutinaAnyFi: {
+    type: String,
+    optional: true
+  },
+  rutinaDescripcio: {
+    type: String,
+    optional: true
+  },
+  completed: {
+    type: Boolean,
+    optional: false
+  },
+  user: {
+    type: String,
+    optional: false
+  }
+});
 
 Meteor.methods({
   'rutines.insert'(rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio){

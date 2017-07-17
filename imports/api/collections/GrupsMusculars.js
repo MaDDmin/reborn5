@@ -1,6 +1,37 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-GrupsMusculars = new Mongo.Collection("grups_musculars");
+export default GrupsMusculars = new Mongo.Collection("grups_musculars");
+
+GrupsMusculars.deny({
+  insert() { return true; },
+  update() { return true; },
+  remove() { return true; }
+});
+
+GrupsMusculars.schema = new SimpleSchema({
+  createdAt: {
+    type: Date,
+    optional: false
+  },
+  grupMuscularNom: {
+    type: String,
+    optional: false
+  },
+  grupMuscularDescripcio: {
+    type: String,
+    optional: true
+  },
+  completed: {
+    type: Boolean,
+    optional: false
+  },
+  user: {
+    type: String,
+    optional: false
+  }
+});
 
 Meteor.methods({
   'grups_musculars.insert'(grupMuscularNom, grupMuscularDescripcio){
