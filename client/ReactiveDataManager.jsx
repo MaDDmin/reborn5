@@ -2,8 +2,8 @@
 import { Meteor } from 'meteor/meteor';
 import { autorun, toJS } from 'mobx';
 
-import Examples from '../imports/api/examples/examples';
-import Dependents from '../imports/api/dependents/dependents';
+//import Examples from '../imports/api/examples/examples';
+//import Dependents from '../imports/api/dependents/dependents';
 
 
 // A class for managing Meteor subscriptions based on observed changes in a state store
@@ -11,11 +11,12 @@ export default class ReactiveDataManager {
     // state - a Mobx store instance
     constructor(state) {
         //  We want to enforce max of only one subscription and observer at a time for each data manager
-        this.examplesSubscription = null;
+
+        /* this.examplesSubscription = null;
         this.examplesObserver = null;
         this.dependentsSubscription = null;
-        this.dependentsObserver = null;
-
+        this.dependentsObserver = null; */
+ 
         // a Mobx autorun function for fetching data
         let examplesDataManager = autorun(() => {
             // reusable method for updating the state store with fresh data

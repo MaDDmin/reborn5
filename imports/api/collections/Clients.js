@@ -3,6 +3,7 @@ import {Meteor} from 'meteor/meteor';
 Clients = new Mongo.Collection("clients");
 
 Meteor.methods({
+
   'clients.insert'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions){
     if (!Meteor.userId()){
       throw new Meteor.Error('not-authorized');
@@ -32,6 +33,7 @@ Meteor.methods({
     }
     Clients.remove(client._id);
   }
+  
 });
 
 // Meteor.publish("allResolutions", function(){
