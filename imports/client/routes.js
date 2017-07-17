@@ -75,7 +75,7 @@ FlowRouter.route('/mobx', {
   action(){
     mount(MainLayout, {
       content: (
-        <MobX />
+        <h1>De moment no res... </h1>
       )
     });
   }

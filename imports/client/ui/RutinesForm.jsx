@@ -1,14 +1,18 @@
-import React, {Component} from 'react';
-import {Meteor} from 'meteor/meteor';
+import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
+
+import { observable, autorun, toJS } from 'mobx';
+import { observer } from 'mobx-react';
+
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
 
-class LiniaExercici extends Component{
+const LiniaExercici = observer(class LiniaExercici extends Component{
   constructor(props){
     super(props);
 
-    this.state = {
+    this.state = extendObservable(this, {
       exerciciSel: "",
       ordre: 0,
       repeticions: 0,
@@ -16,7 +20,7 @@ class LiniaExercici extends Component{
       descans: 0,
       minuts: 0,
       tipus: "Normal"
-    };
+    });
   }
 
   // actualitzaDefaultsExercici(event){
@@ -55,26 +59,45 @@ class LiniaExercici extends Component{
   // }
 
   componentDidMount(){
+    // if (!this.refs.selExercici.selectedOptions[0]){
+    //   this.refs.selExercici.options[0].setAttribute("selected", true);
+    // }
+    this.selExerciciChange();
   }
 
   selExerciciChange(ev){
-    let exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
-      exer = JSON.parse(exerStringified);
+    if (!!this.refs.selExercici.selectedOptions.length) {
+      let exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
+        exer = JSON.parse(exerStringified);
+        // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
+        this.state.exerciciSel = exer;
+    }else{
+      this.refs.selExercici.options[0].setAttribute("selected", "selected");
+    }
 
-    this.refs.inRepeticions.value = exer.exerciciRepeticionsDefault;
-    this.refs.inSeries.value = exer.exerciciSeriesDefault;
-    this.refs.inDescans.value = exer.exerciciDescansDefault;
-    this.refs.inMinuts.value = exer.exerciciMinutsDefault;
-
-    alert(`Exercici ${exer.exerciciNom} canviat!`);
+    this.refs.inRepeticions.value = this.state.repeticions;
+    this.refs.inSeries.value = this.state.series;
+    this.refs.inDescans.value = this.state.descans;
+    this.refs.inMinuts.value = this.state.minuts;
   }
 
+   ---------------------------------------(){
+    this.state.repeticions = this.refs.inRepeticions.value;
+    this.state.series = this.refs.inSeries.value;
+    this.state.descans = this.refs.inDescans.value;
+    this.state.minuts = this.refs.inMinuts.value;
+
+    this.selExerciciChange();
+
+    console.log(`State: ${JSON.stringify(this.state)}`);
+    console.dir(toJS(this.state));
+  }
 
 
   render() {
     return (
       <li className="liSelEx">
-        <select className="selExercici" ref="selExercici" onChange={this.selExerciciChange.bind(this)} >
+        <select className="selExercici" ref="selExercici" onChange={this.liniaChange.bind(this)} >
           {
             this.props.exercicis.map(exercici=>(
               <option key={exercici.exerciciNom} value={exercici._id} data-exercici={JSON.stringify(exercici)} >
@@ -83,10 +106,10 @@ class LiniaExercici extends Component{
             ))
           }
         </select>
-        <input type="text" placeholder="Repeticions" ref="inRepeticions" />
-        <input type="text" placeholder="Series" ref="inSeries" />
-        <input type="text" placeholder="Descans" ref="inDescans" />
-        <input type="text" placeholder="Minuts" ref="inMinuts" />
+        <input type="text" placeholder="Repeticions" ref="inRepeticions" onChange={this.liniaChange.bind(this)} />
+        <input type="text" placeholder="Series" ref="inSeries" onChange={this.liniaChange.bind(this)} />
+        <input type="text" placeholder="Descans" ref="inDescans" onChange={this.liniaChange.bind(this)} />
+        <input type="text" placeholder="Minuts" ref="inMinuts" onChange={this.liniaChange.bind(this)} />
         <table>
           <tr>
             <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
@@ -101,7 +124,7 @@ class LiniaExercici extends Component{
       </li>
     );
   }
-}
+});
 
 class LlistaExercicis extends Component{
   constructor(props){
@@ -434,4 +457,4 @@ export default class RutinesForm extends Component{
       </div>
     );
   }
-};
+}

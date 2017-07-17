@@ -1,6 +1,65 @@
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-Clients = new Mongo.Collection("clients");
+export default Clients = new Mongo.Collection("clients");
+
+Clients.deny({
+  inser() { return true; },
+  update() { return true; },
+  remove() { return true; }
+});
+
+Clients.schema = new SimpleSchema({
+  createdAt: {
+    type: Date,
+    optional: false
+  },
+  clientNom: {
+    type: String,
+    optional: false
+  },
+  clientCognoms: {
+    type: String,
+    optional: false
+  },
+  clientMobil: {
+    type: String,
+    optional: true
+  },
+  clientEmail: {
+    type: String,
+    optional: true
+  },
+  clientAddress: {
+    type: String,
+    optional: true
+  },
+  clientDayOfBirth: {
+    type: Number,
+    optional: true
+  },
+  clientMonthOfBirth: {
+    type: String,
+    optional: true
+  },
+  clientYearOfBirth: {
+    type: Number,
+    optional: true
+  },
+  clientObservacions: {
+    type: String,
+    optional: true
+  },
+  completed: {
+    type: Boolean,
+    optional: false
+  },
+  user: {
+    type: String,
+    optional: false
+  }
+})
 
 Meteor.methods({
 
