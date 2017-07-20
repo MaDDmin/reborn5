@@ -15,6 +15,7 @@ import GrupsMuscularsForm from './ui/GrupsMuscularsForm.jsx';
 import Exercicis from './ui/Exercicis.jsx';
 import Rutines from './ui/Rutines.jsx';
 //import MobX from './ui/MobX.jsx';
+import Experimental from './ui/Experimental.jsx';
 
 FlowRouter.route('/', {
   action(){
@@ -81,6 +82,19 @@ FlowRouter.route('/mobx', {
     });
   }
 });
+
+FlowRouter.route('/experimental', {
+  action(){
+    mount(MainLayout, {
+      content: (
+        <Experimental />
+      )
+    });
+  }
+});
+
+
+
 
 FlowRouter.notFound = {
     // Subscriptions registered here don't have Fast Render support.

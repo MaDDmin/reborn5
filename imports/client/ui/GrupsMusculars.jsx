@@ -28,7 +28,8 @@ class App extends Component{
       subscription: {
         clients: Meteor.subscribe("userClients"),
         grups_musculars: Meteor.subscribe("userGrupsMusculars")
-      }
+      },
+      formActive: false
     }
   }
 
@@ -46,8 +47,8 @@ class App extends Component{
     ));
   }*/
 
-  toggleForm(){
-    
+  showForm(){
+    this.setState({formActive: true})
   }
 
   render(){
@@ -77,10 +78,10 @@ class App extends Component{
           }
         </ReactCSSTransitionGroup>
         <div className="divPrintDeliverer">
-          <button className="btAddNew" onClick={this.addNew()} />
+          <button className="btAddNew" onClick={this.showForm()} />
           <button className="btPrintList" onClick={this.printTheList(this.props.theList)} />
         </div>
-        <GrupsMuscularsForm active={this.state.active} />
+        <GrupsMuscularsForm active={this.state.formActive} />
       </ReactCSSTransitionGroup>
     );
   }
