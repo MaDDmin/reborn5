@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 
-import { observable, autorun, toJS } from 'mobx';
-import { observer } from 'mobx-react';
-
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
 
-const LiniaExercici = observer(class LiniaExercici extends Component{
+class LiniaExercici extends Component{
   constructor(props){
     super(props);
 
@@ -81,7 +78,7 @@ const LiniaExercici = observer(class LiniaExercici extends Component{
     this.refs.inMinuts.value = this.state.minuts;
   }
 
-   ---------------------------------------(){
+   altraOp(){
     this.state.repeticions = this.refs.inRepeticions.value;
     this.state.series = this.refs.inSeries.value;
     this.state.descans = this.refs.inDescans.value;
@@ -124,7 +121,7 @@ const LiniaExercici = observer(class LiniaExercici extends Component{
       </li>
     );
   }
-});
+};
 
 class LlistaExercicis extends Component{
   constructor(props){

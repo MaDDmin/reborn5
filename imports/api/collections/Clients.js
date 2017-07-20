@@ -5,7 +5,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 export default Clients = new Mongo.Collection("clients");
 
 Clients.deny({
-  inser() { return true; },
+  insert() { return true; },
   update() { return true; },
   remove() { return true; }
 });
@@ -59,7 +59,7 @@ Clients.schema = new SimpleSchema({
     type: String,
     optional: false
   }
-})
+});
 
 Meteor.methods({
 

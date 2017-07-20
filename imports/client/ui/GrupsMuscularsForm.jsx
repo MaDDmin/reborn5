@@ -4,6 +4,13 @@ import {Meteor} from 'meteor/meteor';
 import Bert from 'meteor/themeteorchef:bert';
 
 export default class GrupsMuscularsForm extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      active: false
+    };
+  }
+
   addGrupMuscular(event){
     event.preventDefault();
     let grupMuscularNom = this.refs.grupMuscularNom.value.trim(),
@@ -20,6 +27,7 @@ export default class GrupsMuscularsForm extends Component{
       });
     }
   }
+  
   render(){
     return (
       <div id="divGrupsMuscularsForm">

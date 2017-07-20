@@ -11,9 +11,10 @@ import App from './ui/App.jsx';
 import ClientDetails from './ui/ClientDetails.jsx';
 import Clients from './ui/Clients.jsx';
 import GrupsMusculars from './ui/GrupsMusculars.jsx';
+import GrupsMuscularsForm from './ui/GrupsMuscularsForm.jsx';
 import Exercicis from './ui/Exercicis.jsx';
 import Rutines from './ui/Rutines.jsx';
-import MobX from './ui/MobX.jsx';
+//import MobX from './ui/MobX.jsx';
 
 FlowRouter.route('/', {
   action(){
@@ -45,7 +46,7 @@ FlowRouter.route('/grups_musculars', {
   action(){
     mount(MainLayout, {
       content: (
-        <GrupsMusculars />
+        <GrupsMusculars form={<GrupsMuscularsForm />} />
       )
     });
   }

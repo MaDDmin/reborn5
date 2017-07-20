@@ -38,3 +38,5 @@ fortawesome:fontawesome
 # ostrio:files
 # meson:electron
 dynamic-import@0.1.1
+
+aldeed:simple-schema

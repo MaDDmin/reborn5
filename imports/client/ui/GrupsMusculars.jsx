@@ -1,16 +1,24 @@
 // React
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 // La col·lecció de les resolucions
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
 
-import {createContainer} from 'meteor/react-meteor-data';
+import { createContainer } from 'meteor/react-meteor-data';
 import GrupsMuscularsForm from './GrupsMuscularsForm.jsx';
 import GrupMuscularSingle from './GrupMuscularSingle.jsx';
 import { check, Match } from 'meteor/check';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
+//import PrintDeliverer from './PrintDeliverer.jsx';
+
+const FormReceptacle = ({props})=>(
+  <div>
+    {props.form}
+  </div>
+);
 
 class App extends Component{
   constructor(props){
@@ -38,6 +46,10 @@ class App extends Component{
     ));
   }*/
 
+  toggleForm(){
+    
+  }
+
   render(){
   //  let resol = this.props.resolutions;
     //console.log(resol);
@@ -51,7 +63,6 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <GrupsMuscularsForm />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"
@@ -59,13 +70,17 @@ class App extends Component{
           transitionEnterTimeout={600}
           transitionLeaveTimeout={400}
         >
-                                  {/*this.renderResolutions()*/}
           {
             this.props.grups_musculars.map((grup_muscular)=>(
               <GrupMuscularSingle key={grup_muscular._id} grup_muscular={grup_muscular} />
             ))
           }
         </ReactCSSTransitionGroup>
+        <div className="divPrintDeliverer">
+          <button className="btAddNew" onClick={this.addNew()} />
+          <button className="btPrintList" onClick={this.printTheList(this.props.theList)} />
+        </div>
+        <GrupsMuscularsForm active={this.state.active} />
       </ReactCSSTransitionGroup>
     );
   }
