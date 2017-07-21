@@ -275,7 +275,378 @@ const numbers = [1, 2, 3, 4, 5];
 const doubled = numbers.map(x => 2*x);
 console.log(doubled);
 
-const listItems = numbers.map(x => <li>{x}</li>);
+const listItems = numbers.map(x => <li key={x.toString()}>{x}</li>);
+
+//------------------------------------------------
+
+function NumberList(props) {
+    const numbers = props.numbers;
+    const listItems = numbers.map(x => <li key={x.toString()}>{x}</li>);
+
+    return (
+        <ul>{listItems}</ul>
+    );
+}
+
+//--------------------------------------------------------
+
+function Blog(props) {
+    const sidebar = (
+        <ul>
+            {props.posts.map(post =>
+                <li key={post.id} id={post.id}>
+                    {post.title}
+                </li>
+            )}
+        </ul>
+    );
+
+    const content = props.posts.map(post =>
+        <div key={post.id} id={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+        </div>
+    );
+
+    return (
+        <div>
+            {sidebar}
+            <hr />
+            <hr />
+            {content}
+        </div>
+    );
+}
+
+const content = [
+    {id: 1, title: `Hello World`, content: `Welcome to learning React!`},
+    {id: 2, title: `Installation`, content: `You can install React from npm.`}
+];
+
+//-------------------------------------------------------
+function ListItem(props) {
+    return <li>{props.value}</li>;
+}
+
+
+function NumberListEmbedMap(props) {
+    const numbers = props.numbers;
+    return (
+        <ul>
+            {numbers.map(n =>
+                <ListItem key={n.toString()}
+                        value={n} />
+            )}
+        </ul>
+    );
+}
+//-----------------------------------------------------------------
+
+class NameForm extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = { value: `` };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value.toUpperCase() });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        alert(`A name was submitted: ${this.state.value}`);
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit}>
+                <label>
+                    Name: 
+                    <input 
+                        type="text" 
+                        value={this.state.value} 
+                        onChange={this.handleChange}
+                    />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+//---------------------------------------
+
+class EssayForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: `Please write an essay about your favorite DOM element.`
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        alert(`An essay was submitted: ${this.state.value}`);
+        this.setState({value: ``});
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} >
+                <label>
+                    El text:
+                    <textarea value={this.state.value}
+                        onChange={this.handleChange}
+                    />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+
+//-----------------------------------------
+
+class FlavorForm extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { value: `coconut` };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({ value: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        alert(`Your favorite flavor is: ${this.state.value}`);
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} >
+                Pick your favorite La Croix flavor: 
+                <select value={this.state.value} onChange={this.handleChange} >
+                    <option value="grapefruit">Grapefruit</option>
+                    <option value="lime">Lime</option>
+                    <option value="coconut">Coconut</option>
+                    <option value="mango">Mango</option>
+                </select>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+
+//-------------------------------------------------
+class Reservation extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isGoing: true,
+            numberOfGuests: 2
+        };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(event) {
+        const 
+            target = event.target,
+            value = target.type === `checkbox` ? target.checked : target.value,
+            name = target.name;
+
+        this.setState({
+            [name]: value
+        });
+    }
+
+    render() {
+        return (
+            <form>
+                <label>
+                    Is going: 
+                    <input 
+                        name="isGoing"
+                        type="checkbox"
+                        checked={this.state.isGoing}
+                        onChange={this.handleInputChange} 
+                    />
+                </label>
+            </form>
+        );
+    }
+}
+
+//--------------------------------------------------------------
+// UNCONTROLLED COMPONENTS (REFS + DOM CONTROL)
+
+class NameFormUncontrolled extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        alert(`A name was submitted: ${this.input.value}`);
+    }
+
+    render() {
+        return (
+            <form onSubmit={this.handleSubmit} >
+                <label>
+                    Name:
+                    <input
+                        defaultValue="Boub"
+                        type="text"
+                        ref={input => this.input = input}
+                    />
+                </label>
+                <input type="submit" value="Submit" />
+            </form>
+        );
+    }
+}
+//------------------------------------------------------
+// LIFTING STATENameFormUncontrolledNameFormUncontrolled
+
+class Calculator extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            temperature: ``,
+            scale: `c`
+        };
+
+        this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+        this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+    }
+
+    handleCelsiusChange(temperature) {
+        this.setState({
+            temperature,
+            scale: `c`
+        });
+    }
+
+    handleFahrenheitChange(temperature) {
+        this.setState({
+            temperature,
+            scale: `f`
+        });
+    }
+
+    render() {
+        const 
+            scale = this.state.scale,
+            temperature = this.state.temperature,
+            celsius = scale === `f` ? tryConvert(temperature, toCelsius) : temperature,
+            fahrenheit = scale === `c` ? tryConvert(temperature, toFahrenheit) : temperature;
+
+        return (
+            <fieldset>
+                <legend>Enter temperature: </legend>
+                <TemperatureInput 
+                    scale="c" 
+                    temperature={celsius}
+                    onTemperatureChange={this.handleCelsiusChange} 
+                />
+                <TemperatureInput 
+                    scale="f"
+                    temperature={fahrenheit}
+                    onTemperatureChange={this.handleFahrenheitChange}
+                />
+                <BoilingVerdict
+                    celsius={parseFloat(temperature)}
+                />
+            </fieldset>
+        );
+    }
+}
+
+function BoilingVerdict(props) {
+    if (props.celsius >= 100) {
+        return <p>The water would boil.</p>;
+    }
+    return <p>The water would not boil.</p>;
+}
+
+const scaleNames = {
+    c: `Celsius`,
+    f: `Fahrenheit`
+};
+
+class TemperatureInput extends Component {
+    constructor(props) {
+        super(props);
+        
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        this.props.onTemperatureChange(e.target.value);
+    }
+
+    render() {
+        const
+            temperature = this.props.temperature,
+            scale = this.props.scale;
+
+        return (
+            <fieldset>
+                <legend>Enter temperature in {scaleNames[scale]}: </legend>
+                <input value={temperature}
+                    onChange={this.handleChange}
+                />
+            </fieldset>
+        );
+    }
+}
+
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+}
+
+function tryConvert(temperature, convert) {
+    const
+        input = parseFloat(temperature),
+        output = convert(input),
+        rounded = Math.round(output * 1000) / 1000;
+
+    if (Number.isNaN(input)) {
+        return ``;
+    }
+
+    return rounded.toString();
+}
+
+//********************************************************
 
 export default class Experimental extends Component{
     constructor(props){
@@ -334,6 +705,31 @@ export default class Experimental extends Component{
                 <Page />
                 <hr />
                 <ul>{listItems}</ul>
+                <hr />
+                <NumberList numbers={numbers} />
+                <hr />
+                <Blog posts={content} />
+                <hr />
+                <NumberListEmbedMap numbers={numbers} />
+                <hr />
+                <hr />
+
+                <NameForm />
+                <hr />
+                <EssayForm />
+                <hr />
+                <FlavorForm />
+                <hr />
+                <Reservation />
+                <hr />
+                <NameFormUncontrolled />
+
+                <div id="divLiftingState">
+                    <h2>Lifting State: </h2>
+                    <Calculator />
+                </div>
+            
+
             </div>
         )
     }
