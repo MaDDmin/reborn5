@@ -648,44 +648,45 @@ function tryConvert(temperature, convert) {
 
 //********************************************************
 
+const colorScale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
+
 export default class Experimental extends Component{
     constructor(props){
         super(props);
     
-        /* this.scale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
-
         this.state = {
-            color: "grey"
-        }
+            colorIndex: 0
+        };
 
-        this.changeColor = this.changeColor.bind(this); */
+        this.changeColor = this.changeColor.bind(this);
     }
 
-    /* changeColor(){
-        return () => {
-            this.setState((prevState)=>{
-                color: `${this.scale[this.scale.indexOf(prevState.color)+1]}`
-            });
-        };
-    } */
+    changeColor() {
+        this.setState(prevState => ({
+            colorIndex: (prevState.colorIndex + 1) % colorScale.length
+        }));
+    }
     
     render(){
         return (
             <div>
                 <SubExperimental 
-                    ref={0} 
-                    color={`grey`} 
-                    mida={50} />
+                    color={colorScale[this.state.colorIndex]}
+                    mida={50} 
+                    colorChange={this.changeColor}
+                />
                 
                 <SubExperimental 
-                    ref={1} 
-                    color={`grey`} 
-                    mida={50} />
+                    color={colorScale[this.state.colorIndex]}
+                    mida={50}
+                    colorChange={this.changeColor}
+                />
 
                 <SubExperimental 
-                    ref={2} 
-                    color={`grey`} 
-                    mida={50} />
+                    color={colorScale[this.state.colorIndex]}
+                    mida={50}
+                    colorChange={this.changeColor}
+                />
 
                 <Clock />
                 <Clock />
@@ -740,15 +741,14 @@ export default class Experimental extends Component{
 class SubExperimental extends Component{
     constructor(props){
         super(props);
-
-        //this.applyChangeColor = this.applyChangeColor.bind(this);
+        
+        this.applyColorChange = this.applyColorChange.bind(this);
     }
 
-    /* applyChangeColor(){
-        //alert(`Sub`);
-        props.changeColor;
+    applyColorChange() {
+        this.props.colorChange();
     }
- */
+
     render(){
         let estil = {
             border: `solid 2px black`,
@@ -761,7 +761,7 @@ class SubExperimental extends Component{
         };
 
         return (
-            <div style={estil} onClick={this.changeColor} />
+            <div style={estil} onClick={this.applyColorChange}/>
         );
     }
 }
