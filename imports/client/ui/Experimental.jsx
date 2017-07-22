@@ -646,6 +646,73 @@ function tryConvert(temperature, convert) {
     return rounded.toString();
 }
 
+//-------------------------------------------------------------
+// FUNCTIONS AS CHILDREN
+
+function Repeat(props) {
+    let items = [];
+    for (let i = 0; i < props.numTimes; i++) {
+        items.push(props.children(i));
+    }
+
+    return <div>{items}</div>;
+}
+
+function ListOfTenThings() {
+    return (
+        <Repeat numTimes={10}>
+            { index => <div key={index}>This is item {index} in the list</div> }
+        </Repeat>
+    );
+}
+
+//-----------------------------------------------------
+// REFS AND THE DOM
+
+class CustomTextInput extends Component {
+    constructor(props) {
+        super(props);
+
+        this.focus = this.focus.bind(this);
+    }
+
+    focus() {
+        this.textInput.focus();
+    }
+
+    render() {
+        return (
+            <div>
+                <input
+                    type="text"
+                    ref={input => {
+                        this.textInput = input;
+                    }}
+                />
+                <input
+                    type="button"
+                    value="Focus the text input"
+                    onClick={this.focus}
+                />
+            </div>
+        );
+    }
+}
+
+class AutoFocusTextInput extends Component {
+    componentDidMount() {
+        this.textInput.focus();
+    }
+
+    render() {
+        return (
+            <CustomTextInput
+                ref={input => this.textInput = input}
+            />
+        );
+    }
+}
+
 //********************************************************
 
 const colorScale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
@@ -730,6 +797,16 @@ export default class Experimental extends Component{
                     <Calculator />
                 </div>
             
+                <div id="divFunctionsAsChildren">
+                    <h2>Functions as children: </h2>
+                    <ListOfTenThings />
+                </div>
+
+                <div id="divRefsAndTheDOM">
+                    <h2>Refs and the DOM: </h2>
+                    <CustomTextInput />
+                    <AutoFocusTextInput />
+                </div>
 
             </div>
         )
