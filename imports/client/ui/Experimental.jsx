@@ -713,6 +713,34 @@ class AutoFocusTextInput extends Component {
     }
 }
 
+//---------------------------------------------------------
+
+function CustomTextInput(props) {
+    return (
+        <div>
+            <input ref={props.inputRef} />
+        </div>
+    );
+}
+
+function Parent(props) {
+    return (
+        <div>
+            My input: <CustomTextInput inputRef={props.inputRef} />
+        </div>
+    );
+}
+
+class Grandparent extends Component {
+    render() {
+        return (
+            <Parent
+                inputRef={el => this.inputElement = el}
+            />
+        );
+    }
+}
+
 //********************************************************
 
 const colorScale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
@@ -808,6 +836,9 @@ export default class Experimental extends Component{
                     <AutoFocusTextInput />
                 </div>
 
+                <div id="divExposingDOMRefsToParentComponents" />
+                    <h2>Exposing DOM Refs to Parent Components: </h2>
+                    <Grandparent />
             </div>
         )
     }
