@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { mount } from 'react-mounter';
 import { MainLayout } from '../ui/layouts/MainLayout.jsx';
+import './Experimental.scss';
 
 class Clock extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class Clock extends Component {
             <div>
                 <h1>Hello, world!</h1>
                 <this.FormattedDate date={this.state.date} />
-            </div>  
+            </div>
         );
     }
 }
@@ -91,7 +92,7 @@ class Toggle extends Component {
 //---------------------------------------------
 
 class LoggingButton extends Component {
-    
+
     handleClick = () => {
         console.log(`this is:`, this);
     };
@@ -171,8 +172,8 @@ class LoginControl extends Component {
     }
 
     handleLoginClick() {
-        this.setState({ 
-            isLoggedIn: true 
+        this.setState({
+            isLoggedIn: true
         });
     }
 
@@ -345,7 +346,7 @@ function NumberListEmbedMap(props) {
 class NameForm extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = { value: `` };
 
         this.handleChange = this.handleChange.bind(this);
@@ -365,10 +366,10 @@ class NameForm extends Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Name: 
-                    <input 
-                        type="text" 
-                        value={this.state.value} 
+                    Name:
+                    <input
+                        type="text"
+                        value={this.state.value}
                         onChange={this.handleChange}
                     />
                 </label>
@@ -442,7 +443,7 @@ class FlavorForm extends Component {
     render() {
         return (
             <form onSubmit={this.handleSubmit} >
-                Pick your favorite La Croix flavor: 
+                Pick your favorite La Croix flavor:
                 <select value={this.state.value} onChange={this.handleChange} >
                     <option value="grapefruit">Grapefruit</option>
                     <option value="lime">Lime</option>
@@ -469,7 +470,7 @@ class Reservation extends Component {
     }
 
     handleInputChange(event) {
-        const 
+        const
             target = event.target,
             value = target.type === `checkbox` ? target.checked : target.value,
             name = target.name;
@@ -483,12 +484,12 @@ class Reservation extends Component {
         return (
             <form>
                 <label>
-                    Is going: 
-                    <input 
+                    Is going:
+                    <input
                         name="isGoing"
                         type="checkbox"
                         checked={this.state.isGoing}
-                        onChange={this.handleInputChange} 
+                        onChange={this.handleInputChange}
                     />
                 </label>
             </form>
@@ -559,7 +560,7 @@ class Calculator extends Component {
     }
 
     render() {
-        const 
+        const
             scale = this.state.scale,
             temperature = this.state.temperature,
             celsius = scale === `f` ? tryConvert(temperature, toCelsius) : temperature,
@@ -568,12 +569,12 @@ class Calculator extends Component {
         return (
             <fieldset>
                 <legend>Enter temperature: </legend>
-                <TemperatureInput 
-                    scale="c" 
+                <TemperatureInput
+                    scale="c"
                     temperature={celsius}
-                    onTemperatureChange={this.handleCelsiusChange} 
+                    onTemperatureChange={this.handleCelsiusChange}
                 />
-                <TemperatureInput 
+                <TemperatureInput
                     scale="f"
                     temperature={fahrenheit}
                     onTemperatureChange={this.handleFahrenheitChange}
@@ -601,7 +602,7 @@ const scaleNames = {
 class TemperatureInput extends Component {
     constructor(props) {
         super(props);
-        
+
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -740,6 +741,107 @@ class Grandparent extends Component {
         );
     }
 }
+//--------------------------------------------------------------
+// PUJA ARXIUS:
+
+class PujaArxius extends Component {
+  constructor(props){
+    super(props);
+
+    this.fileSelect = this.fileSelect.bind(this);
+    //this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
+  }
+
+  sendFiles() {
+
+    function FileUpload(img, file) {
+      const reader = new FileReader();
+      this.ctrl = createThrobber(img);
+
+      const xhr = new XMLHttpRequest();
+      this.xhr = xhr;
+
+      const self = this;
+      this.xhr.upload.addEventListener("progress", function(e) {
+        if (e.lengthComputable) {
+          const percentage = Math.round((e.loaded * 100) / e.total);
+          self.ctrl.update(percentage);
+        }
+      }, false);
+
+      xhr.upload.addEventListener("load", function(e) {
+        self.ctrl.update(100);
+        let canvas = self.ctrl.ctx.canvas;
+        canvas.parentNode.removeChild(canvas);
+      }, false);
+
+      xhr.open("POST", "http://demos.hacks.mozilla.org/paul/demos/resources/webservices/devnull.php");
+      xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+      reader.onload = function(evt) {
+        xhr.send(evt.target.result);
+      };
+      reader.readAsBinaryString(file);
+    }
+
+    const imgs = document.querySelectorAll(`.obj`);
+
+    imgs.forEach((img) => new FileUpload(img, img.file))
+  }
+
+  fileSelect(ev) {
+    const
+      arxius = ev.target.files,
+      preview = document.querySelector("#divPreview");
+
+    for (let i=0; i < arxius.length; i++) {
+      let
+        arx = arxius[i],
+        imageType = /^image\//;
+
+      // if (!imageType.test(arx.type)){
+      //   continue;
+      // }
+
+      let img = document.createElement("img");
+      img.classList.add("obj");
+      img.file = arx;
+      preview.appendChild(img);
+
+      let reader = new FileReader();
+      reader.onload = ((aImg) => {
+        return (e) => aImg.src = e.target.result;
+      })(img);
+      reader.readAsDataURL(arx);
+    }
+
+    console.dir(arxius);
+    alert("Arxius seleccionats. Missatge a la consola.");
+  }
+
+  // selArxiusAmbAnchor(ev) {
+  //   const inputFile = document.querySelector("#inFile");
+  //
+  //   inputFile.click();
+  //   ev.preventDefault();
+  // }
+
+  render() {
+    return (
+      <div>
+        <input type="file"
+          id="inFile"
+          multiple accept="image/*"
+          style={{display: `none`}}
+          onChange={this.fileSelect}
+        />
+      {/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
+        <label htmlFor="inFile">Selecciona imatges (label)</label>
+        <div id="divPreview" />
+      </div>
+    )
+  }
+}
+
 
 //********************************************************
 
@@ -748,7 +850,7 @@ const colorScale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
 export default class Experimental extends Component{
     constructor(props){
         super(props);
-    
+
         this.state = {
             colorIndex: 0
         };
@@ -761,23 +863,23 @@ export default class Experimental extends Component{
             colorIndex: (prevState.colorIndex + 1) % colorScale.length
         }));
     }
-    
+
     render(){
         return (
             <div>
-                <SubExperimental 
-                    color={colorScale[this.state.colorIndex]}
-                    mida={50} 
-                    colorChange={this.changeColor}
-                />
-                
-                <SubExperimental 
+                <SubExperimental
                     color={colorScale[this.state.colorIndex]}
                     mida={50}
                     colorChange={this.changeColor}
                 />
 
-                <SubExperimental 
+                <SubExperimental
+                    color={colorScale[this.state.colorIndex]}
+                    mida={50}
+                    colorChange={this.changeColor}
+                />
+
+                <SubExperimental
                     color={colorScale[this.state.colorIndex]}
                     mida={50}
                     colorChange={this.changeColor}
@@ -824,7 +926,7 @@ export default class Experimental extends Component{
                     <h2>Lifting State: </h2>
                     <Calculator />
                 </div>
-            
+
                 <div id="divFunctionsAsChildren">
                     <h2>Functions as children: </h2>
                     <ListOfTenThings />
@@ -836,9 +938,15 @@ export default class Experimental extends Component{
                     <AutoFocusTextInput />
                 </div>
 
-                <div id="divExposingDOMRefsToParentComponents" />
+                <div id="divExposingDOMRefsToParentComponents">
                     <h2>Exposing DOM Refs to Parent Components: </h2>
                     <Grandparent />
+                </div>
+
+                <div id="divPujaArxius">
+                  <h2>Puja Arxius: </h2>
+                  <PujaArxius />
+                </div>
             </div>
         )
     }
@@ -849,7 +957,7 @@ export default class Experimental extends Component{
 class SubExperimental extends Component{
     constructor(props){
         super(props);
-        
+
         this.applyColorChange = this.applyColorChange.bind(this);
     }
 
