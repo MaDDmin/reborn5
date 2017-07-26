@@ -810,21 +810,26 @@ class PujaArxius extends Component {
       		this.xhr.upload.addEventListener("progress", function(e) {
       			if (e.lengthComputable) {
       				const percentage = Math.round((e.loaded * 100) / e.total);
-      				self.ctrl.update(percentage);
+					self.ctrl.update(percentage);
+					console.log(`${percentatge}% uploaded`);  
       			}
       		}, false);
 
-      		xhr.upload.addEventListener("load", function(e) {
+			xhr.upload.addEventListener("load", function(e) {
       			self.ctrl.update(100);
-
       		}, false);
 
       		xhr.open("PUT", "http://localhost:3000/file");
-      		xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
-      		reader.onload = (evt) => {
+      		//xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+      		/* reader.onload = (evt) => {
       			xhr.send(evt.target.result);
-      		};
-      		reader.readAsBinaryString(file);
+			  }; */
+			xhr.onload = (event) => {
+				console.log('Done Uploading.');
+			}
+			
+			//reader.readAsBinaryString(file);
+			xhr.send(file);
   	    }
 
         const divArxs = document.querySelectorAll(`.divArx`);
