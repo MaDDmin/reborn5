@@ -1,5 +1,18 @@
 .obj {
   max-width:  100px;
-  margin: .2em;
   box-shadow: 0 3px 3px;
+  display: block;
+  margin: 0 auto;
+}
+
+.divArx {
+  display: inline-block;
+  margin: .2em;
+  max-width: 100px;
+}
+
+progress {
+  vertical-align: middle;
+  max-height: 3px;
+  max-width: 100px;
 }

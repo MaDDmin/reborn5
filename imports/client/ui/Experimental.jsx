@@ -745,77 +745,90 @@ class Grandparent extends Component {
 // PUJA ARXIUS:
 
 class PujaArxius extends Component {
-  constructor(props){
-	super(props);
+    constructor(props){
+    	super(props);
 
-	this.fileSelect = this.fileSelect.bind(this);
-	//this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
-	this.sendFiles = this.sendFiles.bind(this);
-  }
 
-  sendFiles() {
+    	this.fileSelect = this.fileSelect.bind(this);
+    	//this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
+    	this.sendFiles = this.sendFiles.bind(this);
+    }
 
-	function FileUpload(img, file) {
-		const reader = new FileReader();
-		// this.ctrl = createThrobber(img);
+    sendFiles() {
+      	function FileUpload(img, file, prog) {
+      		const reader = new FileReader();
 
-		const xhr = new XMLHttpRequest();
-		this.xhr = xhr;
+            this.ctrl = prog;
+            this.ctrl.update = (val) => this.ctrl.value = val;
 
-		const self = this;
-		this.xhr.upload.addEventListener("progress", function(e) {
-			if (e.lengthComputable) {
-				const percentage = Math.round((e.loaded * 100) / e.total);
-				self.ctrl.update(percentage);
-			}
-		}, false); 
+      		const xhr = new XMLHttpRequest();
+      		this.xhr = xhr;
 
-		xhr.upload.addEventListener("load", function(e) {
-			self.ctrl.update(100);
-			let canvas = self.ctrl.ctx.canvas;
-			canvas.parentNode.removeChild(canvas);
-		}, false);
+      		const self = this;
+      		this.xhr.upload.addEventListener("progress", function(e) {
+      			if (e.lengthComputable) {
+      				const percentage = Math.round((e.loaded * 100) / e.total);
+      				self.ctrl.update(percentage);
+      			}
+      		}, false);
 
-		xhr.open("POST", "http://demos.hacks.mozilla.org/paul/demos/resources/webservices/devnull.php");
-		xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
-		reader.onload = function(evt) {
-			xhr.send(evt.target.result);
-		};
-		reader.readAsBinaryString(file);
-	}
+      		xhr.upload.addEventListener("load", function(e) {
+      			self.ctrl.update(100);
 
-	const imgs = document.querySelectorAll(`.obj`);
+      		}, false);
 
-	imgs.forEach((img) => new FileUpload(img, img.file))
-  }
+      		xhr.open("POST", "http://demos.hacks.mozilla.org/paul/demos/resources/webservices/devnull.php");
+      		xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
+      		reader.onload = function(evt) {
+      			xhr.send(evt.target.result);
+      		};
+      		reader.readAsBinaryString(file);
+  	    }
 
-  fileSelect(ev) {
+        const divArxs = document.querySelectorAll(`.divArx`);
+	    //const imgs = document.querySelectorAll(`.obj`);
+
+    	divArxs.forEach((divArx) => {
+            const
+                img = divArx.querySelector(`.obj`),
+                prog = divArx.querySelector(`progress`);
+
+                new FileUpload(img, img.file, prog);
+        });
+    }
+
+    fileSelect(ev) {
 	const
 		arxius = ev.target.files,
 		preview = document.querySelector("#divPreview");
 
 	for (let i=0; i < arxius.length; i++) {
-	  	let
+  	let
 			arx = arxius[i],
 			imageType = /^image\//;
 
 		// if (!imageType.test(arx.type)){
 		//   continue;
 		// }
+    let divArx = document.createElement("div");
+    divArx.classList.add("divArx");
+    preview.appendChild(divArx);
+
 
 		let img = document.createElement("img");
 		img.classList.add("obj");
 		img.file = arx;
-		preview.appendChild(img);
+		divArx.appendChild(img);
 
 		let prog = document.createElement("progress");
 		prog.setAttribute("max", "100");
 		prog.setAttribute("value", "0");
-		preview.appendChild(prog);
-		
+		divArx.appendChild(prog);
+
+
 		//div.children.push(img).push(prog);
 		//preview.appendChild(div);
-		
+
 
 		let reader = new FileReader();
 		reader.onload = ((aImg) => {
@@ -838,19 +851,19 @@ class PujaArxius extends Component {
   // }
 
   render() {
-	return (
-	  <div>
-		<input type="file"
-		  id="inFile"
-		  multiple accept="image/*"
-		  style={{display: `none`}}
-		  onChange={this.fileSelect}
-		/>
-	  {/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
-		<label htmlFor="inFile">Selecciona imatges (label)</label>
-		<div id="divPreview" />
-	  </div>
-	)
+  	return (
+  	  <div>
+  		<input type="file"
+  		  id="inFile"
+  		  multiple accept="image/*"
+  		  style={{display: `none`}}
+  		  onChange={this.fileSelect}
+  		/>
+  	  {/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
+  		<label htmlFor="inFile">Selecciona imatges (label)</label>
+  		<div id="divPreview" />
+  	  </div>
+  	);
   }
 }
 
