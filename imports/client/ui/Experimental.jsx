@@ -1,5 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import React, { Component } from 'react';
-import { mount } from 'react-mounter';
+import { createContainer } from 'meteor/react-meteor-data';
+// import { mount } from 'react-mounter';
 import { MainLayout } from '../ui/layouts/MainLayout.jsx';
 import './Experimental.scss';
 
@@ -196,7 +198,7 @@ class LoginControl extends Component {
 		return (
 			<div>
 				{/*<Greeting isLoggedIn={isLoggedIn} />*/}
-				The user is <em>{isLoggedIn?`currently`:`not`}</em> logged in.
+				The user is <em>{isLoggedIn ? `currently` : `not`}</em> logged in.
 				{button}
 			</div>
 		);
@@ -228,7 +230,7 @@ function WarningBanner(props) {
 		return null;
 	}
 
-	estilBanner={
+	estilBanner = {
 		background: `orange`,
 		border: `1px solid yellow`,
 		color: `red`
@@ -263,7 +265,7 @@ class Page extends Component {
 			<div>
 				<WarningBanner warn={this.state.showWarning} />
 				<button onClick={this.handleToggleClick}>
-					{this.state.showWarning?`Hide`:`Show`}
+					{this.state.showWarning ? `Hide` : `Show`}
 				</button>
 			</div>
 		);
@@ -273,7 +275,7 @@ class Page extends Component {
 //--------------------------------------
 
 const numbers = [1, 2, 3, 4, 5];
-const doubled = numbers.map(x => 2*x);
+const doubled = numbers.map(x => 2 * x);
 console.log(doubled);
 
 const listItems = numbers.map(x => <li key={x.toString()}>{x}</li>);
@@ -320,8 +322,8 @@ function Blog(props) {
 }
 
 const content = [
-	{id: 1, title: `Hello World`, content: `Welcome to learning React!`},
-	{id: 2, title: `Installation`, content: `You can install React from npm.`}
+	{ id: 1, title: `Hello World`, content: `Welcome to learning React!` },
+	{ id: 2, title: `Installation`, content: `You can install React from npm.` }
 ];
 
 //-------------------------------------------------------
@@ -336,7 +338,7 @@ function NumberListEmbedMap(props) {
 		<ul>
 			{numbers.map(n =>
 				<ListItem key={n.toString()}
-						value={n} />
+					value={n} />
 			)}
 		</ul>
 	);
@@ -393,14 +395,14 @@ class EssayForm extends Component {
 	}
 
 	handleChange(event) {
-		this.setState({value: event.target.value});
+		this.setState({ value: event.target.value });
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 
 		alert(`An essay was submitted: ${this.state.value}`);
-		this.setState({value: ``});
+		this.setState({ value: `` });
 	}
 
 	render() {
@@ -431,7 +433,7 @@ class FlavorForm extends Component {
 	}
 
 	handleChange(event) {
-		this.setState({ value: event.target.value});
+		this.setState({ value: event.target.value });
 	}
 
 	handleSubmit(event) {
@@ -662,7 +664,7 @@ function Repeat(props) {
 function ListOfTenThings() {
 	return (
 		<Repeat numTimes={10}>
-			{ index => <div key={index}>This is item {index} in the list</div> }
+			{index => <div key={index}>This is item {index} in the list</div>}
 		</Repeat>
 	);
 }
@@ -745,27 +747,29 @@ class Grandparent extends Component {
 // PUJA ARXIUS:
 
 class PujaArxius extends Component {
-    constructor(props){
-    	super(props);
+	constructor(props) {
+		super(props);
 
 		this.fileSelect = this.fileSelect.bind(this);
 		this.sendFiles = this.sendFiles.bind(this);
-    	//this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
+
+		/* this.sendFiles2 = this.sendFiles2.bind(this); */
+		//this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
 	}
-	
+
 	fileSelect(ev) {
 		const
 			arxius = ev.target.files,
 			preview = document.querySelector("#divPreview");
 
-		for (let i=0; i < arxius.length; i++) {
+		for (let i = 0; i < arxius.length; i++) {
 			let
 				arx = arxius[i],
 				imageType = /^image\//;
 
-				// if (!imageType.test(arx.type)){
-				//   continue;
-				// }
+			// if (!imageType.test(arx.type)){
+			//   continue;
+			// }
 			let divArx = document.createElement("div");
 			divArx.classList.add("divArx");
 			preview.appendChild(divArx);
@@ -775,97 +779,148 @@ class PujaArxius extends Component {
 			img.file = arx;
 			divArx.appendChild(img);
 
-			let prog = document.createElement("progress");
-			prog.setAttribute("max", "100");
-			prog.setAttribute("value", "0");
-			divArx.appendChild(prog);
-
+			/* 	let prog = document.createElement("progress");
+				prog.setAttribute("max", "100");
+				prog.setAttribute("value", "0");
+				prog.setAttribute("id", `progress_${i}`);
+				divArx.appendChild(prog);
+	 */
 			//div.children.push(img).push(prog);
 			//preview.appendChild(div);
 
 			let reader = new FileReader();
 			reader.onload = ((aImg) => {
+				//let buffer = new Uint8Array(reader.result);
+				//Meteor.call('saveFile', buffer);
 				return (e) => aImg.src = e.target.result;
 			})(img);
 			reader.readAsDataURL(arx);
+			//reader.readAsArrayBuffer(arx);
 		}
 
 		console.dir(arxius);
 		//alert("Arxius seleccionats. Missatge a la consola.");
 
-		this.sendFiles();
+		//this.sendFiles2(arxius)
+		this.sendFiles(arxius);
 	}
 
-    sendFiles() {
-      	function FileUpload(img, file, prog) {
-      		const reader = new FileReader();
+	sendFiles(arxius) {
 
-            this.ctrl = prog;
-            this.ctrl.update = (val) => this.ctrl.value = val;
+		for (let i = 0; i < arxius.length; i++) {
+			let
+				arx = arxius[i],
+				imageType = /^image\//;
 
-      		const xhr = new XMLHttpRequest();
-      		this.xhr = xhr;
-
-      		const self = this;
-      		this.xhr.upload.addEventListener("progress", function(e) {
-      			if (e.lengthComputable) {
-      				const percentage = Math.round((e.loaded * 100) / e.total);
-					self.ctrl.update(percentage);
-					console.log(`${percentatge}% uploaded`);  
-      			}
-      		}, false);
-
-			xhr.upload.addEventListener("load", function(e) {
-      			self.ctrl.update(100);
-      		}, false);
-
-      		xhr.open("PUT", "http://localhost:3000/file");
-      		//xhr.overrideMimeType('text/plain; charset=x-user-defined-binary');
-      		/* reader.onload = (evt) => {
-      			xhr.send(evt.target.result);
-			  }; */
-			xhr.onload = (event) => {
-				console.log('Done Uploading.');
+			if (!imageType.test(arx.type)) {
+				continue;
 			}
-			
-			//reader.readAsBinaryString(file);
-			xhr.send(file);
-  	    }
 
-        const divArxs = document.querySelectorAll(`.divArx`);
-	    //const imgs = document.querySelectorAll(`.obj`);
+			let reader2 = new FileReader();
+			reader2.onload = function (event) {
 
-    	divArxs.forEach((divArx) => {
-            const
-                img = divArx.querySelector(`.obj`),
-                prog = divArx.querySelector(`progress`);
+				let buffer = new Uint8Array(event.target.result);
+				Meteor.call('imatges.insert', buffer);
+				//return (e) => aImg.src = e.target.result;
+			};
+			//reader.readAsDataURL(arx);
+			reader2.readAsArrayBuffer(arx);
+		}
+	}
 
-            new FileUpload(img, img.file, prog);
-        });
-    }
+	/* animaProgres(arxius) {
 
-  // selArxiusAmbAnchor(ev) {
-  //   const inputFile = document.querySelector("#inFile");
-  //
-  //   inputFile.click();
-  //   ev.preventDefault();
-  // }
+		function ompleBarra(target) {
 
-  render() {
-  	return (
-  	  <div>
-  		<input type="file"
-  		  id="inFile"
-  		  multiple accept="image/*"
-  		  style={{display: `none`}}
-  		  onChange={this.fileSelect}
-  		/>
-  	  {/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
-  		<label htmlFor="inFile">Selecciona imatges (label)</label>
-  		<div id="divPreview" />
-  	  </div>
-  	);
-  }
+		}
+
+		if (p === 100) {
+			clearInterval(intervalHandle);
+		} else {
+			p += 10;
+			targetProgress.value = p;
+		}
+
+		intervalHandle = setInterval(animaProgres, 5);
+
+		for (let i=0; i < arxius.length; i++) {
+			let
+				arx = arxius[i],
+				imageType = /^image\//;
+
+			if (!imageType.test(arx.type)){
+				continue;
+			}
+
+			let reader2 = new FileReader();
+			reader2.onload = function(event) {
+
+				let buffer = new Uint8Array(event.target.result);
+				Meteor.call('saveFile', buffer);
+				//return (e) => aImg.src = e.target.result;
+			};
+			//reader.readAsDataURL(arx);
+			reader2.readAsArrayBuffer(arx);
+		}	
+	} */
+
+	// selArxiusAmbAnchor(ev) {
+	//   const inputFile = document.querySelector("#inFile");
+	//
+	//   inputFile.click();
+	//   ev.preventDefault();
+	// }
+
+	render() {
+		return (
+			<div>
+				<input type="file"
+					id="inFile"
+					multiple
+					accept="image/*"
+					style={{ display: `none` }}
+					onChange={this.fileSelect}
+				/>
+				{/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
+				<label htmlFor="inFile">Selecciona imatges (label)</label>
+				<div id="divPreview" />
+			</div>
+		);
+	}
+}
+
+//-------------------------------------------------------------------
+
+class ImatgesPreexistents extends Component {
+	constructor(props) {
+		super(props);
+
+	}
+
+	render() {
+		let 
+			usr = Meteor.userId(),
+			reader = new FileReader(),
+			imgSrc;
+
+		reader.onload = function(event) {
+			//let buffer = new Uint8Array(reader.result);
+			//Meteor.call('saveFile', buffer);
+			imgSrc = event.target.result;
+		};
+		
+		return (
+			<div>
+				{usr.toString()}
+				{this.props.imatges.map((imgDoc) => {
+					reader.readAsDataURL(imgDoc.data);
+					return (
+						<img src={imgSrc} />
+					);
+				})}
+			</div>
+		);
+	}
 }
 
 
@@ -873,8 +928,8 @@ class PujaArxius extends Component {
 
 const colorScale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
 
-export default class Experimental extends Component{
-	constructor(props){
+class Experimental extends Component {
+	constructor(props) {
 		super(props);
 
 		this.state = {
@@ -890,7 +945,7 @@ export default class Experimental extends Component{
 		}));
 	}
 
-	render(){
+	render() {
 		return (
 			<div>
 				<SubExperimental
@@ -970,8 +1025,13 @@ export default class Experimental extends Component{
 				</div>
 
 				<div id="divPujaArxius">
-				  <h2>Puja Arxius: </h2>
-				  <PujaArxius />
+					<h2>Puja Arxius: </h2>
+					<PujaArxius />
+				</div>
+
+				<div id="divImatgesPreexistents">
+					<h2>Imatges Preexistents: </h2>
+					<ImatgesPreexistents imatges={this.props.imatges} />
 				</div>
 			</div>
 		)
@@ -980,8 +1040,8 @@ export default class Experimental extends Component{
 
 // Ara definim els sub-components:
 
-class SubExperimental extends Component{
-	constructor(props){
+class SubExperimental extends Component {
+	constructor(props) {
 		super(props);
 
 		this.applyColorChange = this.applyColorChange.bind(this);
@@ -991,7 +1051,7 @@ class SubExperimental extends Component{
 		this.props.colorChange();
 	}
 
-	render(){
+	render() {
 		let estil = {
 			border: `solid 2px black`,
 			width: `${this.props.mida}px`,
@@ -1003,7 +1063,25 @@ class SubExperimental extends Component{
 		};
 
 		return (
-			<div style={estil} onClick={this.applyColorChange}/>
+			<div style={estil} onClick={this.applyColorChange} />
 		);
 	}
 }
+
+//****************************************************************************
+export default createContainer(() => {
+	const
+		clientsHandle = Meteor.subscribe('userClients'),
+		grupsMuscularsHandle = Meteor.subscribe('userGrupsMusculars'),
+		exercicisHandle = Meteor.subscribe('userExercicis'),
+		rutinesHandle = Meteor.subscribe('userRutines'),
+		imatgesHandle = Meteor.subscribe('userImatges');
+
+	return {
+		clients: Clients.find().fetch(),
+		grups_musculars: GrupsMusculars.find().fetch(),
+		exercicis: Exercicis.find().fetch(),
+		rutines: Rutines.find().fetch(),
+		imatges: Imatges.find().fetch()
+	}
+}, Experimental);

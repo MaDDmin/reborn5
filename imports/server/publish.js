@@ -28,6 +28,12 @@ Meteor.publish("userRutines", function(){
   });
 });
 
+Meteor.publish("userImatges", function(){
+  return Imatges.find({
+    user: this.userId
+  });
+});
+
 // //===============
 // // Publish Bars
 // Meteor.publish("allBars", function(){

@@ -6,8 +6,9 @@ import PropTypes from 'prop-types';
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
 import '../../api/collections/Exercicis.js';
+import '../../api/collections/Imatges.js';
 
-import {createContainer} from 'meteor/react-meteor-data';
+import { createContainer } from 'meteor/react-meteor-data';
 import ExercicisForm from './ExercicisForm.jsx';
 import ExerciciSingle from './ExerciciSingle.jsx';
 import { check, Match } from 'meteor/check';
@@ -21,7 +22,8 @@ class App extends Component{
       subscription: {
         clients: Meteor.subscribe("userClients"),
         grups_musculars: Meteor.subscribe("userGrupsMusculars"),
-        exercicis: Meteor.subscribe("userExercicis")
+        exercicis: Meteor.subscribe("userExercicis"),
+        imatges: Meteor.subscribe("userImatges"),
       }
     }
   }
@@ -75,11 +77,12 @@ class App extends Component{
 App.propTypes = {
 //  clients: PropTypes.array.isRequired
 };
-export default createContainer(()=>{
+export default createContainer(() => {
   return {
     clients: Clients.find().fetch(),
     grups_musculars: GrupsMusculars.find().fetch(),
     exercicis: Exercicis.find().fetch(),
-    rutines: Rutines.find().fetch()
+    rutines: Rutines.find().fetch(),
+    imatges: Imatges.find().fetch()
   }
 }, App);
