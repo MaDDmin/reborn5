@@ -93,6 +93,15 @@ FlowRouter.route('/experimental', {
   }
 });
 
+FlowRouter.route('/file', {
+  action(){
+    mount(MainLayout, {
+      content: (
+        <div />
+      )
+    });
+  }
+});
 
 
 

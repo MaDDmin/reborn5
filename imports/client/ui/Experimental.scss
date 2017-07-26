@@ -16,3 +16,11 @@ progress {
   max-height: 3px;
   max-width: 100px;
 }
+
+progress::-moz-progress-bar {
+    background: lime;
+}
+
+progress::-webkit-progress-value {
+    background: lime;
+}
