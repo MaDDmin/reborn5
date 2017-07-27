@@ -43,13 +43,13 @@ class App extends Component{
     //console.log(resol);
     return (
       <div id="divClientsContainer" ref="divClientsContainer">
-        <button id="btCientsFormTrigger" ref="btClientsFormTrigger"> Nou Client</button>
-        <ClientsForm />
         {
           this.props.clients.map((client)=>(
             <ClientSingle key={client._id} client={client} />
           ))
         }
+        <button id="btCientsFormTrigger" ref="btClientsFormTrigger"> Nou Client</button>
+        <ClientsForm />
       </div>
     );
   }

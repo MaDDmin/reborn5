@@ -1,11 +1,11 @@
-.obj {
+.obj, .imgPreexistent {
   max-width:  100px;
   box-shadow: 0 3px 3px;
   display: block;
   margin: 0 auto;
 }
 
-.divArx {
+.divArx, .imgPreexistent {
   display: inline-block;
   margin: .2em;
   max-width: 100px;

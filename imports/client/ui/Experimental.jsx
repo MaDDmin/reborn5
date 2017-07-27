@@ -819,12 +819,12 @@ class PujaArxius extends Component {
 			let reader2 = new FileReader();
 			reader2.onload = function (event) {
 
-				let buffer = new Uint8Array(event.target.result);
+				let buffer = event.target.result;// = new Uint8Array(event.target.result);
 				Meteor.call('imatges.insert', buffer);
 				//return (e) => aImg.src = e.target.result;
 			};
-			//reader.readAsDataURL(arx);
-			reader2.readAsArrayBuffer(arx);
+			reader2.readAsDataURL(arx);
+			//reader2.readAsArrayBuffer(arx);
 		}
 	}
 
@@ -861,7 +861,7 @@ class PujaArxius extends Component {
 			};
 			//reader.readAsDataURL(arx);
 			reader2.readAsArrayBuffer(arx);
-		}	
+		}
 	} */
 
 	// selArxiusAmbAnchor(ev) {
@@ -898,24 +898,24 @@ class ImatgesPreexistents extends Component {
 	}
 
 	render() {
-		let 
+		let
 			usr = Meteor.userId(),
 			reader = new FileReader(),
 			imgSrc;
 
-		reader.onload = function(event) {
+		//reader.onload = function(event) {
 			//let buffer = new Uint8Array(reader.result);
 			//Meteor.call('saveFile', buffer);
-			imgSrc = event.target.result;
-		};
-		
+			//imgSrc = event.target.result;
+		//};
+
 		return (
 			<div>
-				{usr.toString()}
+				<h3>{usr.toString()}</h3>
 				{this.props.imatges.map((imgDoc) => {
-					reader.readAsDataURL(imgDoc.data);
+					//reader.readAsDataURL(imgDoc.data);
 					return (
-						<img src={imgSrc} />
+						<img className="imgPreexistent" src={imgDoc.data} />
 					);
 				})}
 			</div>

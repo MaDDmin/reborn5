@@ -9,15 +9,15 @@ class LiniaExercici extends Component{
   constructor(props){
     super(props);
 
-    this.state = extendObservable(this, {
-      exerciciSel: "",
-      ordre: 0,
-      repeticions: 0,
-      series: 0,
-      descans: 0,
-      minuts: 0,
-      tipus: "Normal"
-    });
+    // this.state = extendObservable(this, {
+    //   exerciciSel: "",
+    //   ordre: 0,
+    //   repeticions: 0,
+    //   series: 0,
+    //   descans: 0,
+    //   minuts: 0,
+    //   tipus: "Normal"
+    // });
   }
 
   // actualitzaDefaultsExercici(event){
@@ -59,7 +59,7 @@ class LiniaExercici extends Component{
     // if (!this.refs.selExercici.selectedOptions[0]){
     //   this.refs.selExercici.options[0].setAttribute("selected", true);
     // }
-    this.selExerciciChange();
+//    this.selExerciciChange();
   }
 
   selExerciciChange(ev){
@@ -68,7 +68,7 @@ class LiniaExercici extends Component{
         exer = JSON.parse(exerStringified);
         // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
         this.state.exerciciSel = exer;
-    }else{
+    } else {
       this.refs.selExercici.options[0].setAttribute("selected", "selected");
     }
 
@@ -121,7 +121,7 @@ class LiniaExercici extends Component{
       </li>
     );
   }
-};
+}
 
 class LlistaExercicis extends Component{
   constructor(props){
@@ -154,7 +154,7 @@ export default class RutinesForm extends Component{
       newSelEx = ()=>(<li className="liSelEx">
         <select ref="selExercici">
           {
-            this.props.exercicis.map(exercici=>
+            this.props.exercicis.map(exercici =>
               <option key={exercici.exerciciNom} value={exercici._id}>
                 { exercici.exerciciNom }
               </option>
