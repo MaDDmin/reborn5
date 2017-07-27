@@ -5,7 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import Bert from 'meteor/themeteorchef:bert';
 
 
-class LiniaExercici extends Component{
+class LiniaExercici extends Component {
   constructor(props){
     super(props);
 
@@ -18,6 +18,8 @@ class LiniaExercici extends Component{
     //   minuts: 0,
     //   tipus: "Normal"
     // });
+
+    this.liniaChange = this.liniaChange.bind(this);
   }
 
   // actualitzaDefaultsExercici(event){
@@ -55,14 +57,14 @@ class LiniaExercici extends Component{
   //
   // }
 
-  componentDidMount(){
+  componentDidMount() {
     // if (!this.refs.selExercici.selectedOptions[0]){
     //   this.refs.selExercici.options[0].setAttribute("selected", true);
     // }
 //    this.selExerciciChange();
   }
 
-  selExerciciChange(ev){
+  selExerciciChange(ev) {
     if (!!this.refs.selExercici.selectedOptions.length) {
       let exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
         exer = JSON.parse(exerStringified);
@@ -78,7 +80,7 @@ class LiniaExercici extends Component{
     this.refs.inMinuts.value = this.state.minuts;
   }
 
-   altraOp(){
+   altraOp() {
     this.state.repeticions = this.refs.inRepeticions.value;
     this.state.series = this.refs.inSeries.value;
     this.state.descans = this.refs.inDescans.value;
@@ -103,10 +105,30 @@ class LiniaExercici extends Component{
             ))
           }
         </select>
-        <input type="text" placeholder="Repeticions" ref="inRepeticions" onChange={this.liniaChange.bind(this)} />
-        <input type="text" placeholder="Series" ref="inSeries" onChange={this.liniaChange.bind(this)} />
-        <input type="text" placeholder="Descans" ref="inDescans" onChange={this.liniaChange.bind(this)} />
-        <input type="text" placeholder="Minuts" ref="inMinuts" onChange={this.liniaChange.bind(this)} />
+        <input
+            type="text"
+            placeholder="Repeticions"
+            ref="inRepeticions"
+            onChange={this.liniaChange}
+        />
+        <input
+            type="text"
+            placeholder="Series"
+            ref="inSeries"
+            onChange={this.liniaChange}
+        />
+        <input
+            type="text"
+            placeholder="Descans"
+            ref="inDescans"
+            onChange={this.liniaChange}
+        />
+        <input
+            type="text"
+            placeholder="Minuts"
+            ref="inMinuts"
+            onChange={this.liniaChange}
+        />
         <table>
           <tr>
             <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
@@ -151,7 +173,7 @@ export default class RutinesForm extends Component{
   onAddSelEx(event){
     event.preventDefault();
     let olSelEx = this.refs.olSelEx,
-      newSelEx = ()=>(<li className="liSelEx">
+        newSelEx = () => (<li className="liSelEx">
         <select ref="selExercici">
           {
             this.props.exercicis.map(exercici =>
@@ -169,15 +191,15 @@ export default class RutinesForm extends Component{
   addRutina(event){
     event.preventDefault();
     let rutinaNom = this.refs.rutinaNom.value.trim(),
-      rutinaClient = this.refs.selClient.selectedOptions[0].value,
-      rutinaGrupMuscular = this.refs.selGrupMuscular.selectedOptions[0].value,
-      rutinaDiaInici = this.refs.rutinaDayOfStart.selectedOptions[0].value,
-      rutinaMesInici = this.refs.rutinaMonthOfStart.selectedOptions[0].value,
-      rutinaAnyInici = this.refs.rutinaYearOfStart.selectedOptions[0].value,
-      rutinaDiaFi = this.refs.rutinaDayOfFinish.selectedOptions[0].value,
-      rutinaMesFi = this.refs.rutinaMonthOfFinish.selectedOptions[0].value,
-      rutinaAnyFi = this.refs.rutinaYearOfFinish.selectedOptions[0].value,
-      rutinaDescripcio = this.refs.rutinaDescripcio.value.trim();
+        rutinaClient = this.refs.selClient.selectedOptions[0].value,
+        rutinaGrupMuscular = this.refs.selGrupMuscular.selectedOptions[0].value,
+        rutinaDiaInici = this.refs.rutinaDayOfStart.selectedOptions[0].value,
+        rutinaMesInici = this.refs.rutinaMonthOfStart.selectedOptions[0].value,
+        rutinaAnyInici = this.refs.rutinaYearOfStart.selectedOptions[0].value,
+        rutinaDiaFi = this.refs.rutinaDayOfFinish.selectedOptions[0].value,
+        rutinaMesFi = this.refs.rutinaMonthOfFinish.selectedOptions[0].value,
+        rutinaAnyFi = this.refs.rutinaYearOfFinish.selectedOptions[0].value,
+        rutinaDescripcio = this.refs.rutinaDescripcio.value.trim();
 
     if (rutinaNom){
       Meteor.call('rutines.insert', rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio, (error, data)=>{
