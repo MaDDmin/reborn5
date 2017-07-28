@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { LoginButtons } from 'meteor/okgrow:accounts-ui-react';
+//import jQuery from 'meteor/jquery';
 
 export const MainLayout = ({content}) => (
   <div className="main-layout">

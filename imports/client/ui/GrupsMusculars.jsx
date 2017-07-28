@@ -15,11 +15,11 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 //import PrintDeliverer from './PrintDeliverer.jsx';
 
-const FormReceptacle = (props) => (
-    <div>
-        {props.form}
-    </div>
-);
+//import PHE from 'print-html-element';
+//import print form 'print-any-html';
+
+//import $ from 'meteor/jquery';
+
 
 class App extends Component{
     constructor(props){
@@ -34,6 +34,7 @@ class App extends Component{
         }
 
         this.activateForm = this.activateForm.bind(this);
+        this.imprimeixLlista = this.imprimeixLlista.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +55,12 @@ class App extends Component{
         this.setState({formActive: !this.state.formActive});
     }
 
+    imprimeixLlista () {
+    //    PHE.printElement(document.querySelector(".olLlistaGMs"));
+        //alert('Després de PHE');
+        $(".olLlistaGMs").printThis();
+    }
+
     render() {
         //  let resol = this.props.resolutions;
         //console.log(resol);
@@ -68,8 +75,8 @@ class App extends Component{
                 transitionLeaveTimeout={400}
             >
                 <ReactCSSTransitionGroup
-                    component="ul"
-                    className="ulResolutions"
+                    component="ol"
+                    className="olLlistaGMs"
                     transitionName="resolutionLoad"
                     transitionEnterTimeout={600}
                     transitionLeaveTimeout={400}
@@ -84,7 +91,7 @@ class App extends Component{
                 </ReactCSSTransitionGroup>
                 <div className="divPrintDeliverer">
                     <button className="btAddNew" onClick={this.activateForm} >Nou</button>
-                    <button className="btPrintList">Imprimir</button>
+                    <button className="btPrintList" onClick={this.imprimeixLlista}>Imprimir</button>
                 </div>
                 <GrupsMuscularsForm active={this.state.formActive} />
             </ReactCSSTransitionGroup>

@@ -12,3 +12,5 @@ import '../imports/api/collections/Imatges.js';
 
 import '../imports/client/ui/layouts/MainLayout.scss';
 import '../imports/client/routes.js';
+
+import '../imports/client/ui/js/printThis.js';

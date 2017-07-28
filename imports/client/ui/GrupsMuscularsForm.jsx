@@ -26,7 +26,7 @@ export default class GrupsMuscularsForm extends Component{
       });
     }
   }
-  
+
   render() {
     if (!this.props.active){
       return null;
@@ -39,6 +39,7 @@ export default class GrupsMuscularsForm extends Component{
             type="text"
             ref="grupMuscularNom"
             placeholder="Nom"
+            autoFocus
           />
           <textarea
             ref="grupMuscularDescripcio"
