@@ -55,7 +55,6 @@ class App extends Component{
         transitionEnterTimeout={600}
         transitionLeaveTimeout={400}
       >
-        <ExercicisForm grups_musculars={this.props.grups_musculars} />
         <ReactCSSTransitionGroup
           component="ul"
           className="ulResolutions"
@@ -70,6 +69,7 @@ class App extends Component{
             ))
           }
         </ReactCSSTransitionGroup>
+        <ExercicisForm grups_musculars={this.props.grups_musculars} />
       </ReactCSSTransitionGroup>
     );
   }

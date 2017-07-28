@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 // La col·lecció de les resolucions
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
+import './GrupsMusculars.scss';
 
 import { createContainer } from 'meteor/react-meteor-data';
 import GrupsMuscularsForm from './GrupsMuscularsForm.jsx';
@@ -31,27 +32,29 @@ class App extends Component{
             },
             formActive: false
         }
+
+        this.activateForm = this.activateForm.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
     //    this.state.subscription.grups_musculars.stop();
     }
 
-    /*renderResolutions(){
+    /*renderResolutions() {
     return this.props.resolutions.map((resolution)=>(
       <ResolutionSingle key={resolution._id} resolution={resolution} />
     ));
     }*/
 
-    showForm(){
-    //    this.setState({formActive: true})
+    activateForm() {
+        this.setState({formActive: !this.state.formActive});
     }
 
-    render(){
+    render() {
         //  let resol = this.props.resolutions;
         //console.log(resol);
         return (
@@ -80,7 +83,7 @@ class App extends Component{
                     }
                 </ReactCSSTransitionGroup>
                 <div className="divPrintDeliverer">
-                    <button className="btAddNew">Nou</button>
+                    <button className="btAddNew" onClick={this.activateForm} >Nou</button>
                     <button className="btPrintList">Imprimir</button>
                 </div>
                 <GrupsMuscularsForm active={this.state.formActive} />

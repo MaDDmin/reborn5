@@ -1,20 +1,23 @@
-#login-buttons{
+#login-buttons {
   position: fixed;
   top: .5em;
   right: .5em;
   z-index: 10;
 }
-#login-dropdown-list{
+
+#login-dropdown-list {
   position: relative;
   top: -4px;
   margin: .5em;
 }
-#navMain{
+
+#navMain {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
 }
-.aNav{
+
+.aNav {
   flex-grow: 2;
   background: rgba(255,255,255,.5);
   color: rgba(0,0,0,.8);
@@ -28,6 +31,7 @@
   text-align: center;
   transform: skewX(-12deg);
 }
-header{
+
+header {
   margin-bottom: 1em;
 }

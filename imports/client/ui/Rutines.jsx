@@ -2,15 +2,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {Meteor} from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
 
 // La col·lecció de les resolucions
 import '../../api/collections/Clients.js';
 import '../../api/collections/GrupsMusculars.js';
 import '../../api/collections/Exercicis.js';
 import '../../api/collections/Rutines.js';
+import '../../api/collections/Imatges.js';
 
-import {createContainer} from 'meteor/react-meteor-data';
+import { createContainer } from 'meteor/react-meteor-data';
 import RutinesForm from './RutinesForm.jsx';
 import RutinaSingle from './RutinaSingle.jsx';
 import { check, Match } from 'meteor/check';
@@ -21,7 +22,7 @@ class App extends Component{
     super(props);
 
     this.state = {
-    }
+    };
   }
 
   // componentDidMount(){
@@ -38,7 +39,7 @@ class App extends Component{
     ));
   }*/
 
-  render(){
+  render() {
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
@@ -56,7 +57,7 @@ class App extends Component{
           transitionLeaveTimeout={400}
         >
           {
-            this.props.rutines.map((rutina)=>(
+            this.props.rutines.map((rutina) => (
               <RutinaSingle key={rutina._id} rutina={rutina} />
             ))
           }
@@ -68,6 +69,7 @@ class App extends Component{
 App.propTypes = {
 //  clients: PropTypes.array.isRequired
 };
+
 export default AppContainer = createContainer(()=>{
   //const dataHandle = Meteor.subscribe('totesDades');
   const clientsHandle = Meteor.subscribe("userClients");

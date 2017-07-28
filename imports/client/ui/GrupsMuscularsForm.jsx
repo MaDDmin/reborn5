@@ -7,7 +7,6 @@ export default class GrupsMuscularsForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      active: false
     };
   }
 
@@ -28,7 +27,10 @@ export default class GrupsMuscularsForm extends Component{
     }
   }
   
-  render(){
+  render() {
+    if (!this.props.active){
+      return null;
+    }
     return (
       <div id="divGrupsMuscularsForm">
         <h2>Nou Grup Muscular</h2>
