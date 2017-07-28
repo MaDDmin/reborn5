@@ -5,6 +5,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { MainLayout } from '../ui/layouts/MainLayout.jsx';
 import './Experimental.scss';
 
+import { Motion, spring } from 'react-motion';
+
 class Clock extends Component {
 	constructor(props) {
 		super(props);
@@ -704,7 +706,7 @@ class CustomTextInput extends Component {
 
 class AutoFocusTextInput extends Component {
 	componentDidMount() {
-		this.textInput.focus();
+	//	this.textInput.focus();
 	}
 
 	render() {
@@ -923,6 +925,24 @@ class ImatgesPreexistents extends Component {
 	}
 }
 
+//************************************************************************
+// React-Motion:
+
+class PrimerMotion extends Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<Motion defaultStyle={{x: 0}} style={{x: spring(1000)}}>
+				{value => <div>{value.x}</div>}
+			</Motion>
+		);
+	}
+}
+
+
 
 //********************************************************
 
@@ -948,6 +968,12 @@ class Experimental extends Component {
 	render() {
 		return (
 			<div>
+
+				<div id="divPrimerMotion">
+					<h2>Primer Motion: </h2>
+					<PrimerMotion />
+				</div>
+
 				<SubExperimental
 					color={colorScale[this.state.colorIndex]}
 					mida={50}
@@ -1033,6 +1059,7 @@ class Experimental extends Component {
 					<h2>Imatges Preexistents: </h2>
 					<ImatgesPreexistents imatges={this.props.imatges} />
 				</div>
+
 			</div>
 		)
 	}
