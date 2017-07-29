@@ -7,6 +7,8 @@ import './Experimental.scss';
 
 import { Motion, spring } from 'react-motion';
 
+import { CSSTransition, Transition, TransitionGroup } from 'react-transition-group';
+
 class Clock extends Component {
 	constructor(props) {
 		super(props);
@@ -1030,6 +1032,147 @@ class Application extends Component {
 	}
 }
 
+//***************************************************************** */
+// More ReactCSSTransitionGroup (OFFICIAL):
+
+//import { CSSTransition } from 'react-transition-group';
+
+class TodoList extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			items: ['hello', 'world', 'click', 'me']
+		};
+
+		this.handleAdd = this.handleAdd.bind(this);
+	}
+
+	handleAdd() {
+		const 
+			newItems = this.state.items.concat([
+				prompt('Enter some text')
+			]);
+
+		this.setState({
+			items: newItems
+		});
+	}
+
+	handleRemove(i) {
+		let newItems = this.state.items.slice();
+	
+		newItems.splice(i, 1);
+		this.setState({items: newItems});
+	}
+
+	render() {
+		const
+			items = this.state.items.map((item, i) => (
+				<div key={item} onClick={() => this.handleRemove(i)}>
+					{item}
+				</div>
+			));
+
+		return (
+			<div>
+				<button onClick={this.handleAdd}>Add Item</button>
+				<CSSTransition 
+					transitionName="example"
+					transitionEnterTimeout={500}
+					transitionLeaveTimeout={300}
+				>
+					{items}	
+				</CSSTransition>
+			</div>
+		);
+	}
+}
+
+//************************************************************************* */
+// Molt de trajín amb les transicions. Anem a per la bona amb la v2 del 'react-transition-group' (https://github.com/reactjs/react-transition-group/blob/master/Migration.md):
+
+//import { CSSTransition, Transition, TransitionGroup } from 'react-transition-group';
+
+const MyTransition = ({ children: child, ...props }) => (
+	// NOTICE THE SPREAD! THIS IS REQUIRED!
+	<Transition {...props}>
+		{transitionState => React.cloneElement(child, {
+			style: getStyleForTransitionState(transitionState)
+		})}
+	</Transition>
+);
+
+const MyList = () => (
+	<TransitionGroup>
+		{items.map(item => (
+			<MyTransition>{item}</MyTransition>
+		))}
+	</TransitionGroup>
+);
+
+
+//-------------
+
+const FadeTransition = (props) => (
+	<CSSTransition
+		{...props}
+		classNames="example"
+		timeout={{ enter: 1000, exit: 1000 }}
+	/>
+);
+
+class TodoList2 extends Component {
+	constructor(props) {
+		super(props);
+		
+		this.state = {
+			items: ['hello', 'world', 'click', 'me']
+		};
+
+		this.handleAdd = this.handleAdd.bind(this);
+		this.handleRemove = this.handleRemove.bind(this);
+	}
+
+	handleAdd() {
+		const
+			newItems = this.state.items.concat([
+				prompt("Enter some text")
+			]);
+		
+		this.setState({items: newItems});
+	}
+
+	handleRemove(i) {
+		let newItems = this.state.items.slice();
+	
+		newItems.splice(i, 1);
+		this.setState({items: newItems});
+	}
+
+	render() {
+		const
+			items = this.state.items.map((item, i) => (
+				<FadeTransition key={i} onClick={() => this.handleRemove(i)}>
+					<div>
+						{item}
+					</div>
+				</FadeTransition>
+			));
+
+		return (
+			<div>
+				<button onClick={this.handleAdd}>Add Item</button>
+				<TransitionGroup>
+					items}
+				</TransitionGroup>
+				{/*<MyList />*/}
+			</div>
+		)
+	}
+}
+
+
 //********************************************************
 
 const colorScale = [`grey`, `red`, `blue`, `lime`, `fuchsia`, `cyan`, `gold`];
@@ -1054,6 +1197,9 @@ class Experimental extends Component {
 	render() {
 		return (
 			<div>
+				<TodoList2 />
+
+				{/*<TodoList />*/}
 
 				<Application />
 

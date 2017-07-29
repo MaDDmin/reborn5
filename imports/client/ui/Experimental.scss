@@ -49,9 +49,9 @@ progress::-webkit-progress-value {
 //   padding: 0;
 // }
 //
-// li {
-//   list-style-type: none;
-// }
+/* li {
+  list-style-type: none;
+}
 
 .container {
   display: block;
@@ -78,4 +78,22 @@ progress::-webkit-progress-value {
   display: block;
   flex: 0 1 300px;
   padding: 0.5rem;
+} */
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-exit {
+  opacity: 1;
+}
+
+.example-exit.example-exit-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

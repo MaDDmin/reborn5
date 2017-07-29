@@ -22,7 +22,8 @@
     "react-fine-uploader": "^0.1.1",
     "react-komposer": "^1.13.1",
     "react-motion": "^0.5.0",
-    "react-mounter": "^1.2.0"
+    "react-mounter": "^1.2.0",
+    "react-transition-group": "^2.2.0"
   },
   "devDependencies": {}
 }
