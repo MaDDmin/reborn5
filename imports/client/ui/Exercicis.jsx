@@ -1,40 +1,29 @@
-// React
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-
-// La col·lecció de les resolucions
-import '../../api/collections/Clients.js';
-import '../../api/collections/GrupsMusculars.js';
-import '../../api/collections/Exercicis.js';
-import '../../api/collections/Imatges.js';
 
 import { createContainer } from 'meteor/react-meteor-data';
 import ExercicisForm from './ExercicisForm.jsx';
 import ExerciciSingle from './ExerciciSingle.jsx';
+
 import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-class App extends Component{
-  constructor(props){
-    super(props);
+import { CSSTransitionGroup } from 'react-transition-group';
 
-    this.state = {
-      subscription: {
-        clients: Meteor.subscribe("userClients"),
-        grups_musculars: Meteor.subscribe("userGrupsMusculars"),
-        exercicis: Meteor.subscribe("userExercicis"),
-        imatges: Meteor.subscribe("userImatges"),
-      }
+class ExercicisNoData extends Component{
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        };
     }
-  }
 
-  componentDidMount(){
+    componentDidMount(){
 
-  }
+    }
 
-  componentWillUnmount(){
-    this.state.subscription.exercicis.stop();
-  }
+    componentWillUnmount(){
+        //this.state.subscription.exercicis.stop();
+    }
 
   /*renderResolutions(){
     return this.props.resolutions.map((resolution)=>(
@@ -42,47 +31,57 @@ class App extends Component{
     ));
   }*/
 
-  render(){
+    render() {
   //  let resol = this.props.resolutions;
     //console.log(resol);
-    return (
-      <ReactCSSTransitionGroup
-        id="divApp"
-        component="div"
-        transitionName="route"
-        transitionAppear={true}
-        transitionAppearTimeout={600}
-        transitionEnterTimeout={600}
-        transitionLeaveTimeout={400}
-      >
-        <ReactCSSTransitionGroup
-          component="ul"
-          className="ulResolutions"
-          transitionName="resolutionLoad"
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={400}
-        >
-                                  {/*this.renderResolutions()*/}
-          {
-            this.props.exercicis.map((exercici)=>(
-              <ExerciciSingle key={exercici._id} exercici={exercici} />
-            ))
-          }
-        </ReactCSSTransitionGroup>
-        <ExercicisForm grups_musculars={this.props.grups_musculars} />
-      </ReactCSSTransitionGroup>
-    );
-  }
+        return (
+            <CSSTransitionGroup
+                id="divExercicis"
+                component="div"
+                transitionName="route"
+                transitionAppear={true}
+                transitionAppearTimeout={600}
+                transitionEnterTimeout={600}
+                transitionLeaveTimeout={400}
+            >
+                <CSSTransitionGroup
+                    component="ul"
+                    className="ulLlistaExercicis"
+                    transitionName="route"
+                    transitionEnterTimeout={600}
+                    transitionLeaveTimeout={400}
+                >
+                            {/*this.renderResolutions()*/}
+                    {
+                        this.props.exercicis.map((exercici) => (
+                            <ExerciciSingle key={exercici._id} exercici={exercici} />
+                        ))
+                    }
+                </CSSTransitionGroup>
+                <ExercicisForm grups_musculars={this.props.grups_musculars} />
+            </CSSTransitionGroup>
+        );
+    }
 }
-App.propTypes = {
-//  clients: PropTypes.array.isRequired
-};
+
+// App.propTypes = {
+// //  clients: PropTypes.array.isRequired
+// };
+
 export default createContainer(() => {
-  return {
-    clients: Clients.find().fetch(),
-    grups_musculars: GrupsMusculars.find().fetch(),
-    exercicis: Exercicis.find().fetch(),
-    rutines: Rutines.find().fetch(),
-    imatges: Imatges.find().fetch()
-  }
-}, App);
+    const
+        subscription = {
+            clientsSubscription: Meteor.subscribe("userClients"),
+            grups_muscularsSubscription: Meteor.subscribe("userGrupsMusculars"),
+            imatgesSubscription: Meteor.subscribe("userImatges"),
+            exercicisSubscription: Meteor.subscribe("userExercicis")
+        };
+
+    return {
+        clients: Clients.find().fetch(),
+        grups_musculars: GrupsMusculars.find().fetch(),
+        exercicis: Exercicis.find().fetch(),
+        rutines: Rutines.find().fetch(),
+        imatges: Imatges.find().fetch()
+    }
+}, ExercicisNoData);

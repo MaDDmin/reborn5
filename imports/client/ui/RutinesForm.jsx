@@ -92,11 +92,15 @@ class LiniaExercici extends Component {
     console.dir(toJS(this.state));
   }
 
+  liniaChange(ev) {
+      
+  }
+
 
   render() {
     return (
       <li className="liSelEx">
-        <select className="selExercici" ref="selExercici" onChange={this.liniaChange.bind(this)} >
+        <select className="selExercici" ref="selExercici" onChange={this.liniaChange} >
           {
             this.props.exercicis.map(exercici=>(
               <option key={exercici.exerciciNom} value={exercici._id} data-exercici={JSON.stringify(exercici)} >

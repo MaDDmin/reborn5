@@ -4,21 +4,16 @@ import PropTypes from 'prop-types';
 
 import { Meteor } from 'meteor/meteor';
 
-// La col·lecció de les resolucions
-import '../../api/collections/Clients.js';
-import '../../api/collections/GrupsMusculars.js';
-import '../../api/collections/Exercicis.js';
-import '../../api/collections/Rutines.js';
-import '../../api/collections/Imatges.js';
-
 import { createContainer } from 'meteor/react-meteor-data';
 import RutinesForm from './RutinesForm.jsx';
 import RutinaSingle from './RutinaSingle.jsx';
-import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-class App extends Component{
-  constructor(props){
+import { check, Match } from 'meteor/check';
+
+import { CSSTransitionGroup } from 'react-transition-group';
+
+class RutinesNoData extends Component {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -43,46 +38,62 @@ class App extends Component{
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <div>
-        <RutinesForm
-          clients={this.props.clients}
-          grups_musculars={this.props.grups_musculars}
-          exercicis={this.props.exercicis}
-        />
-        <ReactCSSTransitionGroup
-          component="ul"
-          className="ulResolutions"
-          transitionName="resolutionLoad"
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={400}
+        <CSSTransitionGroup
+            id="divRutines"
+            component="div"
+            transitionName="route"
+            transitionAppear={true}
+            transitionAppearTimeout={600}
+            transitionEnterTimeout={600}
+            transitionLeaveTimeout={400}
         >
+            <CSSTransitionGroup
+                component="ul"
+                className="ulLlistaRutines"
+                transitionName="route"
+                transitionEnterTimeout={600}
+                transitionLeaveTimeout={400}
+            >
           {
             this.props.rutines.map((rutina) => (
               <RutinaSingle key={rutina._id} rutina={rutina} />
             ))
           }
-        </ReactCSSTransitionGroup>
-      </div>
+          </CSSTransitionGroup>
+          <RutinesForm
+            clients={this.props.clients}
+            grups_musculars={this.props.grups_musculars}
+            exercicis={this.props.exercicis}
+          />
+        </CSSTransitionGroup>
     );
   }
 }
-App.propTypes = {
-//  clients: PropTypes.array.isRequired
-};
 
-export default AppContainer = createContainer(()=>{
-  //const dataHandle = Meteor.subscribe('totesDades');
-  const clientsHandle = Meteor.subscribe("userClients");
-  const grups_muscularsHandle = Meteor.subscribe("userGrupsMusculars");
-  const exercicisHandle = Meteor.subscribe("userExercicis");
-  const rutinesHandle = Meteor.subscribe("userRutines");
+// App.propTypes = {
+// //  clients: PropTypes.array.isRequired
+// };
 
-  const loading = ! (clientsHandle.ready() && grups_muscularsHandle.ready() && exercicisHandle.ready() && rutinesHandle.ready());
+export default createContainer(() => {
+    const
+        subscription = {
+            clientsSubscription: Meteor.subscribe("userClients"),
+            grups_muscularsSubscription: Meteor.subscribe("userGrupsMusculars"),
+            imatgesSubscription: Meteor.subscribe("userImatges"),
+            exercicisSubscription: Meteor.subscribe("userExercicis"),
+            rutinesSubscription: Meteor.subscribe("userRutines")
+        },
 
-  const clients = clientsHandle.ready() ? Clients.find().fetch() : [];
-  const grups_musculars = grups_muscularsHandle.ready() ? GrupsMusculars.find().fetch() : [];
-  const exercicis = exercicisHandle.ready() ? Exercicis.find().fetch() : [];
-  const rutines = rutinesHandle.ready() ? Rutines.find().fetch() : [];
+        loading = ! ( subscription.clientsSubscription.ready() &&
+            subscription.grups_muscularsSubscription.ready() &&
+            subscription.exercicisSubscription.ready() &&
+            subscription.rutinesSubscription.ready()
+        ),
+
+        clients = subscription.clientsSubscription.ready() ? Clients.find().fetch() : [],
+        grups_musculars = subscription.grups_muscularsSubscription.ready() ? GrupsMusculars.find().fetch() : [],
+        exercicis = subscription.exercicisSubscription.ready() ? Exercicis.find().fetch() : [],
+        rutines = subscription.rutinesSubscription.ready() ? Rutines.find().fetch() : [];
 
   return {
     clients,
@@ -91,4 +102,4 @@ export default AppContainer = createContainer(()=>{
     rutines,
     loading
   }
-}, App);
+}, RutinesNoData);

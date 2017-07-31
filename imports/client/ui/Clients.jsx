@@ -1,19 +1,16 @@
-// React
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
-// La col·lecció de les resolucions
-//import '../../api/collections/Clients.js';
-//import '../../api/collections/GrupsMusculars.js';
-
-import {createContainer} from 'meteor/react-meteor-data';
 import ClientsForm from './ClientsForm.jsx';
 import ClientSingle from './ClientSingle.jsx';
+
 import { check, Match } from 'meteor/check';
-/*import ReactCSSTransitionGroup from 'react-addons-css-transition-group';*/
+
+import { CSSTransitionGroup } from 'react-transition-group';
 
 class ClientsNoData extends Component{
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -21,15 +18,15 @@ class ClientsNoData extends Component{
     //     clients: Meteor.subscribe("userClients"),
     //     grups_musculars: Meteor.subscribe("userGrupsMusculars")
     //   }
-    }
+    };
   }
 
-  componentDidMount(){
+  componentDidMount() {
 
   }
 
-  componentWillUnmount(){
-    this.state.subscription.clients.stop();
+  componentWillUnmount() {
+    //this.props.subscription.clients.stop();
   }
 
   /*renderResolutions(){
@@ -38,32 +35,51 @@ class ClientsNoData extends Component{
     ));
   }*/
 
-  render(){
+  render() {
   //  let resol = this.props.resolutions;
     //console.log(resol);
     return (
-      <div id="divClientsContainer" ref="divClientsContainer">
-        {
-          this.props.clients.map((client)=>(
-            <ClientSingle key={client._id} client={client} />
-          ))
-        }
-        <button id="btCientsFormTrigger" ref="btClientsFormTrigger"> Nou Client</button>
-        <ClientsForm />
-      </div>
+        <CSSTransitionGroup
+            id="divClientsContainer"
+            component="div"
+            transitionName="route"
+            transitionAppear={true}
+            transitionAppearTimeout={600}
+            transitionEnterTimeout={600}
+            transitionLeaveTimeout={400}
+        >
+            <CSSTransitionGroup
+                component="ul"
+                className="ulLlistaClients"
+                transitionName="clientsLoad"
+                transitionEnterTimeout={600}
+                transitionLeaveTimeout={400}
+            >
+                {
+                    this.props.clients.map((client) => (
+                        <ClientSingle key={client._id} client={client} />
+                    ))
+                }
+                <button id="btCientsFormTrigger">Nou Client</button>
+            </CSSTransitionGroup>
+            <ClientsForm />
+      </CSSTransitionGroup>
     );
   }
 }
 
-Clients.propTypes = {
-//  clients: PropTypes.array.isRequired
-};
+// Clients.propTypes = {
+// //  clients: PropTypes.array.isRequired
+// };
 
 export default createContainer(() => {
     const
-        clientsHandler = Meteor.subscribe("userClients"),
-        grups_muscularsHandler = Meteor.subscribe("userGrupsMusculars"),
-        imatgesHandler = Meteor.subscribe("userImatges");
+        subscription = {
+            clientsSubscription: Meteor.subscribe("userClients"),
+            grups_muscularsSubscription: Meteor.subscribe("userGrupsMusculars"),
+            imatgesSubscription: Meteor.subscribe("userImatges"),
+            exercicisSubscription: Meteor.subscribe("userExercicis")
+        };
 
     return {
         clients: Clients.find().fetch(),

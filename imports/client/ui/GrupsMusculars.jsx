@@ -1,17 +1,13 @@
-// React
 import React, { Component } from 'react';
+import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 
-// La col·lecció de les resolucions
-import '../../api/collections/Clients.js';
-import '../../api/collections/GrupsMusculars.js';
 import './GrupsMusculars.scss';
 
-import { createContainer } from 'meteor/react-meteor-data';
 import GrupsMuscularsForm from './GrupsMuscularsForm.jsx';
 import GrupMuscularSingle from './GrupMuscularSingle.jsx';
 import { check, Match } from 'meteor/check';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 //import PrintDeliverer from './PrintDeliverer.jsx';
 
@@ -21,15 +17,16 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 //import $ from 'meteor/jquery';
 
 
-class App extends Component{
-    constructor(props){
+class GrupsMuscularsNoData extends Component {
+    constructor(props) {
         super(props);
 
         this.state = {
-            subscription: {
-                clients: Meteor.subscribe("userClients"),
-                grups_musculars: Meteor.subscribe("userGrupsMusculars")
-            },
+
+            // subscription: {
+            //     clients: Meteor.subscribe("userClients"),
+            //     grups_musculars: Meteor.subscribe("userGrupsMusculars")
+            //},
             formActive: false
         }
 
@@ -65,8 +62,8 @@ class App extends Component{
         //  let resol = this.props.resolutions;
         //console.log(resol);
         return (
-            <ReactCSSTransitionGroup
-                id="divApp"
+            <CSSTransitionGroup
+                id="divGrupsMuscularsContainer"
                 component="div"
                 transitionName="route"
                 transitionAppear={true}
@@ -74,38 +71,48 @@ class App extends Component{
                 transitionEnterTimeout={600}
                 transitionLeaveTimeout={400}
             >
-                <ReactCSSTransitionGroup
-                    component="ol"
-                    className="olLlistaGMs"
-                    transitionName="resolutionLoad"
+                <CSSTransitionGroup
+                    component="ul"
+                    className="ulGrupsMuscularsLlista"
+                    transitionName="route"
                     transitionEnterTimeout={600}
                     transitionLeaveTimeout={400}
                 >
-                    {   this.props.grups_musculars.map((grup_muscular) => (
+                    {  this.props.grups_musculars.map((grup_muscular) => (
                             <GrupMuscularSingle
                                 key={grup_muscular._id}
                                 grup_muscular={grup_muscular}
                             />
                         ))
                     }
-                </ReactCSSTransitionGroup>
-                <div className="divPrintDeliverer">
-                    <button className="btAddNew" onClick={this.activateForm} >Nou</button>
-                    <button className="btPrintList" onClick={this.imprimeixLlista}>Imprimir</button>
-                </div>
+
+                    <div className="divPrintDeliverer">
+                        <button className="btAddNew" onClick={this.activateForm}>Nou</button>
+                        <button className="btPrintList" onClick={this.imprimeixLlista}>Imprimir</button>
+                    </div>
+                </CSSTransitionGroup>
                 <GrupsMuscularsForm active={this.state.formActive} />
-            </ReactCSSTransitionGroup>
+            </CSSTransitionGroup>
         );
     }
 }
 
-App.propTypes = {
-//  clients: PropTypes.array.isRequired
-};
+// propTypes = {
+// //  clients: PropTypes.array.isRequired
+// };
 
 export default createContainer(() => {
+    const
+        subscription = {
+            clientsSubscription: Meteor.subscribe("userClients"),
+            grups_muscularsSubscription: Meteor.subscribe("userGrupsMusculars"),
+            imatgesSubscription: Meteor.subscribe("userImatges"),
+            exercicisSubscription: Meteor.subscribe("userExercicis")
+        };
+
     return {
         clients: Clients.find().fetch(),
-        grups_musculars: GrupsMusculars.find().fetch()
+        grups_musculars: GrupsMusculars.find().fetch(),
+        imatges: Imatges.find().fetch()
     }
-}, App);
+}, GrupsMuscularsNoData);
