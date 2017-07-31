@@ -914,10 +914,10 @@ class ImatgesPreexistents extends Component {
 		return (
 			<div>
 				<h3>{usr.toString()}</h3>
-				{this.props.imatges.map((imgDoc) => {
+				{this.props.imatges.map((imgDoc, index) => {
 					//reader.readAsDataURL(imgDoc.data);
 					return (
-						<img className="imgPreexistent" src={imgDoc.data} />
+						<img key={index} className="imgPreexistent" src={imgDoc.data} />
 					);
 				})}
 			</div>

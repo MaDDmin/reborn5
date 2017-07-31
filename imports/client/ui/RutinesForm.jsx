@@ -93,7 +93,7 @@ class LiniaExercici extends Component {
   }
 
   liniaChange(ev) {
-      
+
   }
 
 

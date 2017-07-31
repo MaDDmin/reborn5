@@ -55,7 +55,7 @@ class GrupsMuscularsNoData extends Component {
     imprimeixLlista () {
     //    PHE.printElement(document.querySelector(".olLlistaGMs"));
         //alert('Després de PHE');
-        $(".olLlistaGMs").printThis();
+        $(".ulGrupsMuscularsLlista").printThis();
     }
 
     render() {
@@ -85,12 +85,11 @@ class GrupsMuscularsNoData extends Component {
                             />
                         ))
                     }
-
-                    <div className="divPrintDeliverer">
-                        <button className="btAddNew" onClick={this.activateForm}>Nou</button>
-                        <button className="btPrintList" onClick={this.imprimeixLlista}>Imprimir</button>
-                    </div>
                 </CSSTransitionGroup>
+                <div className="divPrintDeliverer">
+                    <button className="btAddNew" onClick={this.activateForm}>Nou</button>
+                    <button className="btPrintList" onClick={this.imprimeixLlista}>Imprimir</button>
+                </div>
                 <GrupsMuscularsForm active={this.state.formActive} />
             </CSSTransitionGroup>
         );
