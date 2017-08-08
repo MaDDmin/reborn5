@@ -534,7 +534,7 @@ class NameFormUncontrolled extends Component {
 	}
 }
 //------------------------------------------------------
-// LIFTING STATENameFormUncontrolledNameFormUncontrolled
+// LIFTING STATE NameFormUncontrolledNameFormUncontrolled
 
 class Calculator extends Component {
 	constructor(props) {

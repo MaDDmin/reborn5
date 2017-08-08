@@ -7,25 +7,45 @@ import PujaArxius from './PujaArxius.jsx';
 export default class GrupsMuscularsForm extends Component{
   constructor(props){
     super(props);
+
     this.state = {
+        arrImatgesPujades: []
     };
+
+    this.addGrupMuscular = this.addGrupMuscular.bind(this);
+    this.handleImatgesPujades = this.handleImatgesPujades.bind(this);
   }
 
-  addGrupMuscular(event){
-    event.preventDefault();
-    let grupMuscularNom = this.refs.grupMuscularNom.value.trim(),
-      grupMuscularDescripcio = this.refs.grupMuscularDescripcio.value.trim();
+    addGrupMuscular(event) {
+        event.preventDefault();
+        let
+            that = this;
+            grupMuscularNom = this.grupMuscularNom.value.trim(),
+            grupMuscularDescripcio = this.grupMuscularDescripcio.value.trim();
 
-    if (grupMuscularNom){
-      Meteor.call('grups_musculars.insert', grupMuscularNom, grupMuscularDescripcio, (error, data)=>{
-        if (error){
-          Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");
-        }else{
-          this.refs.grupMuscularNom.value = "";
-          this.refs.grupMuscularDescripcio.value = "";
+        if (grupMuscularNom) {
+            Meteor.call('grups_musculars.insert',
+                grupMuscularNom,
+                grupMuscularDescripcio,
+                that.state.arrImatgesPujades,
+                (error, data) => {
+                    if (error) {
+                      Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");
+                    } else {
+                    //   this.refs.grupMuscularNom.value = "";
+                    //   this.refs.grupMuscularDescripcio.value = "";
+
+                    }
+                }
+            );
         }
-      });
     }
+
+  handleImatgesPujades(arrImatgesPujades) {
+      this.setState({
+          arrImatgesPujades
+      });
+      alert(`handleImatgesPujades`);
   }
 
   render() {
@@ -35,10 +55,10 @@ export default class GrupsMuscularsForm extends Component{
     return (
       <div id="divGrupsMuscularsForm">
         <h2>Nou Grup Muscular</h2>
-        <form className="nougrupmuscular" onSubmit={this.addGrupMuscular.bind(this)}>
+        <form className="nougrupmuscular" onSubmit={this.addGrupMuscular}>
           <input
             type="text"
-            ref="grupMuscularNom"
+            ref={input => this.grupMuscularNom = input}
             placeholder="Nom"
             autoFocus={true}
             style={{
@@ -47,7 +67,7 @@ export default class GrupsMuscularsForm extends Component{
             }}
           />
           <textarea
-            ref="grupMuscularDescripcio"
+            ref={ta => this.grupMuscularDescripcio = ta}
             placeholder="Descripció del grup muscular"
             style={{
                 display: "inline-block",
@@ -56,11 +76,10 @@ export default class GrupsMuscularsForm extends Component{
           />
 
           {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
-          <PujaArxius />
+          <PujaArxius onImatgesPujades={this.handleImatgesPujades} />
 
           <input
             type="submit"
-            ref="grupMuscularSubmit"
             value="Introduir"
           />
         </form>

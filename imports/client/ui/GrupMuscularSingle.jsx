@@ -27,7 +27,7 @@ export default class GrupMuscularSingle extends Component {
                 <a className="aSingleGrupMuscular"
                     href={`grup_muscular/${this.props.grup_muscular._id}`}
                 >
-                    {this.props.grup_muscular.grupMuscularNom }
+                    { this.props.grup_muscular.grupMuscularNom }
                 </a>
                 <button
                     className="btDeleteGrupMuscular"

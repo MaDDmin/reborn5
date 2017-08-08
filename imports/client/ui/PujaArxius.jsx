@@ -8,6 +8,8 @@ export default class PujaArxius extends Component {
       this.fileSelect = this.fileSelect.bind(this);
       this.sendFiles = this.sendFiles.bind(this);
 
+      this.arrImatgesPujades = [];
+
       /* this.sendFiles2 = this.sendFiles2.bind(this); */
       //this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
     }
@@ -61,6 +63,7 @@ export default class PujaArxius extends Component {
     }
 
     sendFiles(arxius) {
+        let that = this;
 
         for (let i = 0; i < arxius.length; i++) {
             let
@@ -75,11 +78,20 @@ export default class PujaArxius extends Component {
             reader2.onload = function (event) {
 
                 let buffer = event.target.result;// = new Uint8Array(event.target.result);
+
                 Meteor.call('imatges.insert',
                       buffer,
-                      "GrupMuscular",
+                      "Provisional",
                       "ID del GM referenciat",
-                      { observacions: "Ací una observació de l'arxiu particular"}
+                      { observacions: "Ací una observació de l'arxiu particular"},
+                      (error, result) => {
+                          that.arrImatgesPujades.push(result);
+                          console.log("ImatgesPujades: ");
+                          console.dir(that.arrImatgesPujades);
+                          // De moment farà els canvis tantes vegades com arxius se passen.
+                          // Se podrà millorar en un futur utilitzant una promesa o un async/await.
+                          that.props.onImatgesPujades(that.arrImatgesPujades);
+                      }
                   );
                 //return (e) => aImg.src = e.target.result;
             };

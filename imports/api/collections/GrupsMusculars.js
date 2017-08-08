@@ -34,17 +34,23 @@ GrupsMusculars.schema = new SimpleSchema({
 });
 
 Meteor.methods({
-  'grups_musculars.insert'(grupMuscularNom, grupMuscularDescripcio){
-    if (!Meteor.userId()){
-      throw new Meteor.Error('not-authorized');
-    }
-    GrupsMusculars.insert({
-      grupMuscularNom, grupMuscularDescripcio,
-      completed: false,
-      createdAt: new Date(),
-      user: Meteor.userId()
-    });
-  },
+    'grups_musculars.insert'(
+        grupMuscularNom,
+        grupMuscularDescripcio,
+        arrImatges) {
+
+        if (!Meteor.userId()) {
+          throw new Meteor.Error('not-authorized');
+        }
+
+        GrupsMusculars.insert( {
+          grupMuscularNom, grupMuscularDescripcio,
+          completed: false,
+          createdAt: new Date(),
+          user: Meteor.userId(),
+          arrImatges
+        });
+    },
 
   'grups_musculars.update'(grupMuscularNom, grupMuscularDescripcio){
     if (Meteor.userId() !== grup_muscular.user){

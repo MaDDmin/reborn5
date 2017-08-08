@@ -9,7 +9,7 @@ $headers_color: steelblue;
 
 #aH1{
   color: $headers_color;
-  text-shadow: 1px 1px 1px grey;
+  text-shadow: 1px 1px 3px grey;
   border: none;
   text-decoration: none;
   font-variant: small-caps;
@@ -32,6 +32,19 @@ html{
 .ulResolutions{
   list-style: none;
 }
+
+// BOTONS
+button, input[type="submit"] {
+    text-decoration: none;
+    border: 1px solid black;
+    margin: 0 .3em;
+    padding: 1em !important;
+    text-align: center;
+    transform: skewX(-12deg);
+}
+
+
+
 
 @keyframes slideIn {
   0%{

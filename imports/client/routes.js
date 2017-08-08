@@ -12,6 +12,7 @@ import ClientDetails from './ui/ClientDetails.jsx';
 import Clients from './ui/Clients.jsx';
 import GrupsMusculars from './ui/GrupsMusculars.jsx';
 import GrupsMuscularsForm from './ui/GrupsMuscularsForm.jsx';
+import GrupMuscularDetails from './ui/GrupMuscularDetails.jsx';
 import Exercicis from './ui/Exercicis.jsx';
 import Rutines from './ui/Rutines.jsx';
 //import MobX from './ui/MobX.jsx';
@@ -49,6 +50,14 @@ FlowRouter.route('/grups_musculars', {
       content: (
         <GrupsMusculars form={<GrupsMuscularsForm />} />
       )
+    });
+  }
+});
+
+FlowRouter.route('/grup_muscular/:id', {
+  action(params){
+    mount(MainLayout, {
+      content: (<GrupMuscularDetails params={{id: params.id}} />)
     });
   }
 });
