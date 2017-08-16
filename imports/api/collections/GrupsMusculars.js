@@ -40,7 +40,7 @@ Meteor.methods({
         arrImatges) {
 
         if (!Meteor.userId()) {
-          throw new Meteor.Error('not-authorized');
+            throw new Meteor.Error('not-authorized');
         }
 
         GrupsMusculars.insert( {

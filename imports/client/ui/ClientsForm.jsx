@@ -7,7 +7,7 @@ export default class ClientsForm extends Component{
   constructor(props){
     super(props);
   }
-  
+
   addClient(event){
     event.preventDefault();
     let clientNom = this.refs.clientNom.value.trim(),
@@ -21,16 +21,17 @@ export default class ClientsForm extends Component{
       clientObservacions = this.refs.clientObservacions.value.trim();
 
 
-    if (clientNom){
-      Meteor.call('clients.insert', clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions, (error, data)=>{
-        if (error){
+    if (clientNom) {
+      Meteor.call('clients.insert', clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions, (error, data) => {
+        if (error) {
           Bert.alert("Logueja't abans d'escriure una resolució.", "danger", "fixed-top", "fa-frown-o");
-        }else{
+        } else {
           this.refs.client.value = "";
         }
       });
     }
   }
+
   render(){
     return (
       <div id="divClientsForm">

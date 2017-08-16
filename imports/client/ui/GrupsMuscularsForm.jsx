@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
-import PujaArxius from './PujaArxius.jsx';
+import PujaArxiusAmbSendButton from './PujaArxiusAmbSendButton.jsx';
 
 export default class GrupsMuscularsForm extends Component{
   constructor(props){
@@ -76,7 +76,7 @@ export default class GrupsMuscularsForm extends Component{
           />
 
           {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
-          <PujaArxius onImatgesPujades={this.handleImatgesPujades} />
+          <PujaArxiusAmbSendButton onImatgesPujades={this.handleImatgesPujades} />
 
           <input
             type="submit"
