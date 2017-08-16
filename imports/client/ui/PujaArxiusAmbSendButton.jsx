@@ -20,7 +20,7 @@ export default class PujaArxiusAmbSendButton extends Component {
 		const
             //that = this,
 			arxius = ev.target.files,
-			preview2 = document.querySelector("#divPreview2");
+			preview = document.querySelector("#divPreview");
 
 		for (let i = 0; i < arxius.length; i++) {
 			let
@@ -32,7 +32,7 @@ export default class PujaArxiusAmbSendButton extends Component {
 			// }
 			let divArx = document.createElement("div");
 			divArx.classList.add("divArx");
-			preview2.appendChild(divArx);
+			preview.appendChild(divArx);
 
 			let img = document.createElement("img");
 			img.classList.add("obj");
@@ -47,15 +47,13 @@ export default class PujaArxiusAmbSendButton extends Component {
 			})(img);
 			reader.readAsDataURL(arx);
 			//reader.readAsArrayBuffer(arx);
-            this.setState((state, props) => {
-                return {
-                    imgArr: state.imgArr.push(arx)
-                };
-            );
 		}
 
 		console.dir(arxius);
 
+        this.setState({
+            imgArr: arxius
+        });
 		//alert("Arxius seleccionats. Missatge a la consola.");
 
 		//this.sendFiles2(arxius)
@@ -74,14 +72,14 @@ export default class PujaArxiusAmbSendButton extends Component {
 				continue;
 			}
 
-			let reader2 = new FileReader();
-			reader2.onload = function (event) {
+			let reader = new FileReader();
+			reader.onload = function (event) {
 
 				let buffer = event.target.result;// = new Uint8Array(event.target.result);
 	            Meteor.call('imatges.insert', buffer);
 				//return (e) => aImg.src = e.target.result;
 			};
-			reader2.readAsDataURL(arx);
+			reader.readAsDataURL(arx);
 			//reader2.readAsArrayBuffer(arx);
 		}
 	}
@@ -91,15 +89,15 @@ export default class PujaArxiusAmbSendButton extends Component {
 			<div>
 				<input
                     type="file"
-					id="inFile2"
+					id="inFile"
 					multiple
 					accept="image/*"
 					style={{ display: `none` }}
 					onChange={this.fileSelect}
 				/>
 				{/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
-				<label htmlFor="inFile2">Selecciona imatges (label + button)</label>
-				<div id="divPreview2" />
+				<label htmlFor="inFile">Selecciona imatges (label + button)</label>
+				<div id="divPreview" />
                 {this.state.imgArr.length > 0 ?
                     <input
                         type="button"
