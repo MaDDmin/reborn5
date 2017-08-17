@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
-import PujaArxiusAmbSendButton from './PujaArxiusAmbSendButton.jsx';
+import PujaArxiusAmbText from './PujaArxiusAmbText.jsx';
 
 export default class GrupsMuscularsForm extends Component{
   constructor(props){
@@ -19,15 +19,27 @@ export default class GrupsMuscularsForm extends Component{
     addGrupMuscular(event) {
         event.preventDefault();
         let
-            that = this;
+            arrImatgesPujadesAmbText = [],
             grupMuscularNom = this.grupMuscularNom.value.trim(),
             grupMuscularDescripcio = this.grupMuscularDescripcio.value.trim();
 
         if (grupMuscularNom) {
+
+            this.state.arrImatgesPujades.forEach(
+                (v, i, a) => {
+                    let
+                        imgTaIterantValue = document.querySelector(`#taArx_${i}`).value,
+                        arrImatgesPujadesAmbTextIterant = v;
+
+                    arrImatgesPujadesAmbTextIterant.imgText = imgTaIterantValue;
+                    arrImatgesPujadesAmbText.push(arrImatgesPujadesAmbTextIterant);
+                }
+            );
+
             Meteor.call('grups_musculars.insert',
                 grupMuscularNom,
                 grupMuscularDescripcio,
-                that.state.arrImatgesPujades,
+                this.state.arrImatgesPujades,
                 (error, data) => {
                     if (error) {
                       Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");
@@ -45,7 +57,7 @@ export default class GrupsMuscularsForm extends Component{
       this.setState({
           arrImatgesPujades
       });
-      alert(`handleImatgesPujades`);
+      //alert(`handleImatgesPujades`);
   }
 
   render() {
@@ -76,7 +88,7 @@ export default class GrupsMuscularsForm extends Component{
           />
 
           {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
-          <PujaArxiusAmbSendButton onImatgesPujades={this.handleImatgesPujades} />
+          <PujaArxiusAmbText onImatgesPujades={this.handleImatgesPujades} />
 
           <input
             type="submit"
