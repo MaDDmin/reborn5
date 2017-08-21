@@ -29,7 +29,33 @@ class GrupMuscularDetailsNoData extends Component {
             <div id="divGrupMuscular">
                 <h2>El Grup Muscular >>> </h2>
                 <h3>ID:{this.props.params.id}</h3>
-                <h4>Nom: {this.props.grup_muscular[0]._id}</h4>
+                <h4>
+                    Nom: {
+                        this.props.grup_muscular[0] ? this.props.grup_muscular[0].grupMuscularNom :
+                        `Carregant...`
+                    }
+                </h4>
+                <h4>Descripció: {
+                        this.props.grup_muscular[0] ?
+                        this.props.grup_muscular[0].grupMuscularDescripcio :
+                        `Carregant...`
+                    }
+                </h4>
+                {this.props.grup_muscular[0] ?
+                    this.props.grup_muscular[0].arrImatges.map(
+                        (v, i, a) => {
+                            return (
+                                <div key={i}>
+                                    <img src={v.imgArx.buffer} alt={v.imgArx.name} />
+                                    <div>
+                                        {v.imgText}
+                                    </div>
+                                </div>
+                            );
+                        }
+                    ) :
+                    `Carregant...`
+                }
             </div>
           );
         /*}*/
@@ -73,7 +99,6 @@ export default createContainer(({ params }) => {
 
   //console.log(props);
     return {
-
         grups_musculars: GrupsMusculars.find().fetch(),
         grup_muscular: GrupsMusculars.find({_id: id}).fetch(),
         exercicis: Exercicis.find().fetch(),

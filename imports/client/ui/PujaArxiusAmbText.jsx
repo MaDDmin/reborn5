@@ -74,11 +74,11 @@ export default class PujaArxiusAmbText extends Component {
                 };
 			})(img);
 			reader.readAsDataURL(arx);
-            console.dir(objImgTxtIterant);
+        //    console.dir(objImgTxtIterant);
 			//reader.readAsArrayBuffer(arx);
 		}
 
-		console.dir(arrImatgesPujadesAmbNoText);
+	//	console.dir(arrImatgesPujadesAmbNoText);
 
         // this.setState({
         //     imgArr: arxius

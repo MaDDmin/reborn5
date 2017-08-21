@@ -33,6 +33,8 @@ export default class GrupsMuscularsForm extends Component{
 
                     arrImatgesPujadesAmbTextIterant.imgText = imgTaIterantValue;
                     arrImatgesPujadesAmbText.push(arrImatgesPujadesAmbTextIterant);
+
+                    console.dir(arrImatgesPujadesAmbText);
                 }
             );
 
