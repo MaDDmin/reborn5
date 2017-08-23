@@ -8,8 +8,8 @@ import { mount } from 'react-mounter';
 import { MainLayout } from './ui/layouts/MainLayout.jsx';
 
 import App from './ui/App.jsx';
-import ClientDetails from './ui/ClientDetails.jsx';
 import Clients from './ui/Clients.jsx';
+import ClientDetails from './ui/ClientDetails.jsx';
 import GrupsMusculars from './ui/GrupsMusculars.jsx';
 import GrupsMuscularsForm from './ui/GrupsMuscularsForm.jsx';
 import GrupMuscularDetails from './ui/GrupMuscularDetails.jsx';

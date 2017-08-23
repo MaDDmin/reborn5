@@ -92,18 +92,17 @@ export default class PujaArxiusAmbText extends Component {
 	}
 
 	sendFiles(arxius) {
-
-		for (let i = 0; i < arxius.length; i++) {
-			let
-				arx = arxius[i],
-				imageType = /^image\//;
-
-			if (!imageType.test(arx.type)) {
-				continue;
-			}
-
-			Meteor.call('.insert', );
-		}
+		// for (let i = 0; i < arxius.length; i++) {
+		// 	let
+		// 		arx = arxius[i],
+		// 		imageType = /^image\//;
+        //
+		// 	if (!imageType.test(arx.type)) {
+		// 		continue;
+		// 	}
+        //
+		// 	Meteor.call('.insert', );
+		// }
 	}
 
 	render() {

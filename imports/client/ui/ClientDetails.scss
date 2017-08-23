@@ -1,0 +1,28 @@
+.divGMDescrip, .divGMImgText {
+    background: rgba(190, 180, 200, .2);
+    font-weight: bold;
+    padding: .5em 1em;
+    margin: .5em 2em;
+    border: 1px solid;
+}
+
+.divGridGMImgs {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-gap: 1em;
+}
+
+.divGMImatges {
+    max-width: 300px;
+    padding: 0 auto;
+    margin: 0 2em;
+    border: 1px solid;
+}
+
+.imgGM {
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 200px;
+}

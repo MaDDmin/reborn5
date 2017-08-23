@@ -23,9 +23,13 @@ GrupsMusculars.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  completed: {
-    type: Boolean,
+  createdAt: {
+    type: Date,
     optional: false
+  },
+  arrImatges: {
+      type: [Object],
+      optional: true
   },
   user: {
     type: String,
@@ -45,7 +49,6 @@ Meteor.methods({
 
         GrupsMusculars.insert( {
           grupMuscularNom, grupMuscularDescripcio,
-          completed: false,
           createdAt: new Date(),
           user: Meteor.userId(),
           arrImatges
@@ -58,7 +61,7 @@ Meteor.methods({
     }
     GrupsMusculars.update(grup_muscular._id, {
       $set: {
-        completed: !grup_muscular.completed
+        //completed: !grup_muscular.completed
       }
     });
   },

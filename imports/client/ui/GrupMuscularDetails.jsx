@@ -1,10 +1,11 @@
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 //import Bert from 'meteor/themeteorchef:bert';
 import { createContainer } from 'meteor/react-meteor-data';
+
+import './GrupMuscularDetails.scss';
 
 class GrupMuscularDetailsNoData extends Component {
     constructor(props) {
@@ -27,35 +28,37 @@ class GrupMuscularDetailsNoData extends Component {
     /*if (this.props.clients.ready()) {*/
         return (
             <div id="divGrupMuscular">
-                <h2>El Grup Muscular >>> </h2>
-                <h3>ID:{this.props.params.id}</h3>
+                <h2>Grup Muscular: </h2>
                 <h4>
-                    Nom: {
+                    {
                         this.props.grup_muscular[0] ? this.props.grup_muscular[0].grupMuscularNom :
                         `Carregant...`
                     }
                 </h4>
-                <h4>Descripció: {
+                <div className="divGMDescrip">
+                    {
                         this.props.grup_muscular[0] ?
                         this.props.grup_muscular[0].grupMuscularDescripcio :
                         `Carregant...`
                     }
-                </h4>
-                {this.props.grup_muscular[0] ?
-                    this.props.grup_muscular[0].arrImatges.map(
-                        (v, i, a) => {
-                            return (
-                                <div key={i}>
-                                    <img src={v.imgArx.buffer} alt={v.imgArx.name} />
-                                    <div>
-                                        {v.imgText}
+                </div>
+                <div className="divGridGMImgs">
+                    {   this.props.grup_muscular[0] ?
+                        this.props.grup_muscular[0].arrImatges.map(
+                            (v, i, a) => {
+                                return (
+                                    <div key={i} className="divGMImatges">
+                                        <img className="imgGM" src={v.imgArx.buffer} alt={v.imgArx.name} />
+                                        <div className="divGMImgText">
+                                            {v.imgText}
+                                        </div>
                                     </div>
-                                </div>
-                            );
-                        }
-                    ) :
-                    `Carregant...`
-                }
+                                );
+                            }
+                        ) :
+                        `Carregant...`
+                    }
+                </div>
             </div>
           );
         /*}*/

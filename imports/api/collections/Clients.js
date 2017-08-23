@@ -58,20 +58,25 @@ Clients.schema = new SimpleSchema({
   user: {
     type: String,
     optional: false
+  },
+  arrImatges: {
+      type: [Object],
+      optional: true
   }
 });
 
 Meteor.methods({
 
-  'clients.insert'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions){
+  'clients.insert'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions, arrImatges){
     if (!Meteor.userId()){
-      throw new Meteor.Error('not-authorized');
+        throw new Meteor.Error('not-authorized');
     }
     Clients.insert({
       clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions,
       completed: false,
       createdAt: new Date(),
-      user: Meteor.userId()
+      user: Meteor.userId(),
+      arrImatges
     });
   },
 
@@ -92,7 +97,7 @@ Meteor.methods({
     }
     Clients.remove(client._id);
   }
-  
+
 });
 
 // Meteor.publish("allResolutions", function(){
