@@ -134,12 +134,14 @@ class LiniaExercici extends Component {
             onChange={this.liniaChange}
         />
         <table>
-          <tr>
-            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
-            <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
-            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
-            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
-          </tr>
+            <tbody>
+              <tr>
+                <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
+                <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
+                <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
+                <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
+              </tr>
+          </tbody>
         </table>
         <button ref="btLiniaUp" ></button>
         <button ref="btLiniaDown" ></button>

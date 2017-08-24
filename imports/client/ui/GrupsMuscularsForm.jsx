@@ -5,16 +5,16 @@ import Bert from 'meteor/themeteorchef:bert';
 import PujaArxiusAmbText from './PujaArxiusAmbText.jsx';
 
 export default class GrupsMuscularsForm extends Component{
-  constructor(props){
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-        arrImatgesPujades: []
-    };
+        this.state = {
+            arrImatgesPujades: []
+        };
 
-    this.addGrupMuscular = this.addGrupMuscular.bind(this);
-    this.handleImatgesPujades = this.handleImatgesPujades.bind(this);
-  }
+        this.addGrupMuscular = this.addGrupMuscular.bind(this);
+        this.handleImatgesPujades = this.handleImatgesPujades.bind(this);
+    }
 
     addGrupMuscular(event) {
         event.preventDefault();
@@ -55,49 +55,49 @@ export default class GrupsMuscularsForm extends Component{
         }
     }
 
-  handleImatgesPujades(arrImatgesPujades) {
-      this.setState({
-          arrImatgesPujades
-      });
-      //alert(`handleImatgesPujades`);
-  }
-
-  render() {
-    if (!this.props.active){
-      return null;
+    handleImatgesPujades(arrImatgesPujades) {
+        this.setState({
+            arrImatgesPujades
+        });
     }
-    return (
-      <div id="divGrupsMuscularsForm">
-        <h2>Nou Grup Muscular</h2>
-        <form className="nougrupmuscular" onSubmit={this.addGrupMuscular}>
-          <input
-            type="text"
-            ref={input => this.grupMuscularNom = input}
-            placeholder="Nom"
-            autoFocus={true}
-            style={{
-                display: "inline-block",
-                width: "40%"
-            }}
-          />
-          <textarea
-            ref={ta => this.grupMuscularDescripcio = ta}
-            placeholder="Descripció del grup muscular"
-            style={{
-                display: "inline-block",
-                width: "40%"
-            }}
-          />
 
-          {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
-          <PujaArxiusAmbText onImatgesPujades={this.handleImatgesPujades} />
+    render() {
+        if (!this.props.active) {
+          return null;
+        }
 
-          <input
-            type="submit"
-            value="Introduir"
-          />
-        </form>
-      </div>
-    );
-  }
+        return (
+            <div id="divGrupsMuscularsForm">
+                <h2>Nou Grup Muscular</h2>
+                <form className="nougrupmuscular" onSubmit={this.addGrupMuscular}>
+                    <input
+                        type="text"
+                        ref={input => this.grupMuscularNom = input}
+                        placeholder="Nom"
+                        autoFocus={true}
+                        style={{
+                            display: "inline-block",
+                            width: "40%"
+                        }}
+                    />
+                    <textarea
+                        ref={ta => this.grupMuscularDescripcio = ta}
+                        placeholder="Descripció del grup muscular"
+                        style={{
+                            display: "inline-block",
+                            width: "40%"
+                        }}
+                    />
+
+                    {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
+                    <PujaArxiusAmbText onImatgesPujades={this.handleImatgesPujades} />
+
+                    <input
+                        type="submit"
+                        value="Introduir"
+                    />
+                </form>
+            </div>
+        );
+    }
 };

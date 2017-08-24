@@ -5,9 +5,9 @@ import { Meteor } from 'meteor/meteor';
 //import Bert from 'meteor/themeteorchef:bert';
 import { createContainer } from 'meteor/react-meteor-data';
 
-import './ClientDetails.scss';
+import './ExerciciDetails.scss';
 
-class ClientDetailsNoData extends Component {
+class ExerciciDetailsNoData extends Component {
     constructor(props) {
         super(props);
 
@@ -27,38 +27,34 @@ class ClientDetailsNoData extends Component {
 
     /*if (this.props.clients.ready()) {*/
         return (
-            <div id="divClient">
-                <h2>Client: </h2>
+            <div id="divExercici">
+                <h2>Exercici: </h2>
                 <h4>
                     {
-                        this.props.client[0] ?
+                        this.props.exercici[0] ?
                         <div>
                             <span id="spnNom">
-                                {this.props.client[0].clientNom}
-                            </span>
-                            &nbsp;
-                            <span id="spnCognom">
-                                {this.props.client[0].clientCognoms}
+                                {this.props.exercici[0].exerciciNom}
                             </span>
                         </div> :
                         `Carregant...`
                     }
                 </h4>
-                <div className="divClientObservacions">
+                <div className="divExerciciDescripcio">
                     {
-                        this.props.client[0] ?
-                        this.props.client[0].clientObservacions :
+                        this.props.exercici[0] ?
+                        this.props.exercici[0].exerciciDescripcio :
                         `Carregant...`
                     }
                 </div>
-                <div className="divGridClientImgs">
-                    {   this.props.client[0] && this.props.client[0].arrImatges ?
-                        this.props.client[0].arrImatges.map(
+                <div className="divGridExerciciImgs">
+                    {   this.props.exercici[0] && this.props.exercici[0].arrImatges ?
+                        this.props.exercici[0].arrImatges.map(
                             (v, i, a) => {
                                 return (
-                                    <div key={i} className="divClientImatges">
-                                        <img className="imgClient" src={v.imgArx.buffer} alt={v.imgArx.name} />
-                                        <div className="divClientImgText">
+                                    <div key={i} className="divExerciciImatges">
+                                        <img className="imgExercici" src={v.imgArx.buffer} alt={v.imgArx.name} />
+                                        <div className="divExerciciImgText">
                                             {v.imgText}
                                         </div>
                                     </div>
@@ -104,7 +100,7 @@ export default createContainer(({ params }) => {
         };
 
     let
-        aquestClient = Clients.find({_id: id}).fetch();//,
+        aquestExercici = Exercicis.find({_id: id}).fetch();//,
         //arrImatges = aquestGM.arrImatges || [];
 
 
@@ -112,12 +108,12 @@ export default createContainer(({ params }) => {
   //console.log(props);
     return {
         clients: Clients.find().fetch(),
-        client: Clients.find({_id: id}).fetch(),
+        exercici: Exercicis.find({_id: id}).fetch(),
         exercicis: Exercicis.find().fetch(),
         rutines: Rutines.find().fetch(),
         imatges: Imatges.find({user: Meteor.userId()}).fetch()
     }
-}, ClientDetailsNoData);
+}, ExerciciDetailsNoData);
 
 //res: Resolutions.find({_id: this.props.id}).fetch()
 //res: "Algo per dir algo..."

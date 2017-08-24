@@ -47,46 +47,69 @@ Exercicis.schema = new SimpleSchema({
     optional: false,
     defaultValue: "1"
   },
-  completed: {
-    type: Boolean,
-    optional: false
-  },
-  user: {
-    type: String,
-    optional: false
-  }
+    arrImatges: {
+        type: [Object],
+        optional: true
+    },
+    user: {
+        type: String,
+        optional: false
+    }
 })
 
 Meteor.methods({
-  'exercicis.insert'(exerciciNom, exerciciGrupMuscular, exerciciDescripcio, exerciciSeriesDefault, exerciciRepeticionsDefault, exerciciDescansDefault, exerciciMinutsDefault){
-    if (!Meteor.userId()){
-      throw new Meteor.Error('not-authorized');
-    }
-    Exercicis.insert({
-      exerciciNom, exerciciGrupMuscular, exerciciDescripcio, exerciciSeriesDefault, exerciciRepeticionsDefault, exerciciDescansDefault, exerciciMinutsDefault,
-      completed: false,
-      createdAt: new Date(),
-      user: Meteor.userId()
-    });
-  },
+    'exercicis.insert'(
+        exerciciNom,
+        exerciciGrupMuscular,
+        exerciciDescripcio,
+        exerciciSeriesDefault,
+        exerciciRepeticionsDefault,
+        exerciciDescansDefault,
+        exerciciMinutsDefault,
+        arrImatges
+    ) {
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Exercicis.insert({
+            exerciciNom,
+            exerciciGrupMuscular,
+            exerciciDescripcio,
+            exerciciSeriesDefault,
+            exerciciRepeticionsDefault,
+            exerciciDescansDefault,
+            exerciciMinutsDefault,
+            createdAt: new Date(),
+            user: Meteor.userId(),
+            arrImatges
+        });
+    },
 
-  'exercicis.update'(exerciciNom, exerciciGrupMuscular, exerciciDescripcio, exerciciSeriesDefault, exerciciRepeticionsDefault, exerciciDescansDefault, exerciciMinutsDefault){
-    if (Meteor.userId() !== exercici.user){
-      throw new Meteor.Error('not-authorized');
-    }
-    Exercicis.update(exercici._id, {
-      $set: {
-        completed: !exercici.completed
-      }
-    });
-  },
+    'exercicis.update'(
+        exerciciNom,
+        exerciciGrupMuscular,
+        exerciciDescripcio,
+        exerciciSeriesDefault,
+        exerciciRepeticionsDefault,
+        exerciciDescansDefault,
+        exerciciMinutsDefault
+    ) {
+        if (Meteor.userId() !== exercici.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Exercicis.update(exercici._id, {
+            $set: {
+                //completed: !exercici.completed
+            }
+        });
+    },
 
-  'exercicis.delete'(exercici){
-    if (Meteor.userId() !== exercici.user){
-      throw new Meteor.Error('not-authorized');
+    'exercicis.delete'(exercici) {
+        if (Meteor.userId() !== exercici.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Exercicis.remove(exercici._id);
     }
-    Exercicis.remove(exercici._id);
-  }
 });
 
 // Meteor.publish("allResolutions", function(){

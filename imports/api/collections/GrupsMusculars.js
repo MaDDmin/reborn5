@@ -41,8 +41,8 @@ Meteor.methods({
     'grups_musculars.insert'(
         grupMuscularNom,
         grupMuscularDescripcio,
-        arrImatges) {
-
+        arrImatges
+    ) {
         if (!Meteor.userId()) {
             throw new Meteor.Error('not-authorized');
         }
@@ -55,23 +55,25 @@ Meteor.methods({
         });
     },
 
-  'grups_musculars.update'(grupMuscularNom, grupMuscularDescripcio){
-    if (Meteor.userId() !== grup_muscular.user){
-      throw new Meteor.Error('not-authorized');
-    }
-    GrupsMusculars.update(grup_muscular._id, {
-      $set: {
-        //completed: !grup_muscular.completed
-      }
-    });
-  },
+    'grups_musculars.update'(grupMuscularNom, grupMuscularDescripcio) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
 
-  'grups_musculars.delete'(grup_muscular){
-    if (Meteor.userId() !== grup_muscular.user){
-      throw new Meteor.Error('not-authorized');
+        GrupsMusculars.update(grup_muscular._id, {
+            $set: {
+                //completed: !grup_muscular.completed
+            }
+        });
+    },
+
+    'grups_musculars.delete'(grup_muscular) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        GrupsMusculars.remove(grup_muscular._id);
     }
-    GrupsMusculars.remove(grup_muscular._id);
-  }
 });
 
 // Meteor.publish("allResolutions", function(){
