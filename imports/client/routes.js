@@ -14,6 +14,7 @@ import GrupsMusculars from './ui/GrupsMusculars.jsx';
 import GrupsMuscularsForm from './ui/GrupsMuscularsForm.jsx';
 import GrupMuscularDetails from './ui/GrupMuscularDetails.jsx';
 import Exercicis from './ui/Exercicis.jsx';
+import ExerciciDetails from './ui/ExerciciDetails.jsx';
 import Rutines from './ui/Rutines.jsx';
 //import MobX from './ui/MobX.jsx';
 import Experimental from './ui/Experimental.jsx';
@@ -68,6 +69,14 @@ FlowRouter.route('/exercicis', {
       content: (
         <Exercicis />
       )
+    });
+  }
+});
+
+FlowRouter.route('/exercici/:id', {
+  action(params){
+    mount(MainLayout, {
+      content: (<ExerciciDetails params={{id: params.id}} />)
     });
   }
 });

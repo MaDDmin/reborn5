@@ -4,6 +4,9 @@ import { Meteor } from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
+import InfiniteCalendar from 'react-infinite-calendar';
+import 'react-infinite-calendar/styles.css';
+
 
 class LiniaExercici extends Component {
   constructor(props){
@@ -227,6 +230,9 @@ export default class RutinesForm extends Component{
     //     number={i}
     //   />);
     // };
+    let
+        today = new Date(),
+        lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
 
     return (
       <div id="divRutinesForm">
@@ -355,6 +361,24 @@ export default class RutinesForm extends Component{
               </div>
             </div>
           </div>
+
+          <InfiniteCalendar
+            selected={today}
+            
+            displayOptions={{
+            }}
+            locale={{
+                locale: require('date-fns/locale/ca'),
+                headerFormat: 'dddd, D MMM',
+                weekdays: ["Dmg","Dll","Dm","Dcs","Djs","Dvs","Dss"],
+                blank: 'Selecciona una data',
+                todayLabel: {
+                 long: 'Anar a avui',
+                 short: 'Avui.'
+             }
+            }}
+          />
+
           <div id="divFinishDate">
             <div className="control-group">
               <label htmlFor="dof-day" className="control-label">Data de Finalització: </label>
