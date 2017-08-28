@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 
-import InfiniteCalendar from 'react-infinite-calendar';
+import InfiniteCalendar, { withRange, Calendar } from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
 
@@ -362,9 +362,14 @@ export default class RutinesForm extends Component{
             </div>
           </div>
 
+          {/*Component= withRange(Calendar)}*/}
+
           <InfiniteCalendar
-            selected={today}
-            
+            display="years"
+            selected={null}
+            min={new Date(1940, 0, 1)}
+            minDate={new Date(1940, 0, 1)}
+            max={new Date()}
             displayOptions={{
             }}
             locale={{

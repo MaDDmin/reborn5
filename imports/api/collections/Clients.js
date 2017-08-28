@@ -35,16 +35,8 @@ Clients.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  clientDayOfBirth: {
-    type: Number,
-    optional: true
-  },
-  clientMonthOfBirth: {
-    type: String,
-    optional: true
-  },
-  clientYearOfBirth: {
-    type: Number,
+  clientDateOfBirth: {
+    type: Date,
     optional: true
   },
   clientObservacions: {
@@ -67,20 +59,35 @@ Clients.schema = new SimpleSchema({
 
 Meteor.methods({
 
-  'clients.insert'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions, arrImatges){
-    if (!Meteor.userId()){
-        throw new Meteor.Error('not-authorized');
-    }
-    Clients.insert({
-      clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions,
-      completed: false,
-      createdAt: new Date(),
-      user: Meteor.userId(),
-      arrImatges
-    });
-  },
+    'clients.insert'(
+        clientNom,
+        clientCognoms,
+        clientMobil,
+        clientEmail,
+        clientAddress,
+        clientDateOfBirth,
+        clientObservacions,
+        arrImatges
+    ) {
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Clients.insert({
+            clientNom,
+            clientCognoms,
+            clientMobil,
+            clientEmail,
+            clientAddress,
+            clientDateOfBirth,
+            clientObservacions,
+            completed: false,
+            createdAt: new Date(),
+            user: Meteor.userId(),
+            arrImatges
+        });
+    },
 
-  'clients.update'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions){
+    'clients.update'(clientNom, clientCognoms, clientMobil, clientEmail, clientAddress, clientDayOfBirth, clientMonthOfBirth, clientYearOfBirth, clientObservacions){
     if (Meteor.userId() !== client.user){
       throw new Meteor.Error('not-authorized');
     }
