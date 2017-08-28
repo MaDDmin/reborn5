@@ -117,7 +117,29 @@ export default class PujaArxiusAmbText extends Component {
 					onChange={this.fileSelect}
 				/>
 				{/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
-				<label htmlFor="inFile">Selecciona imatges (label + button)</label>
+				<label htmlFor="inFile" >
+                    <div
+                        id="divUpload"
+                        style={{
+                            display: `grid`,
+                            border: `.6em dashed white`,
+                            color: `white`,
+                            fontWeight: `bold`,
+                            textAlign: `center`,
+                            margin: `.3em 1em`,
+                            width: `150px`,
+                            height: `200px`
+                        }}
+                    >
+                        <span
+                            style={{
+                                alignSelf: `center`
+                            }}
+                        >
+                                Inclou imatges
+                        </span>
+                    </div>
+                </label>
 				<div id="divPreview" />
 			</div>
 		);
