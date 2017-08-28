@@ -84,8 +84,6 @@ export default class GrupsMuscularsForm extends Component{
                         ref={ta => this.grupMuscularDescripcio = ta}
                         placeholder="Descripció del grup muscular"
                         style={{
-                            display: "inline-block",
-                            width: "40%"
                         }}
                     />
 

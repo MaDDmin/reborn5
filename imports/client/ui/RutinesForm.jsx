@@ -9,194 +9,204 @@ import 'react-infinite-calendar/styles.css';
 
 
 class LiniaExercici extends Component {
-  constructor(props){
-    super(props);
+    constructor(props) {
+        super(props);
 
-    // this.state = extendObservable(this, {
-    //   exerciciSel: "",
-    //   ordre: 0,
-    //   repeticions: 0,
-    //   series: 0,
-    //   descans: 0,
-    //   minuts: 0,
-    //   tipus: "Normal"
-    // });
+        this.liniaChange = this.liniaChange.bind(this);
+    }
 
-    this.liniaChange = this.liniaChange.bind(this);
-  }
+      // actualitzaDefaultsExercici(event){
+      //   event.preventDefault();
+      //
+      //   // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
+      //
+      //   let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
+      //     defaultRepeticions = this.props.exercicis.find({})
+      //
+      //
+      // }
+      //
+      // actualitzaLiniaExercici(event){
+      //   event.preventDefault();
+      //
+      //   // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
+      //
+      //   let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
+      //     repeticions;
+      // }
+      //
+      // ELS BOTONS:
+      //
+      // liniaUp(event){
+      //   event.preventDefault();
+      //
+      // }
+      //
+      // liniaDown(event){
+      //   event.preventDefault();
+      //
+      // }
+      //
+      // liniaDelete(event){
+      //   event.preventDefault();
+      //
+      // }
 
-  // actualitzaDefaultsExercici(event){
-  //   event.preventDefault();
-  //
-  //   // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
-  //
-  //   let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
-  //     defaultRepeticions = this.props.exercicis.find({})
-  //
-  //
-  // }
-  //
-  // actualitzaLiniaExercici(event){
-  //   event.preventDefault();
-  //
-  //   // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
-  //
-  //   let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
-  //     repeticions;
-  // }
-  //
-  // liniaUp(event){
-  //   event.preventDefault();
-  //
-  // }
-  //
-  // liniaDown(event){
-  //   event.preventDefault();
-  //
-  // }
-  //
-  // liniaDelete(event){
-  //   event.preventDefault();
-  //
-  // }
-
-  componentDidMount() {
+    componentDidMount() {
     // if (!this.refs.selExercici.selectedOptions[0]){
     //   this.refs.selExercici.options[0].setAttribute("selected", true);
     // }
-//    this.selExerciciChange();
-  }
-
-  selExerciciChange(ev) {
-    if (!!this.refs.selExercici.selectedOptions.length) {
-      let exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
-        exer = JSON.parse(exerStringified);
-        // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
-        this.state.exerciciSel = exer;
-    } else {
-      this.refs.selExercici.options[0].setAttribute("selected", "selected");
+    //    this.selExerciciChange();
     }
 
-    this.refs.inRepeticions.value = this.state.repeticions;
-    this.refs.inSeries.value = this.state.series;
-    this.refs.inDescans.value = this.state.descans;
-    this.refs.inMinuts.value = this.state.minuts;
-  }
+    selExerciciChange(ev) {
+        if (!!this.refs.selExercici.selectedOptions.length) {
+            let
+                exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
+                exer = JSON.parse(exerStringified);
+            // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
+            this.state.exerciciSel = exer;
+        } else {
+            this.refs.selExercici.options[0].setAttribute("selected", "selected");
+        }
 
-   altraOp() {
-    this.state.repeticions = this.refs.inRepeticions.value;
-    this.state.series = this.refs.inSeries.value;
-    this.state.descans = this.refs.inDescans.value;
-    this.state.minuts = this.refs.inMinuts.value;
+        this.refs.inRepeticions.value = this.state.repeticions;
+        this.refs.inSeries.value = this.state.series;
+        this.refs.inDescans.value = this.state.descans;
+        this.refs.inMinuts.value = this.state.minuts;
+    }
 
-    this.selExerciciChange();
+    altraOp() {
+        this.state.repeticions = this.refs.inRepeticions.value;
+        this.state.series = this.refs.inSeries.value;
+        this.state.descans = this.refs.inDescans.value;
+        this.state.minuts = this.refs.inMinuts.value;
 
-    console.log(`State: ${JSON.stringify(this.state)}`);
-    console.dir(toJS(this.state));
-  }
+        this.selExerciciChange();
 
-  liniaChange(ev) {
+        console.log(`State: ${JSON.stringify(this.state)}`);
+        console.dir(toJS(this.state));
+    }
 
-  }
+    liniaChange(ev) {
+    }
 
-
-  render() {
-    return (
-      <li className="liSelEx">
-        <select className="selExercici" ref="selExercici" onChange={this.liniaChange} >
-          {
-            this.props.exercicis.map(exercici=>(
-              <option key={exercici.exerciciNom} value={exercici._id} data-exercici={JSON.stringify(exercici)} >
-                { exercici.exerciciNom }
-              </option>
-            ))
-          }
-        </select>
-        <input
-            type="text"
-            placeholder="Repeticions"
-            ref="inRepeticions"
-            onChange={this.liniaChange}
-        />
-        <input
-            type="text"
-            placeholder="Series"
-            ref="inSeries"
-            onChange={this.liniaChange}
-        />
-        <input
-            type="text"
-            placeholder="Descans"
-            ref="inDescans"
-            onChange={this.liniaChange}
-        />
-        <input
-            type="text"
-            placeholder="Minuts"
-            ref="inMinuts"
-            onChange={this.liniaChange}
-        />
-        <table>
-            <tbody>
-              <tr>
-                <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
-                <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
-                <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
-                <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
-              </tr>
-          </tbody>
-        </table>
-        <button ref="btLiniaUp" ></button>
-        <button ref="btLiniaDown" ></button>
-        <button ref="btLiniaDelete" ></button>
-      </li>
-    );
-  }
+    render() {
+        return (
+            <li className="liSelEx">
+                <select
+                    className="selExercici"
+                    ref={selExercici => this.selExercici = selExercici}
+                    onChange={this.liniaChange}
+                >
+                    {
+                        this.props.exercicis.map(exercici => (
+                            <option
+                                key={exercici.exerciciNom}
+                                value={exercici._id}
+                                data-exercici={JSON.stringify(exercici)}
+                            >
+                                { exercici.exerciciNom }
+                            </option>
+                        ))
+                    }
+                </select>
+                <input
+                    type="text"
+                    placeholder="Repeticions"
+                    ref={inRepeticions => this.inRepeticions = inRepeticions}
+                    onChange={this.liniaChange}
+                />
+                <input
+                    type="text"
+                    placeholder="Series"
+                    ref={inSeries => this.inSeries = inSeries}
+                    onChange={this.liniaChange}
+                />
+                <input
+                    type="text"
+                    placeholder="Descans"
+                    ref={inDescans => this.inDescans = inDescans}
+                    onChange={this.liniaChange}
+                />
+                <input
+                    type="text"
+                    placeholder="Minuts"
+                    ref={inMinuts => this.inMinuts = inMinuts}
+                    onChange={this.liniaChange}
+                />
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><input type="radio" name="tipusLinia" title="Normal" value="Normal" /></td>
+                            <td><input type="radio" name="tipusLinia" title="Super" value="Super" /></td>
+                            <td><input type="radio" name="tipusLinia" title="Triple" value="Triple" /></td>
+                            <td><input type="radio" name="tipusLinia" title="Separador" value="Separador" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button ref={btLiniaUp => this.btLiniaUp = btLiniaUp} ></button>
+                <button ref={btLiniaDown => this.btLiniaDown = btLiniaDown} ></button>
+                <button ref={btLiniaDelete => this.btLiniaDelete = btLiniaDelete} ></button>
+            </li>
+        );
+    }
 }
 
-class LlistaExercicis extends Component{
-  constructor(props){
-    super(props);
-  }
+class LlistaExercicis extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-  render () {
-    return (
-      <div>
-        <ol id="olSelEx" ref="olSelEx">
-          {this.props.children}
-        </ol>
-        <button id="btAddEx" ref="btAddEx" >+</button>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <ol
+                    id="olSelEx"
+                    ref={olSelEx => this.olSelEx = olSelEx}
+                >
+                    {this.props.children}
+                </ol>
+                <button
+                    id="btAddEx"
+                    ref={btAddEx => this.btAddEx = btAddEx}
+                >
+                    +
+                </button>
+            </div>
+        );
+    }
 }
 
-export default class RutinesForm extends Component{
-  constructor(props){
-    super(props);
-    // this.state = {
-    //   nombreExercicis: 1
-    // };
-  }
+export default class RutinesForm extends Component {
+    constructor(props) {
+        super(props);
+        // this.state = {
+        //   nombreExercicis: 1
+        // };
+    }
 
-  onAddSelEx(event){
-    event.preventDefault();
-    let olSelEx = this.refs.olSelEx,
-        newSelEx = () => (<li className="liSelEx">
-        <select ref="selExercici">
-          {
-            this.props.exercicis.map(exercici =>
-              <option key={exercici.exerciciNom} value={exercici._id}>
-                { exercici.exerciciNom }
-              </option>
-            )
-          }
-        </select>
-      </li>);
+    onAddSelEx(event) {
+        event.preventDefault();
+        let
+            olSelEx = this.olSelEx,
+            newSelEx = () => (
+                <li className="liSelEx">
+                    <select ref={selExercici => this.selExercici = selExercici} >
+                        {
+                            this.props.exercicis.map((exercici, index) =>
+                                <option key={index} value={exercici._id}>
+                                    { exercici.exerciciNom }
+                                </option>
+                            )
+                        }
+                    </select>
+                </li>
+            );
 
-    olSelEx.appendChild(newSelEx);
-  }
-
+        olSelEx.appendChild(newSelEx);
+    }
+//*****************************************************************************************************************
   addRutina(event){
     event.preventDefault();
     let rutinaNom = this.refs.rutinaNom.value.trim(),
@@ -264,112 +274,19 @@ export default class RutinesForm extends Component{
               )
             }
           </select>
-          <div id="divStartDate">
-            <div className="control-group">
-              <label htmlFor="dos-day" className="control-label">Data d'Inici: </label>
-              <div className="controls">
-                <select name="rutinaDayOfStart" id="rutinaDayOfStart" ref="rutinaDayOfStart">
-                  <option value="">Dia</option>
-                  <option value="">---</option>
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="09">09</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                  <option value="13">13</option>
-                  <option value="14">14</option>
-                  <option value="15">15</option>
-                  <option value="16">16</option>
-                  <option value="17">17</option>
-                  <option value="18">18</option>
-                  <option value="19">19</option>
-                  <option value="20">20</option>
-                  <option value="21">21</option>
-                  <option value="22">22</option>
-                  <option value="23">23</option>
-                  <option value="24">24</option>
-                  <option value="25">25</option>
-                  <option value="26">26</option>
-                  <option value="27">27</option>
-                  <option value="28">28</option>
-                  <option value="29">29</option>
-                  <option value="30">30</option>
-                  <option value="31">31</option>
-                </select>
-                <select name="rutinaMonthOfStart" id="rutinaMonthOfStart" ref="rutinaMonthOfStart">
-                  <option value="">Mes</option>
-                  <option value="">-----</option>
-                  <option value="01">Gener</option>
-                  <option value="02">Febrer</option>
-                  <option value="03">Març</option>
-                  <option value="04">Abril</option>
-                  <option value="05">Maig</option>
-                  <option value="06">Juny</option>
-                  <option value="07">Juliol</option>
-                  <option value="08">Agost</option>
-                  <option value="09">Setembre</option>
-                  <option value="10">Octubre</option>
-                  <option value="11">Novembre</option>
-                  <option value="12">Desembre</option>
-                </select>
-                <select name="rutinaYearOfStart" id="rutinaYearOfStart" ref="rutinaYearOfStart">
-                  <option value="">Any</option>
-                  <option value="">----</option>
-                  <option value="2016">2016</option>
-                  <option value="2017">2017</option>
-                  <option value="2018">2018</option>
-                  <option value="2019">2019</option>
-                  <option value="2020">2020</option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                  <option value="2026">2026</option>
-                  <option value="2027">2027</option>
-                  <option value="2028">2028</option>
-                  <option value="2029">2029</option>
-                  <option value="2030">2030</option>
-                  <option value="2031">2031</option>
-                  <option value="2032">2032</option>
-                  <option value="2033">2033</option>
-                  <option value="2034">2034</option>
-                  <option value="2035">2035</option>
-                  <option value="2036">2036</option>
-                  <option value="2037">2037</option>
-                  <option value="2038">2038</option>
-                  <option value="2039">2039</option>
-                  <option value="2040">2040</option>
-                  <option value="2041">2041</option>
-                  <option value="2042">2042</option>
-                  <option value="2043">2043</option>
-                  <option value="2044">2044</option>
-                  <option value="2045">2045</option>
-                  <option value="2046">2046</option>
-                  <option value="2047">2047</option>
-                  <option value="2048">2048</option>
-                  <option value="2049">2049</option>
-                  <option value="2050">2050</option>
-                </select>
-              </div>
-            </div>
-          </div>
 
           {/*Component= withRange(Calendar)}*/}
 
           <InfiniteCalendar
-            display="years"
-            selected={null}
+            Component={withRange(Calendar)}
+            selected={{
+                start: new Date(),
+                end: new Date()
+            }}
             min={new Date(1940, 0, 1)}
             minDate={new Date(1940, 0, 1)}
             max={new Date()}
+
             displayOptions={{
             }}
             locale={{
@@ -384,103 +301,6 @@ export default class RutinesForm extends Component{
             }}
           />
 
-          <div id="divFinishDate">
-            <div className="control-group">
-              <label htmlFor="dof-day" className="control-label">Data de Finalització: </label>
-              <div className="controls">
-                <select name="rutinaDayOfFinish" id="rutinaDayOfFinish" ref="rutinaDayOfFinish">
-                  <option value="">Dia</option>
-                  <option value="">---</option>
-                  <option value="01">01</option>
-                  <option value="02">02</option>
-                  <option value="03">03</option>
-                  <option value="04">04</option>
-                  <option value="05">05</option>
-                  <option value="06">06</option>
-                  <option value="07">07</option>
-                  <option value="08">08</option>
-                  <option value="09">09</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-                  <option value="13">13</option>
-                  <option value="14">14</option>
-                  <option value="15">15</option>
-                  <option value="16">16</option>
-                  <option value="17">17</option>
-                  <option value="18">18</option>
-                  <option value="19">19</option>
-                  <option value="20">20</option>
-                  <option value="21">21</option>
-                  <option value="22">22</option>
-                  <option value="23">23</option>
-                  <option value="24">24</option>
-                  <option value="25">25</option>
-                  <option value="26">26</option>
-                  <option value="27">27</option>
-                  <option value="28">28</option>
-                  <option value="29">29</option>
-                  <option value="30">30</option>
-                  <option value="31">31</option>
-                </select>
-                <select name="rutinaMonthOfFinish" id="rutinaMonthOfFinish" ref="rutinaMonthOfFinish">
-                  <option value="">Mes</option>
-                  <option value="">-----</option>
-                  <option value="01">Gener</option>
-                  <option value="02">Febrer</option>
-                  <option value="03">Març</option>
-                  <option value="04">Abril</option>
-                  <option value="05">Maig</option>
-                  <option value="06">Juny</option>
-                  <option value="07">Juliol</option>
-                  <option value="08">Agost</option>
-                  <option value="09">Setembre</option>
-                  <option value="10">Octubre</option>
-                  <option value="11">Novembre</option>
-                  <option value="12">Desembre</option>
-                </select>
-                <select name="rutinaYearOfFinish" id="rutinaYearOfFinish" ref="rutinaYearOfFinish">
-                  <option value="">Any</option>
-                  <option value="">----</option>
-                  <option value="2016">2016</option>
-                  <option value="2017">2017</option>
-                  <option value="2018">2018</option>
-                  <option value="2019">2019</option>
-                  <option value="2020">2020</option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                  <option value="2026">2026</option>
-                  <option value="2027">2027</option>
-                  <option value="2028">2028</option>
-                  <option value="2029">2029</option>
-                  <option value="2030">2030</option>
-                  <option value="2031">2031</option>
-                  <option value="2032">2032</option>
-                  <option value="2033">2033</option>
-                  <option value="2034">2034</option>
-                  <option value="2035">2035</option>
-                  <option value="2036">2036</option>
-                  <option value="2037">2037</option>
-                  <option value="2038">2038</option>
-                  <option value="2039">2039</option>
-                  <option value="2040">2040</option>
-                  <option value="2041">2041</option>
-                  <option value="2042">2042</option>
-                  <option value="2043">2043</option>
-                  <option value="2044">2044</option>
-                  <option value="2045">2045</option>
-                  <option value="2046">2046</option>
-                  <option value="2047">2047</option>
-                  <option value="2048">2048</option>
-                  <option value="2049">2049</option>
-                  <option value="2050">2050</option>
-                </select>
-              </div>
-            </div>
-          </div>
           <fieldset>
             <legend>Llista d'exercicis: </legend>
 

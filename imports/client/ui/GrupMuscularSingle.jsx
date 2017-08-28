@@ -22,8 +22,16 @@ export default class GrupMuscularSingle extends Component {
         const grupMuscularClass = this.props.grup_muscular.completed ? "checked" : "";
         //const status = this.props.client.completed ? <span className="spnCompleted">Completed</span> : "";
 
+        // Per als GMs, volem una llista amb els seus noms i botons
         return (
-            <li className={grupMuscularClass}>
+            <li
+                className={grupMuscularClass}
+                style={{
+                    display: `grid`,
+                    gridAutoFlow: `column`,
+                    alignSelf: `center`
+                }}
+            >
                 <a className="aSingleGrupMuscular"
                     href={`grup_muscular/${this.props.grup_muscular._id}`}
                 >

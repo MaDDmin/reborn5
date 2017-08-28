@@ -1,24 +1,30 @@
 input,
 textarea{
   display: block;
+  width: 100%;
+}
+
+input[type="radio"] {
+    display: inline-block;
+    width: auto !important;
 }
 
 #divInNomClient,
 #divInGender{
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  // display: flex;
+  // justify-content: space-between;
+  // flex-wrap: wrap;
 }
 
 .inNomClient,
 .divGenderOption {
-  flex-grow: 2;
-  display: inline-block;
-  width: 31%;
+  // flex-grow: 2;
+  // display: inline-block;
+  // width: 31%;
 }
 
 .divGenderOption{
-  text-align: right;
+  // text-align: right;
 }
 
 .divGenderOption input[type="radio"]{
@@ -26,7 +32,7 @@ textarea{
 }
 
 #divClientContact {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  // display: flex;
+  // justify-content: space-between;
+  // flex-wrap: wrap;
 }

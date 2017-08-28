@@ -70,6 +70,9 @@ class GrupsMuscularsNoData extends Component {
                 transitionAppearTimeout={600}
                 transitionEnterTimeout={600}
                 transitionLeaveTimeout={400}
+                style={{
+                    display: `grid`
+                }}
             >
                 <CSSTransitionGroup
                     component="ul"
@@ -77,6 +80,9 @@ class GrupsMuscularsNoData extends Component {
                     transitionName="route"
                     transitionEnterTimeout={600}
                     transitionLeaveTimeout={400}
+                    style={{
+                        display: `grid`
+                    }}
                 >
                     {  this.props.grups_musculars.map((grup_muscular) => (
                             <GrupMuscularSingle
