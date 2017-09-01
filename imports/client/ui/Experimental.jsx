@@ -7,6 +7,10 @@ import './Experimental.scss';
 
 import { Motion, spring } from 'react-motion';
 
+import Select from 'react-select';
+// Be sure to include styles at some point, probably during your bootstrapping
+import 'react-select/dist/react-select.css';
+
 class Clock extends Component {
 	constructor(props) {
 		super(props);
@@ -1202,10 +1206,12 @@ class Experimental extends Component {
 		super(props);
 
 		this.state = {
-			colorIndex: 0
+			colorIndex: 0,
+            selectValue: ``
 		};
 
 		this.changeColor = this.changeColor.bind(this);
+        this.updateSelectValue = this.updateSelectValue.bind(this);
 	}
 
 	changeColor() {
@@ -1214,7 +1220,24 @@ class Experimental extends Component {
 		}));
 	}
 
+    updateSelectValue(selectValue) {
+        this.setState({ selectValue });
+    }
+
 	render() {
+        let arrNomsClients = [];
+
+        this.props.clients.map(
+            (client) => {
+                //console.log(JSON.stringify(client));
+                arrNomsClients.push({
+                    value: `${client._id}`,
+                    label: `${client.clientCognoms}, ${client.clientNom}`,
+                    className: `autoCompleteSelectOption`
+                });
+            }
+        );
+
 		return (
 			<div>
 
@@ -1315,6 +1338,14 @@ class Experimental extends Component {
 					<h2>Imatges Preexistents: </h2>
 					<ImatgesPreexistents imatges={this.props.imatges} />
 				</div>
+
+                <div id="divSelectExp">
+                    <Select
+                        value={this.state.value}
+                        options={arrNomsClients}
+                        onChange={this.updateSelectValue}
+                    />
+                </div>
 
 			</div>
 		)

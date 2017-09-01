@@ -27,28 +27,12 @@ Rutines.schema = new SimpleSchema({
     type: String,
     optional: true
   },
-  rutinaDiaInici: {
-    type: String,
+  rutinaDataInici: {
+    type: Date,
     optional: true
   },
-  rutinaMesInici: {
-    type: String,
-    optional: true
-  },
-  rutinaAnyInici: {
-    type: Number,
-    optional: true
-  },
-  rutinaDiaFi: {
-    type: String,
-    optional: true
-  },
-  rutinaMesFi: {
-    type: Number,
-    optional: true
-  },
-  rutinaAnyFi: {
-    type: String,
+  rutinaDataFi: {
+    type: Date,
     optional: true
   },
   rutinaDescripcio: {
@@ -66,15 +50,29 @@ Rutines.schema = new SimpleSchema({
 });
 
 Meteor.methods({
-  'rutines.insert'(rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio){
-    if (!Meteor.userId()){
-      throw new Meteor.Error('not-authorized');
-    }
-    Rutines.insert({rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio,
-      completed: false,
-      createdAt: new Date(),
-      user: Meteor.userId()
-    });
+  'rutines.insert'(
+      rutinaNom,
+      rutinaClient,
+      rutinaGrupMuscular,
+      rutinaDataInici,
+      rutinaDataFi,
+      rutinaDescripcio
+  ) {
+        if (!Meteor.userId()) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        Rutines.insert({
+            rutinaNom,
+            rutinaClient,
+            rutinaGrupMuscular,
+            rutinaDataInici,
+            rutinaDataFi,
+            rutinaDescripcio,
+            completed: false,
+            createdAt: new Date(),
+            user: Meteor.userId()
+        });
   },
 
   'rutines.update'(rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio){

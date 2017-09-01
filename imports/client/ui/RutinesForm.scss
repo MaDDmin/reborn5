@@ -1,3 +1,19 @@
 .liSelEx > * {
     display: inline;
 }
+
+.autoCompleteSelectOption {
+    z-index: 1000 !important;
+}
+
+.Select:nth-of-type(1) {
+    z-index: 10000;
+}
+
+.Select:nth-of-type(2) {
+    z-index: 9000;
+}
+
+.Select:nth-of-type(3) {
+    z-index: 8000;
+}

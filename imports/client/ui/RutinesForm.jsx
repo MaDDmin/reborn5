@@ -7,6 +7,9 @@ import Bert from 'meteor/themeteorchef:bert';
 import InfiniteCalendar, { withRange, Calendar } from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
 
+import Select from 'react-select';
+// Be sure to include styles at some point, probably during your bootstrapping
+import 'react-select/dist/react-select.css';
 
 class LiniaExercici extends Component {
     constructor(props) {
@@ -15,72 +18,31 @@ class LiniaExercici extends Component {
         this.liniaChange = this.liniaChange.bind(this);
     }
 
-      // actualitzaDefaultsExercici(event){
-      //   event.preventDefault();
-      //
-      //   // Aquest mètode actualitza els valors per defecte del nombre de repeticions, de sèries, temps de descans i minuts assignats a cada exercici de la Llista.
-      //
-      //   let exerciciSelected = this.refs.selExercici.selectedOptions[0].value,
-      //     defaultRepeticions = this.props.exercicis.find({})
-      //
-      //
-      // }
-      //
-      // actualitzaLiniaExercici(event){
-      //   event.preventDefault();
-      //
-      //   // Aquest mètode actualitzarà l'estat del component LiniaExercici que ha sigut modificat amb les noves dades.
-      //
-      //   let exerciciTriat = this.refs.selExercici.selectedOptions[0].value,
-      //     repeticions;
-      // }
-      //
-      // ELS BOTONS:
-      //
-      // liniaUp(event){
-      //   event.preventDefault();
-      //
-      // }
-      //
-      // liniaDown(event){
-      //   event.preventDefault();
-      //
-      // }
-      //
-      // liniaDelete(event){
-      //   event.preventDefault();
-      //
-      // }
-
     componentDidMount() {
-    // if (!this.refs.selExercici.selectedOptions[0]){
-    //   this.refs.selExercici.options[0].setAttribute("selected", true);
-    // }
-    //    this.selExerciciChange();
     }
 
     selExerciciChange(ev) {
-        if (!!this.refs.selExercici.selectedOptions.length) {
+        if (!!this.selExercici.selectedOptions.length) {
             let
-                exerStringified = this.refs.selExercici.selectedOptions[0].getAttribute("data-exercici"),
+                exerStringified = this.selExercici.selectedOptions[0].getAttribute("data-exercici"),
                 exer = JSON.parse(exerStringified);
             // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
-            this.state.exerciciSel = exer;
+            this.exerciciSel = exer;
         } else {
-            this.refs.selExercici.options[0].setAttribute("selected", "selected");
+            this.selExercici.options[0].setAttribute("selected", "selected");
         }
 
-        this.refs.inRepeticions.value = this.state.repeticions;
-        this.refs.inSeries.value = this.state.series;
-        this.refs.inDescans.value = this.state.descans;
-        this.refs.inMinuts.value = this.state.minuts;
+        this.inRepeticions.value = this.state.repeticions;
+        this.inSeries.value = this.state.series;
+        this.inDescans.value = this.state.descans;
+        this.inMinuts.value = this.state.minuts;
     }
 
     altraOp() {
-        this.state.repeticions = this.refs.inRepeticions.value;
-        this.state.series = this.refs.inSeries.value;
-        this.state.descans = this.refs.inDescans.value;
-        this.state.minuts = this.refs.inMinuts.value;
+        this.state.repeticions = this.inRepeticions.value;
+        this.state.series = this.inSeries.value;
+        this.state.descans = this.inDescans.value;
+        this.state.minuts = this.inMinuts.value;
 
         this.selExerciciChange();
 
@@ -181,9 +143,17 @@ class LlistaExercicis extends Component {
 export default class RutinesForm extends Component {
     constructor(props) {
         super(props);
-        // this.state = {
-        //   nombreExercicis: 1
-        // };
+
+        this.state = {
+            rangeOfDates: {},
+            selectClientsValue: ``,
+            selectGMsValue: ``
+        }
+
+        this.addRutina = this.addRutina.bind(this);
+        this.handleDates = this.handleDates.bind(this);
+        this.selectClientsUpdateValue = this.selectClientsUpdateValue.bind(this);
+        this.selectGMsUpdateValue = this.selectGMsUpdateValue.bind(this);
     }
 
     onAddSelEx(event) {
@@ -194,8 +164,8 @@ export default class RutinesForm extends Component {
                 <li className="liSelEx">
                     <select ref={selExercici => this.selExercici = selExercici} >
                         {
-                            this.props.exercicis.map((exercici, index) =>
-                                <option key={index} value={exercici._id}>
+                            this.props.exercicis.map(exercici =>
+                                <option key={exercici._id} value={exercici._id}>
                                     { exercici.exerciciNom }
                                 </option>
                             )
@@ -206,129 +176,170 @@ export default class RutinesForm extends Component {
 
         olSelEx.appendChild(newSelEx);
     }
-//*****************************************************************************************************************
-  addRutina(event){
-    event.preventDefault();
-    let rutinaNom = this.refs.rutinaNom.value.trim(),
-        rutinaClient = this.refs.selClient.selectedOptions[0].value,
-        rutinaGrupMuscular = this.refs.selGrupMuscular.selectedOptions[0].value,
-        rutinaDiaInici = this.refs.rutinaDayOfStart.selectedOptions[0].value,
-        rutinaMesInici = this.refs.rutinaMonthOfStart.selectedOptions[0].value,
-        rutinaAnyInici = this.refs.rutinaYearOfStart.selectedOptions[0].value,
-        rutinaDiaFi = this.refs.rutinaDayOfFinish.selectedOptions[0].value,
-        rutinaMesFi = this.refs.rutinaMonthOfFinish.selectedOptions[0].value,
-        rutinaAnyFi = this.refs.rutinaYearOfFinish.selectedOptions[0].value,
-        rutinaDescripcio = this.refs.rutinaDescripcio.value.trim();
 
-    if (rutinaNom){
-      Meteor.call('rutines.insert', rutinaNom, rutinaClient, rutinaGrupMuscular, rutinaDiaInici, rutinaMesInici, rutinaAnyInici, rutinaDiaFi, rutinaMesFi, rutinaAnyFi, rutinaDescripcio, (error, data)=>{
-        if (error){
-          Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");
-        }else{
-          this.refs.rutinaNom.value = "";
-          this.refs.rutinaDescripcio.value = "";
+    addRutina(event) {
+        event.preventDefault();
+        let
+            rutinaNom = this.rutinaNom.value.trim(),
+            rutinaClient = this.selClient.selectedOptions[0].value,
+            rutinaGrupMuscular = this.selGrupMuscular.selectedOptions[0].value,
+            rutinaDescripcio = this.rutinaDescripcio.value.trim(),
+
+            rutinaDataInici = this.state.rangeOfDates.start,
+            rutinaDataFi = this.state.rangeOfDates.end;
+
+        if (rutinaNom) {
+            Meteor.call(
+                'rutines.insert',
+                rutinaNom,
+                rutinaClient,
+                rutinaGrupMuscular,
+                rutinaDataInici,
+                rutinaDataFi,
+                rutinaDescripcio,
+                (error, data) => {
+                    if (error) {
+                        Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");
+                    } else {
+                        this.rutinaNom.value = "";
+                        this.rutinaDescripcio.value = "";
+                    }
+                }
+            );
         }
-      });
     }
-  }
 
-  render(){
-    // const children = [];
-    //
-    // for (let i = 0; i < this.state.nombreExercicis; i += 1) {
-    //   children.push(<LiniaExercici
-    //     number={i}
-    //   />);
-    // };
-    let
-        today = new Date(),
-        lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+    handleDates(data) {
+        if (data.eventType === 3) {
+            // this.infCal.props.rangeOfDates.start = data.start;
+            // this.infCal.props.rangeOfDates.end = data.end;
 
-    return (
-      <div id="divRutinesForm">
-        <h2>Nova Rutina</h2>
-        <form className="novarutina" onSubmit={this.addRutina.bind(this)}>
-          <input
-            type="text"
-            ref="rutinaNom"
-            placeholder="Nom de la Rutina"
-          />
-          <label>Client: </label>
-          <select ref="selClient">
-            {
-              this.props.clients.map(client=>
-                <option key={client.clientNom} value={client._id}>
-                  { client.clientCognoms+", "+client.clientNom }
-                </option>
+            this.setState({
+                rangeOfDates: data
+            });
+        }
+    }
 
-              )
+    selectClientsUpdateValue(selectClientsValue) {
+        this.setState({ selectClientsValue });
+    }
+
+    selectGMsUpdateValue(selectGMsValue) {
+        this.setState({ selectGMsValue });
+    }
+
+    render() {
+        let
+            today = new Date(),
+            lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7),
+            lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()),
+            nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()),
+
+            arrNomsClients = [],
+            arrGMs = [];
+
+        this.props.clients.map(
+            (client) => {
+                //console.log(JSON.stringify(client));
+                arrNomsClients.push({
+                    value: `${client._id}`,
+                    label: `${client.clientCognoms}, ${client.clientNom}`,
+                    className: `autoCompleteSelectOption`
+                });
             }
-          </select>
-          <label>Grup Muscular: </label>
-          <select ref="selGrupMuscular">
-            {
-              this.props.grups_musculars.map(grup_muscular=>
-                <option key={grup_muscular.grupMuscularNom} value={grup_muscular._id}>
-                  { grup_muscular.grupMuscularNom }
-                </option>
-              )
+        );
+
+        this.props.grups_musculars.map(
+            (gm) => {
+                //console.log(JSON.stringify(client));
+                arrGMs.push({
+                    value: `${gm._id}`,
+                    label: `${gm.grupMuscularNom}`,
+                    className: `autoCompleteSelectOption`
+                });
             }
-          </select>
+        );
 
-          {/*Component= withRange(Calendar)}*/}
+        return (
+            <div id="divRutinesForm">
+                <h2>Nova Rutina</h2>
+                <form className="novarutina" onSubmit={this.addRutina}>
+                    <input
+                        type="text"
+                        ref={rutinaNom => this.rutinaNom = rutinaNom}
+                        placeholder="Nom de la Rutina"
+                    />
 
-          <InfiniteCalendar
-            Component={withRange(Calendar)}
-            selected={{
-                start: new Date(),
-                end: new Date()
-            }}
-            min={new Date(1940, 0, 1)}
-            minDate={new Date(1940, 0, 1)}
-            max={new Date()}
+                    <label>Client: </label>
+                    <Select
+                        value={this.state.selectClientsValue}
+                        options={arrNomsClients}
+                        onChange={this.selectClientsUpdateValue}
+                    />
 
-            displayOptions={{
-            }}
-            locale={{
-                locale: require('date-fns/locale/ca'),
-                headerFormat: 'dddd, D MMM',
-                weekdays: ["Dmg","Dll","Dm","Dcs","Djs","Dvs","Dss"],
-                blank: 'Selecciona una data',
-                todayLabel: {
-                 long: 'Anar a avui',
-                 short: 'Avui.'
-             }
-            }}
-          />
+                    <label>Grup Muscular: </label>
+                    <Select
+                        value={this.state.selectGMsValue}
+                        options={arrGMs}
+                        onChange={this.selectGMsUpdateValue}
+                    />
 
-          <fieldset>
-            <legend>Llista d'exercicis: </legend>
+                    {/*Component= withRange(Calendar)}*/}
 
-            <LlistaExercicis
-              addSelEx={this.onAddSelEx.bind(this)}
-              clients={this.props.clients}
-              grups_musculars={this.props.grups_musculars}
-              exercicis={this.props.exercicis}
-            >
-              <LiniaExercici
-                clients={this.props.clients}
-                grups_musculars={this.props.grups_musculars}
-                exercicis={this.props.exercicis}
-              />
-            </LlistaExercicis>
+                    <InfiniteCalendar
+                        Component={withRange(Calendar)}
+                        selected={false}
+                        min={lastYear}
+                        minDate={lastYear}
+                        max={nextYear}
+                        maxDate={nextYear}
 
-          </fieldset>
-          <textarea
-            ref="rutinaDescripcio"
-            placeholder="Descripció de la rutina"
-          />
-          <input
-            type="submit"
-            ref="rutinaSubmit"
-            value="Introduir"
-          />
-        </form>
-      </div>
-    );
-  }
+                        displayOptions={{
+                        }}
+                        locale={{
+                            locale: require('date-fns/locale/ca'),
+                            headerFormat: 'ddd, D MMM',
+                            weekdays: ["Dmg","Dll","Dm","Dcs","Djs","Dvs","Dss"],
+                            weekStartsOn: 1,
+                            blank: 'Selecciona una data',
+                            todayLabel: {
+                                long: 'Anar a avui',
+                                short: 'Avui.'
+                            }
+                        }}
+                        ref={infCal => this.infCal = infCal}
+                        onSelect={this.handleDates}
+                    />
+
+                    <fieldset>
+                        <legend>Llista d'exercicis: </legend>
+
+                        <LlistaExercicis
+                            addSelEx={this.onAddSelEx.bind(this)}
+                            clients={this.props.clients}
+                            grups_musculars={this.props.grups_musculars}
+                            exercicis={this.props.exercicis}
+                        >
+                            <LiniaExercici
+                                clients={this.props.clients}
+                                grups_musculars={this.props.grups_musculars}
+                                exercicis={this.props.exercicis}
+                            />
+                        </LlistaExercicis>
+                    </fieldset>
+
+                    <textarea
+                        ref={rutinaDescripcio => this.rutinaDescripcio = rutinaDescripcio}
+                        placeholder="Descripció de la rutina"
+                    />
+
+                    <input
+                        type="submit"
+                        ref={rutinaSubmit => this.rutinaSubmit = rutinaSubmit}
+                        value="Introduir"
+                    />
+                </form>
+            </div>
+        );
+    }
 }
