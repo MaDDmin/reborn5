@@ -52,7 +52,7 @@ Clients.schema = new SimpleSchema({
     optional: false
   },
   arrImatges: {
-      type: [Object],
+      type: Array,
       optional: true
   }
 });

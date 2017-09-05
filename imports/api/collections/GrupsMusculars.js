@@ -28,14 +28,19 @@ GrupsMusculars.schema = new SimpleSchema({
     optional: false
   },
   arrImatges: {
-      type: [Object],
+      type: Array,
       optional: true
+  },
+  'arrImatges.$': {
+      type: Object
   },
   user: {
     type: String,
     optional: false
   }
 });
+
+GrupsMusculars.attachSchema(GrupsMusculars.schema);
 
 Meteor.methods({
     'grups_musculars.insert'(
@@ -47,12 +52,19 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        GrupsMusculars.insert( {
-          grupMuscularNom, grupMuscularDescripcio,
-          createdAt: new Date(),
-          user: Meteor.userId(),
-          arrImatges
-        });
+        GrupsMusculars.insert({
+            grupMuscularNom, grupMuscularDescripcio,
+            createdAt: new Date(),
+            user: Meteor.userId(),
+            arrImatges
+        }, {
+                validate: false
+        }, (error, result) => {
+                if (error) {
+                    alert(`ERROR: ${error}`);
+                }
+            }
+        );
     },
 
     'grups_musculars.update'(grupMuscularNom, grupMuscularDescripcio) {

@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
+import { exerciciSchema } from './Exercicis.js';
 
 export default Rutines = new Mongo.Collection("rutines");
 
@@ -48,8 +49,68 @@ Rutines.schema = new SimpleSchema({
         optional: false
     },
     setmanes: {
-        type: [Object],
+        type: Array,
         optional: false
+    },
+    'setmanes.$': {
+        type: new SimpleSchema({
+            indexSetmana: {
+                type: SimpleSchema.Integer,
+                optional: false
+            },
+            sessions: {
+                type: Array,
+                optional: false
+            },
+            'sessions.$': {
+                type: new SimpleSchema({
+                    indexSessio: {
+                        type: SimpleSchema.Integer,
+                        optional: false
+                    },
+                    data: {
+                        type: Date,
+                        optional: true
+                    },
+                    sessioDescripcio: {
+                        type: String,
+                        optional: true
+                    },
+                    parts: {
+                        type: Array,
+                        optional: false
+                    },
+                    'parts.$': {
+                        type: new SimpleSchema({
+                            partNom: {
+                                type: String,
+                                optional: false
+                            },
+                            partDescripcio: {
+                                type: String,
+                                optional: true
+                            },
+                            exercicis: {
+                                type: Array,
+                                optional: false
+                            },
+                            'exercicis.$': {
+                                type: new SimpleSchema({
+                                    indexExercici: {
+                                        type: SimpleSchema.Integer,
+                                        optional: false
+                                    },
+                                    exerciciUtil: {
+                                        type: exerciciSchema,
+                                        optional: false
+                                    }
+                                }).extend(exerciciSchema)
+                            }
+                        })
+                    }
+                })
+            }
+        })
     }
 });
 

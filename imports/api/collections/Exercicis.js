@@ -10,7 +10,7 @@ Exercicis.deny({
   remove() { return true; }
 })
 
-Exercicis.schema = new SimpleSchema({
+export const exerciciSchema = Exercicis.schema = new SimpleSchema({
   createdAt: {
     type: Date,
     optional: false
@@ -48,7 +48,7 @@ Exercicis.schema = new SimpleSchema({
     defaultValue: "1"
   },
     arrImatges: {
-        type: [Object],
+        type: Array,
         optional: true
     },
     user: {
