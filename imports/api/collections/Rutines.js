@@ -1,52 +1,56 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import SimpleSchema from 'simpl-schema';
 
 export default Rutines = new Mongo.Collection("rutines");
 
 Rutines.deny({
-  insert() { return true; },
-  update() { return true; },
-  remove() { return true; }
+    insert() { return true; },
+    update() { return true; },
+    remove() { return true; }
 });
 
 Rutines.schema = new SimpleSchema({
-  createdAt: {
-    type: Date,
-    optional: false
-  },
-  rutinaNom: {
-    type: String,
-    optional: false
-  },
-  rutinaClient: {
-    type: String,
-    optional: false
-  },
-  rutinaGrupMuscular: {
-    type: String,
-    optional: true
-  },
-  rutinaDataInici: {
-    type: Date,
-    optional: true
-  },
-  rutinaDataFi: {
-    type: Date,
-    optional: true
-  },
-  rutinaDescripcio: {
-    type: String,
-    optional: true
-  },
-  completed: {
-    type: Boolean,
-    optional: false
-  },
-  user: {
-    type: String,
-    optional: false
-  }
+    createdAt: {
+        type: Date,
+        optional: false
+    },
+    rutinaTitol: {
+        type: String,
+        optional: false
+    },
+    rutinaClient: {
+        type: Object,
+        optional: false
+    },
+    rutinaGrupMuscular: {
+        type: Object,
+        optional: true
+    },
+    rutinaDataInici: {
+        type: Date,
+        optional: true
+    },
+    rutinaDataFi: {
+        type: Date,
+        optional: true
+    },
+    rutinaDescripcio: {
+        type: String,
+        optional: true
+    },
+    completed: {
+        type: Boolean,
+        optional: true
+    },
+    user: {
+        type: String,
+        optional: false
+    },
+    setmanes: {
+        type: [Object],
+        optional: false
+    }
 });
 
 Meteor.methods({

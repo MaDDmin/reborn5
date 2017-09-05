@@ -6,6 +6,11 @@
     z-index: 1000 !important;
 }
 
+.Select {
+    display: inline-block;
+    width: 100%;
+}
+
 .Select:nth-of-type(1) {
     z-index: 10000;
 }

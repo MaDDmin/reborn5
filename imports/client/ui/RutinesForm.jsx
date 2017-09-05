@@ -15,87 +15,77 @@ class LiniaExercici extends Component {
     constructor(props) {
         super(props);
 
-        this.liniaChange = this.liniaChange.bind(this);
+        this.state = {
+            selectExercicisValue: {
+                value: `zzz`
+            }
+        };
+
+        this.handleSelectExercicisUpdateValue = this.handleSelectExercicisUpdateValue.bind(this);
+        // this.selExercici.map((sE, index) =>
+        //     sE = this.selExercici[index].bind(this);
+        // );
     }
 
-    componentDidMount() {
-    }
-
-    selExerciciChange(ev) {
-        if (!!this.selExercici.selectedOptions.length) {
-            let
-                exerStringified = this.selExercici.selectedOptions[0].getAttribute("data-exercici"),
-                exer = JSON.parse(exerStringified);
-            // Ha canviat l'exercici i hem d'actualitzar les dades que l'acompanyen ()
-            this.exerciciSel = exer;
-        } else {
-            this.selExercici.options[0].setAttribute("selected", "selected");
-        }
-
-        this.inRepeticions.value = this.state.repeticions;
-        this.inSeries.value = this.state.series;
-        this.inDescans.value = this.state.descans;
-        this.inMinuts.value = this.state.minuts;
-    }
-
-    altraOp() {
-        this.state.repeticions = this.inRepeticions.value;
-        this.state.series = this.inSeries.value;
-        this.state.descans = this.inDescans.value;
-        this.state.minuts = this.inMinuts.value;
-
-        this.selExerciciChange();
-
-        console.log(`State: ${JSON.stringify(this.state)}`);
-        console.dir(toJS(this.state));
-    }
-
-    liniaChange(ev) {
+    handleSelectExercicisUpdateValue(selectExercicisValue) {
+        this.setState({ selectExercicisValue });
     }
 
     render() {
+        let
+            arrExercicis = [];
+
+        this.props.exercicis.map(
+            (exer) => {
+                //console.log(JSON.stringify(client));
+                arrExercicis.push({
+                    value: exer,
+                    label: `${exer.exerciciNom}`,
+                    className: `autoCompleteSelectOption`
+                });
+            }
+        );
+
         return (
             <li className="liSelEx">
-                <select
-                    className="selExercici"
-                    ref={selExercici => this.selExercici = selExercici}
-                    onChange={this.liniaChange}
-                >
-                    {
-                        this.props.exercicis.map(exercici => (
-                            <option
-                                key={exercici.exerciciNom}
-                                value={exercici._id}
-                                data-exercici={JSON.stringify(exercici)}
-                            >
-                                { exercici.exerciciNom }
-                            </option>
-                        ))
-                    }
-                </select>
+
+                <label>Exercici: </label>
+
+                <Select
+                    value={this.state.selectExercicisValue}
+                    placeholder="Selecciona un exercici"
+                    clearable={true}
+                    options={arrExercicis}
+                    onChange={this.handleSelectExercicisUpdateValue}
+                />
+
                 <input
                     type="text"
                     placeholder="Repeticions"
                     ref={inRepeticions => this.inRepeticions = inRepeticions}
                     onChange={this.liniaChange}
+                    value={this.state.selectExercicisValue.value.exerciciRepeticionsDefault}
                 />
                 <input
                     type="text"
                     placeholder="Series"
                     ref={inSeries => this.inSeries = inSeries}
                     onChange={this.liniaChange}
+                    value={this.state.selectExercicisValue.value.exerciciSeriesDefault}
                 />
                 <input
                     type="text"
                     placeholder="Descans"
                     ref={inDescans => this.inDescans = inDescans}
                     onChange={this.liniaChange}
+                    value={this.state.selectExercicisValue.value.exerciciDescansDefault}
                 />
                 <input
                     type="text"
                     placeholder="Minuts"
                     ref={inMinuts => this.inMinuts = inMinuts}
                     onChange={this.liniaChange}
+                    value={this.state.selectExercicisValue.value.exerciciMinutsDefault}
                 />
                 <table>
                     <tbody>
@@ -118,6 +108,10 @@ class LiniaExercici extends Component {
 class LlistaExercicis extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            exercicisMaxIndex: 0
+        }
     }
 
     render() {
@@ -147,7 +141,8 @@ export default class RutinesForm extends Component {
         this.state = {
             rangeOfDates: {},
             selectClientsValue: ``,
-            selectGMsValue: ``
+            selectGMsValue: ``,
+            maxIndexExercicis: 0
         }
 
         this.addRutina = this.addRutina.bind(this);
@@ -321,6 +316,7 @@ export default class RutinesForm extends Component {
                             exercicis={this.props.exercicis}
                         >
                             <LiniaExercici
+                                exIndex={this.state.maxIndexExercicis}
                                 clients={this.props.clients}
                                 grups_musculars={this.props.grups_musculars}
                                 exercicis={this.props.exercicis}
