@@ -40,7 +40,7 @@ GrupsMusculars.schema = new SimpleSchema({
   }
 });
 
-GrupsMusculars.attachSchema(GrupsMusculars.schema);
+// GrupsMusculars.attachSchema(GrupsMusculars.schema);
 
 Meteor.methods({
     'grups_musculars.insert'(
