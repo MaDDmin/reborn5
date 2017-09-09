@@ -6,7 +6,7 @@ import Bert from 'meteor/themeteorchef:bert';
 
 import InfiniteCalendar, { withRange, Calendar } from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
-import { getISOWeek } from 'date-fns';
+import { getISOWeek, startOfWeek, compareDesc, endOfWeek } from 'date-fns';
 
 import Select from 'react-select';
 // Be sure to include styles at some point, probably during your bootstrapping
@@ -17,17 +17,6 @@ const
     lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7),
     lastYear = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate()),
     nextYear = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate()),
-
-    Setmana = (props) => {
-        return (
-            <div>
-                <span>DataIni: {props.dataIni}</span>
-                <span>DataFi: {props.dataFi}</span>
-                <span>Nº de setmana ISO: {props.nSetmanaISO}</span>
-                <span>Nº de setmana de Rutina: {props.nSetmanaRutina}</span>
-            </div>
-        );
-    },
 
     Avatar = (props) =>
         <img
@@ -47,34 +36,7 @@ const
                 boxShadow: `0 .2em .1em black`
             }}
         />
-    ,
-
-    SetmanaButton = (props) =>
-        <button onClick={props.onClick}>
-            { `Setmana ${props.nSetmana}` }
-        </button>
-    ,
-
-    LlistaSetmanes = (props) => {
-        let arrSetmanes = [];
-
-        if (!!props.nSetmanes) {
-            for (let i = 1; i <= props.nSetmanes; i += 1) {
-                arrSetmanes.push(
-                    <SetmanaButton
-                        key={i}
-                        nSetmana={i}
-                        onClick={() => {alert(`Botó de la setmana ${i}`);}}
-                    />);
-            }
-            return <div id="arrSetm">{arrSetmanes}</div>;
-        }
-        return null;
-    };
-
-
-
-
+    ;
 
 
 
@@ -98,6 +60,7 @@ class Rutina extends Component {
         this.handleDates = this.handleDates.bind(this);
         this.selectClientsUpdateValue = this.selectClientsUpdateValue.bind(this);
         this.selectGMsUpdateValue = this.selectGMsUpdateValue.bind(this);
+        this.afegeixSetmanaAlState = this.afegeixSetmanaAlState.bind(this);
     }
 
     addRutina(event) {
@@ -132,14 +95,107 @@ class Rutina extends Component {
         }
     }
 
+    afegeixSetmanaAlState(nSetmana, setmana) {
+
+        this.setState(
+            (previousState, props) => {
+                let
+                    setmanes = previousState.setmanes;
+
+                //setmanes.push(setmana);
+                Object.assign(setmanes, setmana);
+                return ({
+                    setmanes
+                });
+            }
+        );
+    }
+
     handleDates(data) {
+        let
+            setmanes = {},
+            rangeOfDates = data,
+            nSetmanes = getISOWeek(data.end) - getISOWeek(data.start) + 1,
+            dataIniSetmana,
+            dataFiSetmana,
+            nSetmanaISO,
+            nSetmanaRutina,
+            setmana,
+            extremsSetmanes,
+            finalPrimeraSetmana,
+            iniciUltimaSetmana;
+
         if (data.eventType === 3) {
             // this.infCal.props.rangeOfDates.start = data.start;
             // this.infCal.props.rangeOfDates.end = data.end;
 
+            // El final de la primera setmana sempre serà endOfWeek(rangeOfDates.start) si aquesta és posterior a rangeOfDates.end.
+
+            if (compareDesc(rangeOfDates.end, endOfWeek(rangeOfDates.start, {weekStartsOn: 1})) === 1) {
+                finalPrimeraSetmana = rangeOfDates.end;
+            } else {
+                finalPrimeraSetmana = endOfWeek(rangeOfDates.start, {weekStartsOn: 1});
+            }
+
+            //----
+
+            if (nSetmanes === 1) {
+                iniciUltimaSetmana = rangeOfDates.start;
+            } else {
+                iniciUltimaSetmana = startOfWeek(rangeOfDates.end, {weekStartsOn: 1});
+            }
+
+            extremsSetmanes = Object.assign(
+                {},
+
+                { 1: {
+                    start: rangeOfDates.start,
+                    end: finalPrimeraSetmana
+                }},
+
+                { [nSetmanes]: {
+                    start: iniciUltimaSetmana,
+                    end: rangeOfDates.end
+                }}
+            );
+
+            for (let i = 1; i < nSetmanes; i += 1) {
+
+                if (i === 1) {
+                    dataIniSetmana = extremsSetmanes[1].start;
+                    dataFiSetmana = extremsSetmanes[1].end;
+                } else {
+                    dataIniSetmana = new Date(extremsSetmanes[i-1].end.getFullYear(), extremsSetmanes[i-1].end.getMonth(), extremsSetmanes[i-1].end.getDate() + 1);
+                    dataFiSetmana = endOfWeek(dataIniSetmana, {weekStartsOn: 1});
+                }
+
+
+                Object.assign(
+                    extremsSetmanes,
+
+                    { [i]: {
+                        start: dataIniSetmana,
+                        end: dataFiSetmana
+                    }}
+                );
+            }
+
+            dataIniSetmana = startOfWeek(rangeOfDates.start, {weekStartsOn: 1});
+            // setmana = {
+            //     [this.props.nSetmana]: {
+            //         start: "",
+            //         end: "",
+            //         nSetmanaRutina,
+            //         dataIniSetmana,
+            //         extremsSetmanes
+            //     }
+            // };
+
             this.setState({
-                rangeOfDates: data,
-                nSetmanes: getISOWeek(data.end) - getISOWeek(data.start) + 1
+                rangeOfDates,
+                nSetmanes,
+                setmanes,
+                extremsSetmanes
             });
         }
     }
@@ -205,11 +261,160 @@ class Rutina extends Component {
                     id="taObservacionsRutina"
                 />
 
-                <LlistaSetmanes nSetmanes={this.state.nSetmanes} />
+                <LlistaSetmanes
+                    rangeOfDates={this.state.rangeOfDates}
+                    nSetmanes={this.state.nSetmanes}
+                    afegeixSetmanaAlState={this.afegeixSetmanaAlState}
+                />
             </div>
         );
     }
 }
+
+
+class LlistaSetmanes extends Component {
+    constructor(props) {
+        super(props);
+
+    }
+
+    render() {
+        let
+            arrSetmanes = [];
+
+        if (!!this.props.nSetmanes) {
+            for (let i = 1; i <= this.props.nSetmanes; i += 1) {
+                arrSetmanes.push(
+                    <SetmanaButton
+                        key={i}
+                        nSetmana={i}
+                        nSetmanes={this.props.nSetmanes}
+                        rangeOfDates={this.props.rangeOfDates}
+                        afegeixSetmanaAlState={this.props.afegeixSetmanaAlState}
+                    />
+                );
+            }
+            return <div id="arrSetm">{arrSetmanes}</div>;
+        }
+        return null;
+    }
+}
+
+
+class SetmanaButton extends Component {
+    constructor(props) {
+        super(props);
+
+        this.appendSetmanaForm = this.appendSetmanaForm.bind(this);
+    }
+
+    appendSetmanaForm(ev) {
+        let
+            rangeOfDates = this.props.rangeOfDates,
+            nSetmanes = this.props.nSetmanes,
+            dataIniSetmana,
+            dataFiSetmana,
+            nSetmanaISO,
+            nSetmanaRutina = this.props.nSetmana,
+            setmana,
+            extremsSetmanes,
+            finalPrimeraSetmana,
+            iniciUltimaSetmana;
+
+        // El final de la primera setmana sempre serà endOfWeek(rangeOfDates.start) si aquesta és posterior a rangeOfDates.end.
+
+        if (compareDesc(rangeOfDates.end, endOfWeek(rangeOfDates.start, {weekStartsOn: 1})) === 1) {
+            finalPrimeraSetmana = rangeOfDates.end;
+        } else {
+            finalPrimeraSetmana = endOfWeek(rangeOfDates.start, {weekStartsOn: 1});
+        }
+
+        //----
+
+        if (nSetmanes === 1) {
+            iniciUltimaSetmana = rangeOfDates.start;
+        } else {
+            iniciUltimaSetmana = startOfWeek(rangeOfDates.end, {weekStartsOn: 1});
+        }
+
+        extremsSetmanes = Object.assign(
+            {},
+
+            { 1: {
+                start: rangeOfDates.start,
+                end: finalPrimeraSetmana
+            }},
+
+            { [nSetmanes]: {
+                start: iniciUltimaSetmana,
+                end: rangeOfDates.end
+            }}
+        );
+
+        dataIniSetmana = startOfWeek(rangeOfDates.start, {weekStartsOn: 1});
+        setmana = {
+            [this.props.nSetmana]: {
+                start: "",
+                end: "",
+                nSetmanaRutina,
+                dataIniSetmana,
+                extremsSetmanes
+            }
+        };
+
+        this.props.afegeixSetmanaAlState(this.props.nSetmana, setmana);
+
+    //    alert(`Botó de la setmana ${this.props.nSetmana}`);
+        //alert(`Botó de la setmana ${ev.target.dataset.n_setmana}`);
+    }
+
+    render() {
+        return (
+            <button
+                onClick={this.appendSetmanaForm}
+            >
+                { `Setmana ${this.props.nSetmana}` }
+            </button>
+        );
+    }
+}
+
+
+
+class SetmanaForm extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <div>
+                <span>DataIni: {props.dataIni}</span>
+                <span>DataFi: {props.dataFi}</span>
+                <span>Nº de setmana ISO: {props.nSetmanaISO}</span>
+                <span>Nº de setmana de Rutina: {props.nSetmanaRutina}</span>
+            </div>
+        );
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
