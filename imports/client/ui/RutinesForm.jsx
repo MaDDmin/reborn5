@@ -38,7 +38,6 @@ const
                 boxShadow: `0 .2em .1em black`
             }}
         />
-    ;
 
 
 class Rutina extends Component {
@@ -334,8 +333,6 @@ class BotonsSetmanesIModal extends Component {
                                 dataFi={new Date()}
                                 nSetmanaISO={getISOWeek(new Date())}
                                 nSetmanaRutina={10}
-                                setmana={this.props.setmana}
-                                afegeixSetmanaAlState={this.props.afegeixSetmanaAlState}
                             />
                         </Modal>
                     </div>
@@ -410,12 +407,6 @@ class SetmanaForm extends Component {
                 <span>DataFi: {JSON.stringify(this.props.dataFi)}</span>
                 <span>Nº de setmana ISO: {this.props.nSetmanaISO}</span>
                 <span>Nº de setmana de Rutina: {this.props.nSetmanaRutina}</span>
-
-                <button
-                    onClick={this.props.afegeixSetmanaAlState(this.props.nSetmana, setmana)}
-                >
-                    Estableix
-                </button>
             </div>
         );
     }
