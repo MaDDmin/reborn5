@@ -56,7 +56,7 @@ class Rutina extends Component {
         this.handleDates = this.handleDates.bind(this);
         this.selectClientsUpdateValue = this.selectClientsUpdateValue.bind(this);
         this.selectGMsUpdateValue = this.selectGMsUpdateValue.bind(this);
-        this.afegeixSetmanaAlState = this.afegeixSetmanaAlState.bind(this);
+        this.afegeixSetmanaAlStateDeLaRutina = this.afegeixSetmanaAlStateDeLaRutina.bind(this);
     }
 
     addRutina(event) {
@@ -91,7 +91,7 @@ class Rutina extends Component {
         }
     }
 
-    afegeixSetmanaAlState(nSetmana, setmana) {
+    afegeixSetmanaAlStateDeLaRutina(nSetmana, setmana) {
 
         this.setState(
             (previousState, props) => {
@@ -259,7 +259,7 @@ class Rutina extends Component {
                 <BotonsSetmanesIModal
                     rangeOfDates={this.state.rangeOfDates}
                     nSetmanes={this.state.nSetmanes}
-                    afegeixSetmanaAlState={this.afegeixSetmanaAlState}
+                    afegeixSetmanaAlStateDeLaRutina={this.afegeixSetmanaAlStateDeLaRutina}
                     setmanes={this.state.setmanes}
                     extremsSetmanes={this.state.extremsSetmanes}
                 />
@@ -279,19 +279,31 @@ class BotonsSetmanesIModal extends Component {
 
         this.showModal = this.showModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+    //    this.triaSetmana = this.triaSetmana.bind(this);
     }
 
     showModal(setmana) {
         this.setState({
-            showModal: true
+            showModal: true,
+            editant: setmana
         });
     }
 
     handleCloseModal() {
         this.setState({
-            showModal: false
+            showModal: false,
+            nSetmanaRutina: null
         });
     }
+
+    //triaSetmana(nSetmanaRutina, setmana) {
+        // this.setState({
+        //     nSetmanaRutina,
+        //     setmana
+        // });
+
+        //this.props.afegeixSetmanaAlStateDeLaRutina(nSetmanaRutina, setmana);
+    //}
 
     render() {
         let
@@ -306,7 +318,8 @@ class BotonsSetmanesIModal extends Component {
                         setmanes={this.props.setmanes}
                         rangeOfDates={this.props.rangeOfDates}
                         extremsSetmanes={this.props.extremsSetmanes}
-                        afegeixSetmanaAlState={this.props.afegeixSetmanaAlState}
+
+                        afegeixSetmanaAlStateDeLaRutina={this.props.afegeixSetmanaAlStateDeLaRutina}
                         showModal={this.showModal}
                     />
                 );
@@ -316,7 +329,7 @@ class BotonsSetmanesIModal extends Component {
                     {arrSetmanes}
                     <div
                         id="divSetmanesForms"
-                        key={divSetmanesForms => this.divSetmanesForms = divSetmanesForms}
+                        ref={divSetmanesForms => this.divSetmanesForms = divSetmanesForms}
                     >
                         <Modal
                             isOpen={this.state.showModal}
@@ -328,11 +341,14 @@ class BotonsSetmanesIModal extends Component {
                             shouldCloseOnOverlayClick={true}
                         >
                             <button onClick={this.handleCloseModal}>x</button>
-                            <SetmanaForm
+                            <SetmanaFormContent
                                 dataIni={new Date()}
                                 dataFi={new Date()}
                                 nSetmanaISO={getISOWeek(new Date())}
                                 nSetmanaRutina={10}
+
+                                afegeixSetmanaAlStateDeLaRutina={this.props.afegeixSetmanaAlStateDeLaRutina}
+                                setmana={this.state.setmana}
                             />
                         </Modal>
                     </div>
@@ -364,7 +380,15 @@ class SetmanaButton extends Component {
             extremsSetmanes = this.props.extremsSetmanes,
             finalPrimeraSetmana,
             sessions = {},
-            iniciUltimaSetmana;
+            iniciUltimaSetmana,
+            setmanaObj = {
+                start: extremsSetmanes[nSetmanaRutina].start,
+                end: extremsSetmanes[nSetmanaRutina].end,
+                nSetmanaRutina,
+                nSetmanaISO,
+                sessions
+            };
+
 
         setmana = {
             [this.props.nSetmana]: {
@@ -376,12 +400,8 @@ class SetmanaButton extends Component {
             }
         };
 
-        this.props.afegeixSetmanaAlState(this.props.nSetmana, setmana);
-        this.props.showModal(setmana);
-
-
-    //    alert(`Botó de la setmana ${this.props.nSetmana}`);
-        //alert(`Botó de la setmana ${ev.target.dataset.n_setmana}`);
+        this.props.afegeixSetmanaAlStateDeLaRutina(nSetmanaRutina, setmana);
+        this.props.showModal(setmanaObj);
     }
 
     render() {
@@ -395,7 +415,7 @@ class SetmanaButton extends Component {
     }
 }
 
-class SetmanaForm extends Component {
+    class SetmanaFormContent extends Component {
     constructor(props) {
         super(props);
     }
