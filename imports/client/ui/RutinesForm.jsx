@@ -14,6 +14,8 @@ import 'react-select/dist/react-select.css';
 
 import Modal from 'react-modal';
 
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+
 const
     today = new Date(),
     lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7),
@@ -38,6 +40,29 @@ const
                 boxShadow: `0 .2em .1em black`
             }}
         />
+
+Modal.defaultStyles = {
+    overlay: {
+        position: 'fixed',
+        display: 'grid',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor : 'rgba(255, 255, 255, 0.75)',
+        zIndex: 200000
+    },
+    content: {
+        alignSelf: `center`,
+        padding: `5%`,
+        margin: `5%`,
+        border: `1px solid gray`,
+        borderRadius: `2em`,
+        boxShadow: `0 .2em .3em gray`,
+        background      : `rgba(252,124,5,.7)`
+    }
+};
+
 
 
 class Rutina extends Component {
@@ -279,7 +304,7 @@ class BotonsSetmanesIModal extends Component {
 
         this.showModal = this.showModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
-    //    this.triaSetmana = this.triaSetmana.bind(this);
+        this.triaSetmana = this.triaSetmana.bind(this);
     }
 
     showModal(setmana) {
@@ -296,14 +321,14 @@ class BotonsSetmanesIModal extends Component {
         });
     }
 
-    //triaSetmana(nSetmanaRutina, setmana) {
-        // this.setState({
-        //     nSetmanaRutina,
-        //     setmana
-        // });
+    triaSetmana(nSetmanaRutina, setmana) {
+        this.setState({
+            nSetmanaRutina,
+            setmana
+        });
 
         //this.props.afegeixSetmanaAlStateDeLaRutina(nSetmanaRutina, setmana);
-    //}
+    }
 
     render() {
         let
@@ -318,7 +343,7 @@ class BotonsSetmanesIModal extends Component {
                         setmanes={this.props.setmanes}
                         rangeOfDates={this.props.rangeOfDates}
                         extremsSetmanes={this.props.extremsSetmanes}
-
+                        triaSetmana={this.triaSetmana}
                         afegeixSetmanaAlStateDeLaRutina={this.props.afegeixSetmanaAlStateDeLaRutina}
                         showModal={this.showModal}
                     />
@@ -334,19 +359,10 @@ class BotonsSetmanesIModal extends Component {
                         <Modal
                             isOpen={this.state.showModal}
                             contentLabel="Modal"
-                            portalClassName="ReactModalPortal"
-                            overlayClassName="ReactModal__Overlay"
-                            className="ReactModal__Content"
                             ariaHideApp={true}
-                            shouldCloseOnOverlayClick={true}
                         >
                             <button onClick={this.handleCloseModal}>x</button>
-                            <SetmanaFormContent
-                                dataIni={new Date()}
-                                dataFi={new Date()}
-                                nSetmanaISO={getISOWeek(new Date())}
-                                nSetmanaRutina={10}
-
+                            <ModalFormContent
                                 afegeixSetmanaAlStateDeLaRutina={this.props.afegeixSetmanaAlStateDeLaRutina}
                                 setmana={this.state.setmana}
                             />
@@ -400,6 +416,7 @@ class SetmanaButton extends Component {
             }
         };
 
+        this.props.triaSetmana(nSetmanaRutina, setmanaObj);
         this.props.afegeixSetmanaAlStateDeLaRutina(nSetmanaRutina, setmana);
         this.props.showModal(setmanaObj);
     }
@@ -415,21 +432,271 @@ class SetmanaButton extends Component {
     }
 }
 
-    class SetmanaFormContent extends Component {
+// >>>>><<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// TODO: Aquest component capta totes les dades necessàries per dibuixar el diàleg modal mitjançant props (children pels camps i altres per la gestió de les dades)...
+// >>>>>          El reutilitzarem per a cada Modal... (amb recursivitat inclosa!)  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+class ModalFormContent extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            sessions: {},
+            showModal: false,
+            ta: ""
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleEstableixSessio = this.handleEstableixSessio.bind(this);
+    //    this.triaSetmana = this.triaSetmana.bind(this);
+    }
+
+    showModal(sessio) {
+        this.setState({
+            showModal: true,
+            editant: sessio
+        });
+    }
+
+    handleCloseModal() {
+        this.setState({
+            showModal: false,
+            nSetmanaRutina: null
+        });
+    }
+
+    handleEstableixSessio(setmana) {
+        let
+            sessio = {
+                descripDeProva: this.ta.value
+            },
+            sessions = [];
+
+        sessions.push(sessio);
+
+        Object.assign(setmana, { sessions });
+        this.props.afegeixSetmanaAlStateDeLaRutina(setmana.nSetmanaRutina, setmana);
+    }
+
+    render() {
+        let
+            setmana = this.props.setmana;
+
+        return (
+            <div>
+                <div>{`Data Inici Setmana: ${this.props.setmana.start.getDate()}`}</div>
+                <div>{`Data Final Setmana: ${this.props.setmana.end.getDate()}`}</div>
+                <div>Nº de setmana ISO: {this.props.setmana.nSetmanaISO}</div>
+                <div>Nº de setmana de Rutina: {this.props.setmana.nSetmanaRutina}</div>
+
+                <textarea
+                    ref={(ta) => {this.ta = ta;}}
+                    placeholder="Escriu alguna cosa per provar que guardem la sessió..."
+                />
+                <button onClick={() => {this.handleEstableixSessio(setmana);}}>
+                    Estableix la sessió
+                </button>
+
+                <button
+                    onClick={this.showModal}
+                >
+                    Nova sessió
+                </button>
+
+                <Modal
+                    isOpen={this.state.showModal}
+                    contentLabel="Modal"
+
+                    ariaHideApp={true}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <button onClick={this.handleCloseModal}>&times;</button>
+                    <SessioFormContent />
+                </Modal>
+            </div>
+        );
+    }
+}
+
+class SessioFormContent extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            parts: {},
+            showModal: false
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+    //    this.triaSetmana = this.triaSetmana.bind(this);
+    }
+
+    showModal(part) {
+        this.setState({
+            showModal: true,
+            editant: part
+        });
+    }
+
+    handleCloseModal() {
+        this.setState({
+            showModal: false,
+            nSetmanaRutina: null
+        });
+    }
+
+    handleEstableixSessio() {
+
     }
 
     render() {
         return (
             <div>
-                <span>DataIni: {JSON.stringify(this.props.dataIni)}</span>
-                <span>DataFi: {JSON.stringify(this.props.dataFi)}</span>
-                <span>Nº de setmana ISO: {this.props.nSetmanaISO}</span>
-                <span>Nº de setmana de Rutina: {this.props.nSetmanaRutina}</span>
+                <textarea placeholder="Escriu alguna cosa per provar que guardem la sessió..." />
+                <button onClick={this.handleEstableixSessio}>
+                    Estableix la sessió
+                </button>
+
+                <button
+                    onClick={this.showModal}
+                >
+                    Nova part
+                </button>
+                <Modal
+                    isOpen={this.state.showModal}
+                    contentLabel="Modal"
+
+                    ariaHideApp={true}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <button onClick={this.handleCloseModal}>&times;</button>
+                    <PartFormContent
+
+                    />
+                </Modal>
             </div>
         );
     }
 }
+
+
+class PartFormContent extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            exercicis: {},
+            showModal: false
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+    //    this.triaSetmana = this.triaSetmana.bind(this);
+    }
+
+    showModal(part) {
+        this.setState({
+            showModal: true,
+            editant: part
+        });
+    }
+
+    handleCloseModal() {
+        this.setState({
+            showModal: false,
+            nSetmanaRutina: null
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <span>SESSIO: </span>
+                <span>DataFi: </span>
+                <span>Nº de setmana ISO: </span>
+                <span>Nº de setmana de Rutina: </span>
+
+                <button
+                    onClick={this.showModal}
+                >
+                    Nou exercici
+                </button>
+                <Modal
+                    isOpen={this.state.showModal}
+                    contentLabel="Modal"
+                    ariaHideApp={true}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <button onClick={this.handleCloseModal}>&times;</button>
+                    <ExerciciFormContent
+
+                    />
+                </Modal>
+            </div>
+        );
+    }
+}
+
+
+class ExerciciFormContent extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            exercicis: {},
+            showModal: false
+        }
+
+        this.showModal = this.showModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+    //    this.triaSetmana = this.triaSetmana.bind(this);
+    }
+
+    showModal(exercici) {
+        this.setState({
+            showModal: true,
+            editant: exercici
+        });
+    }
+
+    handleCloseModal() {
+        this.setState({
+            showModal: false,
+            nSetmanaRutina: null
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <span>SESSIO: </span>
+                <span>DataFi: </span>
+                <span>Nº de setmana ISO: </span>
+                <span>Nº de setmana de Rutina: </span>
+
+                <button
+                    onClick={() => {
+                        alert(`Nou exercici`);
+                    }}
+                >
+                    Nou exercici
+                </button>
+                <Modal
+                    isOpen={this.state.showModal}
+                    contentLabel="Modal"
+                    ariaHideApp={true}
+                    shouldCloseOnOverlayClick={true}
+                >
+                    <button onClick={this.handleCloseModal}>&times;</button>
+
+                    <h1>I prou per ara...</h1>
+                </Modal>
+            </div>
+        );
+    }
+}
+
 
 export default Rutina;
