@@ -6,7 +6,16 @@ import Bert from 'meteor/themeteorchef:bert';
 
 import InfiniteCalendar, { withRange, Calendar } from 'react-infinite-calendar';
 import 'react-infinite-calendar/styles.css';
-import { getISOWeek, startOfWeek, compareDesc, endOfWeek } from 'date-fns';
+
+import {
+    format,
+    getISOWeek,
+    startOfWeek,
+    compareDesc,
+    endOfWeek,
+    addDays
+} from 'date-fns';
+import caLocale from 'date-fns/locale/ca';
 
 import Select from 'react-select';
 // Be sure to include styles at some point, probably during your bootstrapping
@@ -261,7 +270,7 @@ class Rutina extends Component {
                     maxDate={nextYear}
                     displayOptions={{}}
                     locale={{
-                        locale: require('date-fns/locale/ca'),
+                        locale: caLocale,
                         headerFormat: 'ddd, D MMM',
                         weekdays: ["Dmg","Dll","Dm","Dcs","Djs","Dvs","Dss"],
                         weekStartsOn: 1,
@@ -480,15 +489,112 @@ class ModalFormContent extends Component {
     }
 
     render() {
-        let
+        const
             setmana = this.props.setmana;
+
+        let
+            diaDelMesIniciSetmana = setmana.start.getDate(),
+            diaDelMesFiSetmana = setmana.end.getDate(),
+            diaDeLaSetmanaIniciSetmana = setmana.start.getDay(),
+            diaDeLaSetmanaFiSetmana = setmana.end.getDay(),
+            arrDiesSetmana;
+
+        function diaDeLaSetmanaACa(cod) {
+            switch (cod) {
+                case 0: {
+                    return `Diumenge`;
+                    break;
+                }
+                case 1: {
+                    return `Dilluns`;
+                    break;
+                }
+                case 2: {
+                    return `Dimarts`;
+                    break;
+                }
+                case 3: {
+                    return `Dimecres`;
+                    break;
+                }
+                case 4: {
+                    return `Dijous`;
+                    break;
+                }
+                case 5: {
+                    return `Divendres`;
+                    break;
+                }
+                case 6: {
+                    return `Dissabte`;
+                    break;
+                }
+                default: {
+                    return `Dia no vàlid!!!`;
+                }
+            }
+        }
+
+        function muntaArrDiesSetmana(setmana) {
+            let
+                arrDiesSetmana = [],
+                punterData = new Date(setmana.start.getFullYear(), setmana.start.getMonth(), setmana.start.getDate()),
+                punterDataFi = addDays(new Date(setmana.end.getFullYear(), setmana.end.getMonth(), setmana.end.getDate()), 1),
+                nDies;
+
+            while (compareDesc(punterData, punterDataFi) !== 0) {
+                arrDiesSetmana.push({
+                    diaMes: punterData.getDate(),
+                    diaSet: diaDeLaSetmanaACa(punterData.getDay())
+                });
+                punterData = addDays(new Date(punterData), 1);
+            }
+            nDies = arrDiesSetmana.length;
+            return arrDiesSetmana;
+        }
+
+        arrDiesSetmana = muntaArrDiesSetmana(setmana);
 
         return (
             <div>
-                <div>{`Data Inici Setmana: ${this.props.setmana.start.getDate()}`}</div>
-                <div>{`Data Final Setmana: ${this.props.setmana.end.getDate()}`}</div>
-                <div>Nº de setmana ISO: {this.props.setmana.nSetmanaISO}</div>
-                <div>Nº de setmana de Rutina: {this.props.setmana.nSetmanaRutina}</div>
+                <h1>
+                    {`Setmana ${setmana.nSetmanaRutina} (${format(setmana.start, `D/MM/YY`, {locale: caLocale})} ~ ${format(setmana.end, `D/MM/YY`, {locale: caLocale})})`}
+                </h1>
+
+                <div>
+                    {arrDiesSetmana.map((objDia, ind) => {
+                        return (
+                            <div
+                                key={ind}
+                            >
+                                <span
+                                    style={{
+                                        gridArea: `diaMes`,
+                                        background: `red`
+                                    }}
+                                >
+                                    {objDia.diaMes}
+                                </span>
+                                <span
+                                    style={{
+                                        gridArea: `diaSet`,
+                                        background: `green`
+                                    }}
+                                >
+                                    {objDia.diaSet}
+                                </span>
+                                <span>
+                                    <AfegeixSessio showModal={this.showModal}/>
+                                </span>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                <div>{`Data Inici Setmana: ${setmana.start.getDate()}`}</div>
+                <div>{`Data Final Setmana: ${setmana.end.getDate()}`}</div>
+                <div>Nº de setmana ISO: {setmana.nSetmanaISO}</div>
+                <div>Nº de setmana de Rutina: {setmana.nSetmanaRutina}</div>
 
                 <textarea
                     ref={(ta) => {this.ta = ta;}}
@@ -512,9 +618,26 @@ class ModalFormContent extends Component {
                     shouldCloseOnOverlayClick={true}
                 >
                     <button onClick={this.handleCloseModal}>&times;</button>
-                    <SessioFormContent />
                 </Modal>
             </div>
+        );
+    }
+}
+
+class AfegeixSessio extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.showModal();
+    }
+
+    render() {
+        return (
+            <button onClick={this.handleClick}> + Sessió</button>
         );
     }
 }
