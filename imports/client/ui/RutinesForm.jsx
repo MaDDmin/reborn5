@@ -229,6 +229,12 @@ class Rutina extends Component {
         }
     }
 
+    actualitzaSetmanesAmbNovaSessioARutinaState(setmanes) {
+        this.setState({
+            setmanes
+        });
+    }
+
     selectClientsUpdateValue(selectClientsValue) {
         this.setState({ selectClientsValue });
     }
@@ -296,6 +302,8 @@ class Rutina extends Component {
                     afegeixSetmanaAlStateDeLaRutina={this.afegeixSetmanaAlStateDeLaRutina}
                     setmanes={this.state.setmanes}
                     extremsSetmanes={this.state.extremsSetmanes}
+                    actualitzaSetmanesAmbNovaSessioARutinaState={this.actualitzaSetmanesAmbNovaSessioARutinaState}
+                    objSetmanes={this.state.setmanes}
                 />
             </div>
         );
@@ -374,6 +382,8 @@ class BotonsSetmanesIModal extends Component {
                             <ModalFormContent
                                 afegeixSetmanaAlStateDeLaRutina={this.props.afegeixSetmanaAlStateDeLaRutina}
                                 setmana={this.state.setmana}
+                                actualitzaSetmanesAmbNovaSessioARutinaState={this.props.actualitzaSetmanesAmbNovaSessioARutinaState}
+                                objSetmanes={this.props.objSetmanes}
                             />
                         </Modal>
                     </div>
@@ -461,20 +471,18 @@ class ModalFormContent extends Component {
     //    this.triaSetmana = this.triaSetmana.bind(this);
     }
 
-    showModal(sessio) {
+    showModal(objDiaSessio) {
         this.setState({
             showModal: true,
-            editant: sessio
+            objDiaSessio
         });
     }
-
     handleCloseModal() {
         this.setState({
             showModal: false,
             nSetmanaRutina: null
         });
     }
-
     handleEstableixSessio(setmana) {
         let
             sessio = {
@@ -487,18 +495,15 @@ class ModalFormContent extends Component {
         Object.assign(setmana, { sessions });
         this.props.afegeixSetmanaAlStateDeLaRutina(setmana.nSetmanaRutina, setmana);
     }
-
     render() {
         const
-            setmana = this.props.setmana;
-
+            setmana = this.props.setmana
         let
             diaDelMesIniciSetmana = setmana.start.getDate(),
             diaDelMesFiSetmana = setmana.end.getDate(),
             diaDeLaSetmanaIniciSetmana = setmana.start.getDay(),
             diaDeLaSetmanaFiSetmana = setmana.end.getDay(),
             arrDiesSetmana;
-
         function diaDeLaSetmanaACa(cod) {
             switch (cod) {
                 case 0: {
@@ -534,7 +539,6 @@ class ModalFormContent extends Component {
                 }
             }
         }
-
         function muntaArrDiesSetmana(setmana) {
             let
                 arrDiesSetmana = [],
@@ -545,22 +549,20 @@ class ModalFormContent extends Component {
             while (compareDesc(punterData, punterDataFi) !== 0) {
                 arrDiesSetmana.push({
                     diaMes: punterData.getDate(),
-                    diaSet: diaDeLaSetmanaACa(punterData.getDay())
+                    diaSet: diaDeLaSetmanaACa(punterData.getDay()),
+                    diaData: punterData
                 });
                 punterData = addDays(new Date(punterData), 1);
             }
             nDies = arrDiesSetmana.length;
             return arrDiesSetmana;
         }
-
         arrDiesSetmana = muntaArrDiesSetmana(setmana);
-
         return (
             <div>
                 <h1>
                     {`Setmana ${setmana.nSetmanaRutina} (${format(setmana.start, `D/MM/YY`, {locale: caLocale})} ~ ${format(setmana.end, `D/MM/YY`, {locale: caLocale})})`}
                 </h1>
-
                 <div>
                     {arrDiesSetmana.map((objDia, ind) => {
                         return (
@@ -584,18 +586,20 @@ class ModalFormContent extends Component {
                                     {objDia.diaSet}
                                 </span>
                                 <span>
-                                    <AfegeixSessio showModal={this.showModal}/>
+                                    <AfegeixSessio
+                                        id={`as_${ind}`}
+                                        objDia={objDia}
+                                        showModal={this.showModal}
+                                    />
                                 </span>
                             </div>
                         );
                     })}
                 </div>
-
                 <div>{`Data Inici Setmana: ${setmana.start.getDate()}`}</div>
                 <div>{`Data Final Setmana: ${setmana.end.getDate()}`}</div>
                 <div>Nº de setmana ISO: {setmana.nSetmanaISO}</div>
                 <div>Nº de setmana de Rutina: {setmana.nSetmanaRutina}</div>
-
                 <textarea
                     ref={(ta) => {this.ta = ta;}}
                     placeholder="Escriu alguna cosa per provar que guardem la sessió..."
@@ -603,21 +607,23 @@ class ModalFormContent extends Component {
                 <button onClick={() => {this.handleEstableixSessio(setmana);}}>
                     Estableix la sessió
                 </button>
-
                 <button
                     onClick={this.showModal}
                 >
                     Nova sessió
                 </button>
-
                 <Modal
                     isOpen={this.state.showModal}
                     contentLabel="Modal"
-
                     ariaHideApp={true}
                     shouldCloseOnOverlayClick={true}
                 >
                     <button onClick={this.handleCloseModal}>&times;</button>
+                    <SessioFormContent
+                        objDia={this.state.objDiaSessio}
+                        actualitzaSetmanesAmbNovaSessioARutinaState={this.props.actualitzaSetmanesAmbNovaSessioARutinaState}
+                        objSetmanes={this.props.objSetmanes}
+                    />
                 </Modal>
             </div>
         );
@@ -630,11 +636,9 @@ class AfegeixSessio extends Component {
 
         this.handleClick = this.handleClick.bind(this);
     }
-
     handleClick() {
-        this.props.showModal();
+        this.props.showModal(this.props.objDia);
     }
-
     render() {
         return (
             <button onClick={this.handleClick}> + Sessió</button>
@@ -645,14 +649,15 @@ class AfegeixSessio extends Component {
 class SessioFormContent extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             parts: {},
-            showModal: false
+            showModal: false,
+            showCanviaDiaSessioModal: false
         }
-
         this.showModal = this.showModal.bind(this);
+    //    this.setModal = this.setModal.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.hideCanviaDiaSessioModal = this.hideCanviaDiaSessioModal.bind(this);
     //    this.triaSetmana = this.triaSetmana.bind(this);
     }
 
@@ -660,6 +665,18 @@ class SessioFormContent extends Component {
         this.setState({
             showModal: true,
             editant: part
+        });
+    }
+
+    showCanviaDiaSessioModal() {
+        this.setState({
+            showCanviaDiaSessioModal: true
+        });
+    }
+
+    hideCanviaDiaSessioModal() {
+        this.setState({
+            showCanviaDiaSessioModal: false
         });
     }
 
@@ -671,17 +688,51 @@ class SessioFormContent extends Component {
     }
 
     handleEstableixSessio() {
+        let
+            setmanes = this.props.objSetmanes,
+            nSetmana,//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            sessio = {
+                titol: this.inTitol,
+                observacions: this.ta
+            };
 
+        Object.assign(setmanes, )
+
+        this.props.actualitzaSetmanesAmbNovaSessioARutinaState(setmanes);
     }
 
     render() {
+        let
+            dataSessioProp = addDays(this.props.objDia.diaData, 1),
+            dataDia = new Date(
+                dataSessioProp.getFullYear(),
+                dataSessioProp.getMonth(),
+                dataSessioProp.getDate()
+            );
         return (
             <div>
-                <textarea placeholder="Escriu alguna cosa per provar que guardem la sessió..." />
+                <label>Data: </label> <span>{JSON.stringify(dataDia)}</span>
+                <button onClick={() => {
+                    this.showCanviaDiaSessioModal();
+                }}>
+                    Canvia dia de la Sessió
+                </button>
+                <CanviaDiaSessioModal
+                    show={this.state.showCanviaDiaSessioModal}
+                    handleCloseModal={this.hideCanviaDiaSessioModal}
+                />
+                <input
+                    ref={input => this.inTitol = input}
+                    type="text"
+                    placeholder="Títol de la sessió"
+                />
+                <textarea
+                    ref={ta => this.ta = ta}
+                    placeholder="Escriu alguna cosa per provar que guardem la sessió..."
+                />
                 <button onClick={this.handleEstableixSessio}>
                     Estableix la sessió
                 </button>
-
                 <button
                     onClick={this.showModal}
                 >
@@ -695,15 +746,36 @@ class SessioFormContent extends Component {
                     shouldCloseOnOverlayClick={true}
                 >
                     <button onClick={this.handleCloseModal}>&times;</button>
-                    <PartFormContent
-
-                    />
+                    <PartFormContent />
                 </Modal>
             </div>
         );
     }
 }
 
+class CanviaDiaSessioModal extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+    }
+
+    handleCloseModal() {
+        this.props.handleCloseModal();
+    }
+
+    render() {
+        return (
+            <Modal
+                isOpen={this.props.show}
+                contentLabel="Modal"
+            >
+                <button onClick={this.handleCloseModal}>&times;</button>
+                <h1>Ie que va!</h1>
+            </Modal>
+        );
+    }
+}
 
 class PartFormContent extends Component {
     constructor(props) {
@@ -753,9 +825,7 @@ class PartFormContent extends Component {
                     shouldCloseOnOverlayClick={true}
                 >
                     <button onClick={this.handleCloseModal}>&times;</button>
-                    <ExerciciFormContent
-
-                    />
+                    <ExerciciFormContent />
                 </Modal>
             </div>
         );
