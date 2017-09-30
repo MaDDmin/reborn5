@@ -28,8 +28,9 @@ export default class ExercicisForm extends Component {
             exerciciDescripcio = this.exerciciDescripcio.value.trim(),
             exerciciSeriesDefault = this.exerciciSeriesDefault.value.trim(),
             exerciciRepeticionsDefault = this.exerciciRepeticionsDefault.value.trim(),
-            exerciciDescansDefault = this.exerciciDescansDefault.value.trim(),
-            exerciciMinutsDefault = this.exerciciMinutsDefault.value.trim();
+            exerciciDescansMinuts = this.exerciciDescansMinuts.value.trim(),
+            exerciciDescansSegons = this.exerciciDescansSegons.value.trim();
+            exerciciCarrega = this.exerciciCarrega.value.trim();
 
         if (exerciciNom) {
 
@@ -53,8 +54,9 @@ export default class ExercicisForm extends Component {
                 exerciciDescripcio,
                 exerciciSeriesDefault,
                 exerciciRepeticionsDefault,
-                exerciciDescansDefault,
-                exerciciMinutsDefault,
+                exerciciDescansMinuts,
+                exerciciDescansSegons,
+                exerciciCarrega,
                 this.state.arrImatgesPujades,
                 (error, data) => {
                     if (error) {
@@ -69,8 +71,9 @@ export default class ExercicisForm extends Component {
                         this.exerciciDescripcio.value = "";
                         this.exerciciSeriesDefault.value = "";
                         this.exerciciRepeticionsDefault.value = "";
-                        this.exerciciDescansDefault.value = "";
-                        this.exerciciMinutsDefault.value = "";
+                        this.exerciciDescansMinuts.value = "";
+                        this.exerciciDescansSegons.value = "";
+                        this.exerciciCarrega.value = "";
                     }
             });
         }
@@ -111,24 +114,37 @@ export default class ExercicisForm extends Component {
                     <fieldset>
                         <legend>Valors per defecte: </legend>
                         <input
-                            type="text"
+                            type="number"
+                            min="1"
                             ref={input => this.exerciciSeriesDefault = input}
                             placeholder="Sèries"
                         />
                         <input
-                            type="text"
+                            type="number"
+                            min="1"
                             ref={input => this.exerciciRepeticionsDefault = input}
                             placeholder="Repeticions"
                         />
                         <input
-                            type="text"
-                            ref={input => this.exerciciDescansDefault = input}
-                            placeholder="Descans"
+                            type="number"
+                            min="0"
+                            ref={input => this.exerciciDescansMinuts = input}
+                            placeholder="DescansMinuts"
                         />
                         <input
-                            type="text"
-                            ref={input => this.exerciciMinutsDefault = input}
-                            placeholder="Minuts"
+                            type="number"
+                            min="0"
+                            max="60"
+                            step="10"
+                            ref={input => this.exerciciDescansSegons = input}
+                            placeholder="DescansSegons"
+                        />
+                        <input
+                            type="number"
+                            min="0"
+                            step="5"
+                            ref={input => this.exerciciCarrega = input}
+                            placeholder="Càrrega"
                         />
                     </fieldset>
 

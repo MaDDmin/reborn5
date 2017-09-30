@@ -67,14 +67,38 @@ Meteor.methods({
         );
     },
 
-    'grups_musculars.update'(grupMuscularNom, grupMuscularDescripcio) {
+    'grups_musculars.nom.update'(grup_muscular, grupMuscularNom) {
         if (Meteor.userId() !== grup_muscular.user) {
             throw new Meteor.Error('not-authorized');
         }
 
         GrupsMusculars.update(grup_muscular._id, {
             $set: {
-                //completed: !grup_muscular.completed
+                grupMuscularNom
+            }
+        });
+    },
+
+    'grups_musculars.descrip.update'(grup_muscular, grupMuscularDescripcio) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        GrupsMusculars.update(grup_muscular._id, {
+            $set: {
+                grupMuscularDescripcio
+            }
+        });
+    },
+
+    'grups_musculars.imatge.update'(grup_muscular, imatge) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        GrupsMusculars.update(grup_muscular._id, {
+            $set: {
+                //grupMuscularDescripcio.arrImatges[imatge.]
             }
         });
     },

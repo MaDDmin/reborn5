@@ -49,6 +49,7 @@ const
                 boxShadow: `0 .2em .1em black`
             }}
         />
+    ;
 
 Modal.defaultStyles = {
     overlay: {

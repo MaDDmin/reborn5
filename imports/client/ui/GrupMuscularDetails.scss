@@ -17,7 +17,7 @@
     max-width: 300px;
     padding: 0 auto;
     margin: 0 2em;
-    border: 1px solid;
+/*    border: 1px solid;*/
 }
 
 .imgGM {
@@ -25,4 +25,12 @@
     margin: auto;
     width: 100%;
     max-width: 200px;
+}
+
+.divPreview {
+    max-width: 100%;
+}
+
+.preview {
+    width: 210px;
 }

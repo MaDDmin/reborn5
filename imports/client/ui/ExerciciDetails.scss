@@ -1,9 +1,23 @@
-.divExerciciDescripcio, .divExerciciImgText {
+img {
+    border-radius: 2em;
+    box-shadow: 0 .5em .5em;
+}
+
+.divExerciciImgText {
+    background: rgba(190, 180, 200, .2);
+    //font-weight: bold;
+    font-size: small;
+    padding: .5em 1em;
+    margin: .5em 2em;
+    //border: 1px solid;
+}
+
+.divExerciciDescripcio {
     background: rgba(190, 180, 200, .2);
     font-weight: bold;
     padding: .5em 1em;
     margin: .5em 2em;
-    border: 1px solid;
+    //border: 1px solid;
 }
 
 .divGridExerciciImgs {
@@ -17,7 +31,7 @@
     max-width: 300px;
     padding: 0 auto;
     margin: 0 2em;
-    border: 1px solid;
+    //border: 1px solid;
 }
 
 .imgExercici {
@@ -26,3 +40,21 @@
     width: 100%;
     max-width: 200px;
 }
+
+.divExerciciImatgePrincipal {
+    max-width: 500px;
+    padding: 0 auto;
+    margin: 0 2em;
+    //border: 1px solid;
+}
+
+.imgPrincipalExercici {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    width: 400px;
+}
+
+// .divExerciciImatges::before {
+//     content: "Fig :"
+// }

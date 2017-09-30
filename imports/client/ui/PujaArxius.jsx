@@ -114,17 +114,24 @@ export default class PujaArxius extends Component {
                 <label htmlFor="inFile">
                     <div id="divZonaUpload"
                         style={{
-                            display: "inline-block",
-                            width: "10em",
-                            height: "3em",
-                            border: "2px dashed aliceblue",
-                            cursor: "pointer",
-                            color: "aliceblue",
-                            textAlign: "center"
+                            display: `grid`,
+                            border: `.6em dashed white`,
+                            color: `white`,
+                            fontWeight: `bold`,
+                            textAlign: `center`,
+                            margin: `.3em 1em`,
+                            width: `150px`,
+                            height: `200px`
                         }}
                         title="Clica ací per incloure imatges il·lustratives"
                     >
-                        Selecciona imatges
+                        <span
+                            style={{
+                                alignSelf: `center`
+                            }}
+                        >
+                            Selecciona una imatge
+                        </span>
                     </div>
                 </label>
                 <div id="divPreview" />

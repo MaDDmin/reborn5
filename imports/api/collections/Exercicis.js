@@ -28,24 +28,29 @@ export const exerciciSchema = Exercicis.schema = new SimpleSchema({
     optional: true
   },
   exerciciSeriesDefault: {
-    type: String,
+    type: Number,
     optional: false,
     defaultValue: "1"
   },
   exerciciRepeticionsDefault: {
-    type: String,
+    type: Number,
     optional: false,
     defaultValue: "1"
   },
-  exerciciDescansDefault: {
-    type: String,
+  exerciciDescansMinuts: {
+    type: Number,
     optional: false,
     defaultValue: "0"
   },
-  exerciciMinutsDefault: {
-    type: String,
+  exerciciDescansSegons: {
+    type: Number,
     optional: false,
-    defaultValue: "1"
+    defaultValue: "0"
+  },
+  exerciciCarrega: {
+    type: Number,
+    optional: false,
+    defaultValue: "0"
   },
     arrImatges: {
         type: Array,
@@ -64,8 +69,9 @@ Meteor.methods({
         exerciciDescripcio,
         exerciciSeriesDefault,
         exerciciRepeticionsDefault,
-        exerciciDescansDefault,
-        exerciciMinutsDefault,
+        exerciciDescansMinuts,
+        exerciciDescansSegons,
+        exerciciCarrega,
         arrImatges
     ) {
         if (!Meteor.userId()) {
@@ -77,8 +83,9 @@ Meteor.methods({
             exerciciDescripcio,
             exerciciSeriesDefault,
             exerciciRepeticionsDefault,
-            exerciciDescansDefault,
-            exerciciMinutsDefault,
+            exerciciDescansMinuts,
+            exerciciDescansSegons,
+            exerciciCarrega,
             createdAt: new Date(),
             user: Meteor.userId(),
             arrImatges
@@ -91,8 +98,10 @@ Meteor.methods({
         exerciciDescripcio,
         exerciciSeriesDefault,
         exerciciRepeticionsDefault,
-        exerciciDescansDefault,
-        exerciciMinutsDefault
+        exerciciDescansMinuts,
+        exerciciDescansSegons,
+        exerciciCarrega,
+        arrImatges
     ) {
         if (Meteor.userId() !== exercici.user) {
             throw new Meteor.Error('not-authorized');
