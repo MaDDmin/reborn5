@@ -117,26 +117,57 @@ Meteor.methods({
         arrImatges[clau].imgArx.editDate = editDate;
 
         console.dir("arrImatges: ", arrImatges);
-        //
+
         GrupsMusculars.update({
             _id: grup_muscular._id
         }, { $set: {
             arrImatges
         }});
-        // console.log("Interior del Mètode de Meteor.Després de buffer.");
-        //
-        // GrupsMusculars.update({
-        //     _id: grup_muscular._id
-        // }, {
-        //     $set: {arrClau.imgArx.name: imgTitle}
-        // });
-        // console.log("Interior del Mètode de Meteor. Després de Name.");
-        //
-        // GrupsMusculars.update({
-        //     _id: grup_muscular._id
-        // }, {
-        //     $set: {arrClau.imgArx.editDate: editDate}
-        // });
+    },
+
+    'grups_musculars.imatgeText.update'(
+        grup_muscular,
+        clau,
+        nouText
+    ) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        let
+            arrImatges = grup_muscular.arrImatges,
+            arrClau = arrImatges[clau];
+
+        arrImatges[clau].imgText = nouText;
+        arrImatges[clau].editDate = new Date();
+
+        GrupsMusculars.update({
+            _id: grup_muscular._id
+        }, { $set: {
+            arrImatges
+        }});
+    },
+
+    'grups_musculars.imatge.delete'(
+        grup_muscular,
+        clau
+    ) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        let
+            arrImatges = grup_muscular.arrImatges;
+
+        grup_muscular.arrImatges.splice(clau, 1);
+
+        arrImatges.editDate = new Date();
+
+        GrupsMusculars.update({
+            _id: grup_muscular._id
+        }, { $set: {
+            arrImatges
+        }});
     },
 
     'grups_musculars.delete'(grup_muscular) {

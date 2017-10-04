@@ -7,8 +7,8 @@ import { createContainer } from 'meteor/react-meteor-data';
 import './GrupMuscularDetails.scss';
 import Tappable from 'react-tappable';
 import sanitizeHtml from 'sanitize-html-react';
-import renderHTML from 'react-render-html';
-import ActualitzaImatge from './ActualitzaImatge.jsx';
+//import renderHTML from 'react-render-html';
+import ImatgeModificable from './ImatgeModificable.jsx';
 //import Modal from 'react-modal';
 
 
@@ -178,135 +178,7 @@ class GrupMuscularDetailsNoData extends Component {
     }
 }
 
-class ImatgeModificable extends Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            editantImatge: false,
-            tappableOnKeyDown: true,
-            tappableOnMouseDown: true,
-            tappableOnTouchStart: true
-        }
-
-        this.handlePressEventImatge = this.handlePressEventImatge.bind(this);
-    }
-
-    handlePressEventImatge(ev) {
-    //     let clau = ev.target.dataset.clau;
-    //
-        this.setState({
-                editantImatge: true,
-                tappableOnKeyDown: false,
-                tappableOnMouseDown: false,
-                tappableOnTouchStart: false
-        });
-    }
-
-    render() {
-        return (
-            <div className="divGMImatges">
-                <Tappable
-                    component="div"
-                    onPress={this.handlePressEventImatge}
-                    pressDelay={250}
-                    stopPropagation={true}
-                    onKeyDown={() => this.state.tappableOnKeyDown}
-                    onMouseDown={() => this.state.tappableOnMouseDown}
-                    onTouchStart={() => this.state.tappableOnTouchStart}
-                >
-                    <div style={{
-                        display: `grid`,
-                        gridTemplateAreas: `"imatgeModificable"`
-                    }}>
-                        <img
-                            className="imgGM"
-                            src={this.props.src}
-                            alt={this.props.alt}
-                            style={{
-                                gridArea: `imatgeModificable`
-                            }}
-                        />
-                        <div
-                            style={{
-                                gridArea: `imatgeModificable`,
-                                alignSelf: `stretch`,
-                                justifySelf: `center`,
-                                borderRadius: `2em`,
-                                overflow: `hidden`,
-                                width: `100%`,
-                                textAlign: `center`,
-                                margin: `0 auto`
-                            }}
-                        >
-                            <SelectorImatge
-                                grup_muscular={this.props.grup_muscular}
-                                isOpen={this.state.editantImatge}
-                                clau={this.props.clau}
-                                handleEditantImatge={this.props.handleEditantImatge}
-                            />
-                        </div>
-                    </div>
-                    <div className="divGMImgText">
-                        {this.props.peu}
-                    </div>
-                </Tappable>
-            </div>
-        );
-    }
-}
-
-class SelectorImatge extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            imatgeEstablerta: false
-        }
-
-        this.handleEstableixImatge = this.handleEstableixImatge.bind(this);
-    }
-
-    handleEstableixImatge() {
-        this.setState({
-            imatgeEstablerta: true
-        });
-    }
-
-    render() {
-        return (
-            <div
-                className="divOverlay"
-                style={{
-                    display:
-                        this.props.isOpen && !this.state.imatgeEstablerta
-                        ?   `grid`
-                        :   `none`
-                    ,
-                    position: `relative`,
-                    background: `rgba(50,50,50,.85)`,
-                    width: `100%`,
-                    height: `100%`,
-                    float: `left`,
-                    padding: `0 1em`,
-                    zIndex: '100',
-                    alignContent: `center`,
-                    margin: `.5em`
-                }}
-            >
-                <ActualitzaImatge
-                    meteor_method={``}
-                    grup_muscular={this.props.grup_muscular}
-                    imatge_amb_text_original={this.props.imatge_amb_text_original}
-                    clau={this.props.clau}
-                    handleEditantImatge={this.props.handleEditantImatge}
-                    handleEstableixImatge={this.handleEstableixImatge}
-
-                />
-            </div>
-        );
-    }
-}
 
 // ResolutionDetails.propTypes = {
 //   res: PropTypes.array.isRequired

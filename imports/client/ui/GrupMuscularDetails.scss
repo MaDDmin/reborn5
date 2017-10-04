@@ -20,6 +20,8 @@
     margin: 0 2em;
 /*    border: 1px solid;*/
     align-self: center;
+    justify-self: center;
+    display: grid;
 }
 
 .imgGM {
@@ -28,6 +30,14 @@
     width: 100%;
     max-width: 200px;
 }
+
+// .divGMImatges .imgGM:nth-of-type(2n-1) {
+//     transform: rotate(-2deg);
+// }
+//
+// .divGMImatges .imgGM:nth-of-type(2n) {
+//     transform: rotate(10deg);
+// }
 
 .divPreview {
     max-width: 100%;
