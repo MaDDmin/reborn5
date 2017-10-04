@@ -11,6 +11,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     grid-gap: 1em;
+    align-self: center;
 }
 
 .divGMImatges {
@@ -18,6 +19,7 @@
     padding: 0 auto;
     margin: 0 2em;
 /*    border: 1px solid;*/
+    align-self: center;
 }
 
 .imgGM {

@@ -91,16 +91,52 @@ Meteor.methods({
         });
     },
 
-    'grups_musculars.imatge.update'(grup_muscular, imatge) {
+    'grups_musculars.imatge.update'(
+        grup_muscular,
+        clau,
+        imgSrc,
+        imgTitle,
+        editDate
+    ) {
         if (Meteor.userId() !== grup_muscular.user) {
             throw new Meteor.Error('not-authorized');
         }
+        console.log("Interior del Mètode de Meteor.");
 
-        GrupsMusculars.update(grup_muscular._id, {
-            $set: {
-                //grupMuscularDescripcio.arrImatges[imatge.]
-            }
-        });
+        let
+            arrImatges = grup_muscular.arrImatges,
+            arrClau = arrImatges[clau],
+            imgArx = arrClau.imgArx;
+
+        console.dir("arrImatges: ", arrImatges);
+        console.dir("arrClau: ", arrClau);
+        console.dir("imgArx: ", imgArx);
+
+        arrImatges[clau].imgArx.buffer = imgSrc;
+        arrImatges[clau].imgArx.name = imgTitle;
+        arrImatges[clau].imgArx.editDate = editDate;
+
+        console.dir("arrImatges: ", arrImatges);
+        //
+        GrupsMusculars.update({
+            _id: grup_muscular._id
+        }, { $set: {
+            arrImatges
+        }});
+        // console.log("Interior del Mètode de Meteor.Després de buffer.");
+        //
+        // GrupsMusculars.update({
+        //     _id: grup_muscular._id
+        // }, {
+        //     $set: {arrClau.imgArx.name: imgTitle}
+        // });
+        // console.log("Interior del Mètode de Meteor. Després de Name.");
+        //
+        // GrupsMusculars.update({
+        //     _id: grup_muscular._id
+        // }, {
+        //     $set: {arrClau.imgArx.editDate: editDate}
+        // });
     },
 
     'grups_musculars.delete'(grup_muscular) {

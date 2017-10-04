@@ -183,7 +183,10 @@ class ImatgeModificable extends Component {
         super(props);
 
         this.state = {
-            editantImatge: false
+            editantImatge: false,
+            tappableOnKeyDown: true,
+            tappableOnMouseDown: true,
+            tappableOnTouchStart: true
         }
 
         this.handlePressEventImatge = this.handlePressEventImatge.bind(this);
@@ -193,7 +196,10 @@ class ImatgeModificable extends Component {
     //     let clau = ev.target.dataset.clau;
     //
         this.setState({
-            editantImatge: true
+                editantImatge: true,
+                tappableOnKeyDown: false,
+                tappableOnMouseDown: false,
+                tappableOnTouchStart: false
         });
     }
 
@@ -205,6 +211,9 @@ class ImatgeModificable extends Component {
                     onPress={this.handlePressEventImatge}
                     pressDelay={250}
                     stopPropagation={true}
+                    onKeyDown={() => this.state.tappableOnKeyDown}
+                    onMouseDown={() => this.state.tappableOnMouseDown}
+                    onTouchStart={() => this.state.tappableOnTouchStart}
                 >
                     <div style={{
                         display: `grid`,
@@ -250,6 +259,18 @@ class ImatgeModificable extends Component {
 class SelectorImatge extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            imatgeEstablerta: false
+        }
+
+        this.handleEstableixImatge = this.handleEstableixImatge.bind(this);
+    }
+
+    handleEstableixImatge() {
+        this.setState({
+            imatgeEstablerta: true
+        });
     }
 
     render() {
@@ -258,7 +279,7 @@ class SelectorImatge extends Component {
                 className="divOverlay"
                 style={{
                     display:
-                        this.props.isOpen
+                        this.props.isOpen && !this.state.imatgeEstablerta
                         ?   `grid`
                         :   `none`
                     ,
@@ -268,7 +289,9 @@ class SelectorImatge extends Component {
                     height: `100%`,
                     float: `left`,
                     padding: `0 1em`,
-                    zIndex: '100'
+                    zIndex: '100',
+                    alignContent: `center`,
+                    margin: `.5em`
                 }}
             >
                 <ActualitzaImatge
@@ -277,6 +300,8 @@ class SelectorImatge extends Component {
                     imatge_amb_text_original={this.props.imatge_amb_text_original}
                     clau={this.props.clau}
                     handleEditantImatge={this.props.handleEditantImatge}
+                    handleEstableixImatge={this.handleEstableixImatge}
+
                 />
             </div>
         );

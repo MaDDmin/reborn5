@@ -18,6 +18,7 @@ import ExerciciDetails from './ui/ExerciciDetails.jsx';
 import Rutines from './ui/Rutines.jsx';
 //import MobX from './ui/MobX.jsx';
 import Experimental from './ui/Experimental.jsx';
+import Experimental2 from './ui/Experimental2.jsx';
 
 FlowRouter.route('/', {
   action(){
@@ -106,6 +107,16 @@ FlowRouter.route('/experimental', {
     mount(MainLayout, {
       content: (
         <Experimental />
+      )
+    });
+  }
+});
+
+FlowRouter.route('/experimental2', {
+  action(){
+    mount(MainLayout, {
+      content: (
+        <Experimental2 clau={666} />
       )
     });
   }

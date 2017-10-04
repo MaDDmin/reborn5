@@ -20,6 +20,7 @@
     "react-addons-pure-render-mixin": "^15.3.1",
     "react-atellier": "^0.1.13",
     "react-dom": "^15.3.1",
+    "react-file-reader": "^1.1.2",
     "react-infinite-calendar": "^2.3.1",
     "react-komposer": "^1.13.1",
     "react-modal": "^2.3.2",
