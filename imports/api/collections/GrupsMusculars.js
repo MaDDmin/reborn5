@@ -170,6 +170,30 @@ Meteor.methods({
         }});
     },
 
+    'grups_musculars.imatges.afegeix'(
+        grup_muscular,
+        arrNovesImatges
+    ) {
+        if (Meteor.userId() !== grup_muscular.user) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+        let
+            arrImatges = grup_muscular.arrImatges;
+
+        arrNovesImatges.map(
+            (v,i,a) => arrImatges.push(v)
+        );
+
+        grup_muscular.arrImatges.editDate = new Date();
+
+        GrupsMusculars.update({
+            _id: grup_muscular._id
+        }, { $set: {
+            arrImatges
+        }});
+    },
+
     'grups_musculars.delete'(grup_muscular) {
         if (Meteor.userId() !== grup_muscular.user) {
             throw new Meteor.Error('not-authorized');

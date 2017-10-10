@@ -14,14 +14,10 @@ export default class PujaArxiusAmbText extends Component {
 
         this.fileSelect = this.fileSelect.bind(this);
         this.sendFiles = this.sendFiles.bind(this);
-
-        /* this.sendFiles2 = this.sendFiles2.bind(this); */
-        //this.selArxiusAmbAnchor = this.selArxiusAmbAnchor.bind(this);
     }
 
 	fileSelect(ev) {
 		const
-            //that = this,
 			arxius = ev.target.files,
 			preview = document.querySelector("#divPreview");
 
@@ -44,10 +40,6 @@ export default class PujaArxiusAmbText extends Component {
                 arx = arxius[i],
 				imageType = /^image\//;
 
-
-			// if (!imageType.test(arx.type)){
-			//   continue;
-			// }
 			let divArx = document.createElement("div");
 			divArx.classList.add("divArx");
             let taArx = document.createElement("textarea");
@@ -74,35 +66,12 @@ export default class PujaArxiusAmbText extends Component {
                 };
 			})(img);
 			reader.readAsDataURL(arx);
-        //    console.dir(objImgTxtIterant);
-			//reader.readAsArrayBuffer(arx);
 		}
 
-	//	console.dir(arrImatgesPujadesAmbNoText);
-
-        // this.setState({
-        //     imgArr: arxius
-        // });
-		//alert("Arxius seleccionats. Missatge a la consola.");
-
-		//this.sendFiles2(arxius)
-
-		//this.sendFiles(arxius);
         this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
 	}
 
 	sendFiles(arxius) {
-		// for (let i = 0; i < arxius.length; i++) {
-		// 	let
-		// 		arx = arxius[i],
-		// 		imageType = /^image\//;
-        //
-		// 	if (!imageType.test(arx.type)) {
-		// 		continue;
-		// 	}
-        //
-		// 	Meteor.call('.insert', );
-		// }
 	}
 
 	render() {
@@ -116,7 +85,6 @@ export default class PujaArxiusAmbText extends Component {
 					style={{ display: `none` }}
 					onChange={this.fileSelect}
 				/>
-				{/*  <a href="#" id="aSelArxius" onClick= this.selArxiusAmbAnchor}>Selecciona imatges (anchor)</a> */}
 				<label htmlFor="inFile" >
                     <div
                         id="divUpload"

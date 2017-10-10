@@ -9,20 +9,11 @@ import GrupMuscularSingle from './GrupMuscularSingle.jsx';
 import { check, Match } from 'meteor/check';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-//import PrintDeliverer from './PrintDeliverer.jsx';
-
-//import PHE from 'print-html-element';
-//import print form 'print-any-html';
-
-//import $ from 'meteor/jquery';
-
-
 class GrupsMuscularsNoData extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-
             // subscription: {
             //     clients: Meteor.subscribe("userClients"),
             //     grups_musculars: Meteor.subscribe("userGrupsMusculars")
@@ -34,22 +25,10 @@ class GrupsMuscularsNoData extends Component {
         this.imprimeixLlista = this.imprimeixLlista.bind(this);
     }
 
-    componentDidMount() {
-
-    }
-
-    componentWillUnmount() {
-    //    this.state.subscription.grups_musculars.stop();
-    }
-
-    /*renderResolutions() {
-    return this.props.resolutions.map((resolution)=>(
-      <ResolutionSingle key={resolution._id} resolution={resolution} />
-    ));
-    }*/
-
     activateForm() {
-        this.setState({formActive: !this.state.formActive});
+        this.setState({
+            formActive: !this.state.formActive
+        });
     }
 
     imprimeixLlista () {

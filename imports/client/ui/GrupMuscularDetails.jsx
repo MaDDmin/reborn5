@@ -9,6 +9,7 @@ import Tappable from 'react-tappable';
 import sanitizeHtml from 'sanitize-html-react';
 //import renderHTML from 'react-render-html';
 import ImatgeModificable from './ImatgeModificable.jsx';
+import PujaArxiusAmbTextRFR from './PujaArxiusAmbTextRFR.jsx';
 //import Modal from 'react-modal';
 
 
@@ -52,6 +53,8 @@ class GrupMuscularDetailsNoData extends Component {
         this.handleEditaDescrip = this.handleEditaDescrip.bind(this);
         this.handleEstableixDescrip = this.handleEstableixDescrip.bind(this);
         this.handleEditantImatge = this.handleEditantImatge.bind(this);
+
+        this.handleImatgesPujades = this.handleImatgesPujades.bind(this);
     }
 
     handleTapEventTitol() {
@@ -98,6 +101,19 @@ class GrupMuscularDetailsNoData extends Component {
         this.setState({
             editantImatge: clau
         })
+    }
+
+    handleImatgesPujades(arrImatgesPujades) {
+        this.setState({
+            arrImatgesPujades
+        });
+    }
+
+    addImatgesPujades() {
+        Meteor.call('grups_musculars.imatges.afegeix',
+            this.props.grup_muscular[0],
+            this.state.arrImatgesPujades
+        );
     }
 
     render() {
@@ -173,11 +189,34 @@ class GrupMuscularDetailsNoData extends Component {
                         `Carregant...`
                     }
                 </div>
+
+                <AfegeixImatges />
             </div>
           );
     }
 }
 
+class AfegeixImatges extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            imatgesPujades: []
+        }
+    }
+
+    render() {
+        return (
+            <div
+                style={{
+                    display: `grid`
+                }}
+            >
+                <PujaArxiusAmbTextRFR />
+            </div>
+        );
+    }
+}
 
 
 // ResolutionDetails.propTypes = {
