@@ -13,13 +13,16 @@ export default class PujaArxiusAmbTextRFR extends Component {
 
         this.state = {
             imatgesTriadesNoText: [],
-            imatgesEstablertes: false
+            imatgesEstablertes: false,
+            textsImatges: []
         }
 
         this.fileSelect = this.fileSelect.bind(this);
         this.sendFiles = this.sendFiles.bind(this);
         this.handleFiles = this.handleFiles.bind(this);
         this.handleAfegeixImatges = this.handleAfegeixImatges.bind(this);
+        this.handleTaInput = this.handleTaInput.bind(this);
+        this.textsAlState = this.textsAlState.bind(this);
     }
 
 	fileSelect(ev) {
@@ -114,7 +117,9 @@ export default class PujaArxiusAmbTextRFR extends Component {
                 }
             );
 
-            return arrNovesImatgesAmbText;
+            return ({
+                arrNovesImatgesAmbText
+            });
         })
 
         // Meteor.call('grups_musculars.imatges.afegeix',
@@ -123,18 +128,29 @@ export default class PujaArxiusAmbTextRFR extends Component {
     }
 
     handleTaInput(ev) {
-        this.setState((prevState, props) => ({
-            prevState.imatgesTriadesNoText.map(
-                (v,i,a) => {
-                    let
-                        imgTaIterantValue = document.querySelector(`#taImgText_${i}`).value,
-                        arrImatgesPujadesAmbTextIterant = v;
-                    ;
-                }
-            )
+        // this.setState((prevState, props) => {
+        //     let textIterat =
+        //
+        //     prevState.imatgesTriadesNoText.map(
+        //         (v,i,a) => {
+        //         }
+        //     );
+        //
+        //     return ({
+        //
+        //     });
+        // });
+    }
 
-            imatgesTriadesNoText: prevState.imatgesTriadesNoText[v.target.clau].imgText = v.target.value;
-        }));
+    textsAlState(clau, text) {
+        let
+            textsImatges = this.state.textsImatges;
+
+        textsImatges[clau] = text;
+
+        this.setState({
+            textsImatges
+        });
     }
 
 	render() {
@@ -150,33 +166,12 @@ export default class PujaArxiusAmbTextRFR extends Component {
                 { this.state.imatgesTriadesNoText.map(
                     (v,i,a) => {
                         return (
-                            <div
+                            <ImatgeAmbTextAAfegir
                                 key={i}
-                                style={{
-                                    display: `grid`,
-                                    justifyContent: `center`
-                                }}
-                            >
-                                <img
-                                    src={v.imgArx.buffer}
-                                    alt={v.imgArx.name}
-                                    title={v.imgArx.name}
-                                    style={{
-                                        display: `inline-block`,
-                                        width: `210px`,
-                                        alignSelf: `center`
-                                    }}
-                                />
-                                <textarea
-                                    id={`taImgText_${i}`}
-                                    className="taImgText"
-                                    clau={i}
-                                    style={{
-                                        alignSelf: `stretch`
-                                    }}
-                                    onInput={this.handleTaInput}
-                                />
-                            </div>
+                                clau={i}
+                                v={v}
+                                textsAlState={this.textsAlState}
+                            />
                         );
                     }
                 )}
@@ -211,8 +206,10 @@ export default class PujaArxiusAmbTextRFR extends Component {
                 >
         			<div
                         style={{
+                            display: `grid`,
                             alignSelf: `center`,
-                            justifySelf: `center`
+                            justifySelf: `center`,
+                            justifyContent: `center`
                         }}
                     >
         				<input
@@ -237,7 +234,9 @@ export default class PujaArxiusAmbTextRFR extends Component {
                             >
                                 <span
                                     style={{
-                                        alignSelf: `center`
+                                        alignSelf: `center`,
+                                        justifySelf: `center`
+
                                     }}
                                 >
                                         Inclou imatges
@@ -247,16 +246,61 @@ export default class PujaArxiusAmbTextRFR extends Component {
         			</div>
                 </ReactFileReader>
 
-                <PreviewsImatgesAmbTexts />
+                <PreviewsImatgesAmbTexts handleTaInput={this.handleTaInput} />
 
                 <BotoEstableix
                     grup_muscular={this.props.grup_muscular}
                     clau={this.props.clau}
                     imgSrc={this.state.imgSrc}
                     imgTitle={this.state.imgTitle}
-                    editDate={new Date()}
                 />
             </div>
 		);
 	}
+}
+
+class ImatgeAmbTextAAfegir extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleTaInput = this.handleTaInput.bind(this);
+    }
+
+    handleTaInput(ev) {
+        let
+            textAAfegir = ev.target.value
+        ;
+
+        this.props.textsAlState(this.props.clau, textAAfegir);
+    }
+
+    render() {
+        return (
+            <div
+                style={{
+                    display: `grid`,
+                    justifyContent: `center`
+                }}
+            >
+                <img
+                    src={this.props.v.imgArx.buffer}
+                    alt={this.props.v.imgArx.name}
+                    title={this.props.v.imgArx.name}
+                    style={{
+                        display: `inline-block`,
+                        width: `210px`,
+                        alignSelf: `center`
+                    }}
+                />
+                <textarea
+                    id={`taImgText_${this.props.clau}`}
+                    className="taImgText"
+                    style={{
+                        alignSelf: `stretch`
+                    }}
+                    onInput={this.handleTaInput}
+                />
+            </div>
+        );
+    }
 }

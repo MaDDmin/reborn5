@@ -27,15 +27,19 @@ export default class PujaArxiusAmbText extends Component {
 		for (let i = 0; i < arxius.length; i++) {
 			let
                 objImgTxtIterant = {
-                    imgArx: {
-                        lastModified: arxius[i].lastModified,
-                        lastModifiedDate: arxius[i].lastModifiedDate,
-                        name: arxius[i].name,
-                        size: arxius[i].size,
-                        type: arxius[i].type,
-                        webkitRelativePath: arxius[i].webkitRelativePath
-                    },
-                    imgText: ""
+                    imgArx: arxius[i]
+                    // {
+                    //     lastModified: arxius[i].lastModified,
+                    //     lastModifiedDate: arxius[i].lastModifiedDate,
+                    //     name: arxius[i].name,
+                    //     size: arxius[i].size,
+                    //     type: arxius[i].type,
+                    //     webkitRelativePath: arxius[i].webkitRelativePath
+                    // }
+                    ,
+                    imgText: "",
+                    imgClau: i
+
                 },
                 arx = arxius[i],
 				imageType = /^image\//;
@@ -50,6 +54,7 @@ export default class PujaArxiusAmbText extends Component {
 			let img = document.createElement("img");
 			img.classList.add("obj");
 			img.file = arx;
+
 			divArx.appendChild(img);
             divArx.appendChild(taArx);
 

@@ -33,15 +33,15 @@ export default class GrupsMuscularsForm extends Component{
 
                     arrImatgesPujadesAmbTextIterant.imgText = imgTaIterantValue;
                     arrImatgesPujadesAmbText.push(arrImatgesPujadesAmbTextIterant);
-
-                    console.dir(arrImatgesPujadesAmbText);
                 }
             );
+            
+            console.dir("addGrupMuscular: arrImatgesPujadesAmbText", arrImatgesPujadesAmbText);
 
             Meteor.call('grups_musculars.insert',
                 grupMuscularNom,
                 grupMuscularDescripcio,
-                this.state.arrImatgesPujades,
+                arrImatgesPujadesAmbText,
                 (error, data) => {
                     if (error) {
                       Bert.alert("Logueja't abans d'introduir dades.", "danger", "fixed-top", "fa-frown-o");

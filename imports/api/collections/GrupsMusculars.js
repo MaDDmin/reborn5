@@ -53,7 +53,8 @@ Meteor.methods({
         }
 
         GrupsMusculars.insert({
-            grupMuscularNom, grupMuscularDescripcio,
+            grupMuscularNom,
+            grupMuscularDescripcio,
             createdAt: new Date(),
             user: Meteor.userId(),
             arrImatges
