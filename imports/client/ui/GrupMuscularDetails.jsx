@@ -213,6 +213,7 @@ class AfegeixImatges extends Component {
                 }}
             >
                 <PujaArxiusAmbTextRFR />
+
             </div>
         );
     }

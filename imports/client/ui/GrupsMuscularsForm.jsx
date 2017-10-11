@@ -3,13 +3,15 @@ import { Meteor } from 'meteor/meteor';
 //import ReactDOM from 'react-dom';
 import Bert from 'meteor/themeteorchef:bert';
 import PujaArxiusAmbText from './PujaArxiusAmbText.jsx';
+import PuArxsAbTxtRFR from './PuArxsAbTxtRFR.jsx';
 
 export default class GrupsMuscularsForm extends Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            arrImatgesPujades: []
+            arrImatgesPujades: [],
+            arrImatgesPujadesAmbText: []
         };
 
         this.addGrupMuscular = this.addGrupMuscular.bind(this);
@@ -35,7 +37,7 @@ export default class GrupsMuscularsForm extends Component{
                     arrImatgesPujadesAmbText.push(arrImatgesPujadesAmbTextIterant);
                 }
             );
-            
+
             console.dir("addGrupMuscular: arrImatgesPujadesAmbText", arrImatgesPujadesAmbText);
 
             Meteor.call('grups_musculars.insert',
@@ -59,6 +61,10 @@ export default class GrupsMuscularsForm extends Component{
         this.setState({
             arrImatgesPujades
         });
+    }
+
+    textAlState(clau, text) {
+
     }
 
     render() {
@@ -89,7 +95,6 @@ export default class GrupsMuscularsForm extends Component{
 
                     {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
                     <PujaArxiusAmbText onImatgesPujades={this.handleImatgesPujades} />
-
                     <input
                         type="submit"
                         value="Introduir"

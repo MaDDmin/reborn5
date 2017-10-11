@@ -22,62 +22,62 @@ export default class PujaArxiusAmbTextRFR extends Component {
         this.handleFiles = this.handleFiles.bind(this);
         this.handleAfegeixImatges = this.handleAfegeixImatges.bind(this);
         this.handleTaInput = this.handleTaInput.bind(this);
-        this.textsAlState = this.textsAlState.bind(this);
+        this.textAlState = this.textAlState.bind(this);
     }
 
 	fileSelect(ev) {
-		const
-			arxius = ev.target.files,
-			preview = document.querySelector("#divPreview");
-
-        let
-            arrImatgesPujadesAmbNoText = [];
-
-		for (let i = 0; i < arxius.length; i++) {
-			let
-                objImgTxtIterant = {
-                    imgArx: {
-                        lastModified: arxius[i].lastModified,
-                        lastModifiedDate: arxius[i].lastModifiedDate,
-                        name: arxius[i].name,
-                        size: arxius[i].size,
-                        type: arxius[i].type,
-                        webkitRelativePath: arxius[i].webkitRelativePath
-                    },
-                    imgText: ""
-                },
-                arx = arxius[i],
-				imageType = /^image\//;
-
-			let divArx = document.createElement("div");
-			divArx.classList.add("divArx");
-            let taArx = document.createElement("textarea");
-            taArx.classList.add("taArx");
-            taArx.setAttribute("id", `taArx_${i}`);
-			preview.appendChild(divArx);
-
-			let img = document.createElement("img");
-			img.classList.add("obj");
-			img.file = arx;
-			divArx.appendChild(img);
-            divArx.appendChild(taArx);
-
-			let reader = new FileReader();
-			reader.onload = ((aImg) => {
-				//let buffer = new Uint8Array(reader.result);
-				//Meteor.call('saveFile', buffer);
-				return (e) => {
-                    aImg.src = e.target.result;
-                    Object.assign(objImgTxtIterant.imgArx, {
-                        buffer: e.target.result
-                    });
-                    arrImatgesPujadesAmbNoText.push(objImgTxtIterant);
-                };
-			})(img);
-			reader.readAsDataURL(arx);
-		}
-
-        this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
+		// const
+		// 	arxius = ev.target.files,
+		// 	preview = document.querySelector("#divPreview");
+        //
+        // let
+        //     arrImatgesPujadesAmbNoText = [];
+        //
+		// for (let i = 0; i < arxius.length; i++) {
+		// 	let
+        //         objImgTxtIterant = {
+        //             imgArx: {
+        //                 lastModified: arxius[i].lastModified,
+        //                 lastModifiedDate: arxius[i].lastModifiedDate,
+        //                 name: arxius[i].name,
+        //                 size: arxius[i].size,
+        //                 type: arxius[i].type,
+        //                 webkitRelativePath: arxius[i].webkitRelativePath
+        //             },
+        //             imgText: ""
+        //         },
+        //         arx = arxius[i],
+		// 		imageType = /^image\//;
+        //
+		// 	let divArx = document.createElement("div");
+		// 	divArx.classList.add("divArx");
+        //     let taArx = document.createElement("textarea");
+        //     taArx.classList.add("taArx");
+        //     taArx.setAttribute("id", `taArx_${i}`);
+		// 	preview.appendChild(divArx);
+        //
+		// 	let img = document.createElement("img");
+		// 	img.classList.add("obj");
+		// 	img.file = arx;
+		// 	divArx.appendChild(img);
+        //     divArx.appendChild(taArx);
+        //
+		// 	let reader = new FileReader();
+		// 	reader.onload = ((aImg) => {
+		// 		//let buffer = new Uint8Array(reader.result);
+		// 		//Meteor.call('saveFile', buffer);
+		// 		return (e) => {
+        //             aImg.src = e.target.result;
+        //             Object.assign(objImgTxtIterant.imgArx, {
+        //                 buffer: e.target.result
+        //             });
+        //             arrImatgesPujadesAmbNoText.push(objImgTxtIterant);
+        //         };
+		// 	})(img);
+		// 	reader.readAsDataURL(arx);
+		// }
+        //
+        // this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
 	}
 
 	sendFiles(arxius) {
@@ -142,15 +142,14 @@ export default class PujaArxiusAmbTextRFR extends Component {
         // });
     }
 
-    textsAlState(clau, text) {
+    textAlState(clau, text) {
         let
-            textsImatges = this.state.textsImatges;
+            arrTexts = [];
 
-        textsImatges[clau] = text;
-
+        arrTexts[clau] = text;
         this.setState({
-            textsImatges
-        });
+            textsImatges: arrTexts
+        })
     }
 
 	render() {
@@ -170,7 +169,7 @@ export default class PujaArxiusAmbTextRFR extends Component {
                                 key={i}
                                 clau={i}
                                 v={v}
-                                textsAlState={this.textsAlState}
+                                textAlState={this.textAlState}
                             />
                         );
                     }
@@ -229,7 +228,7 @@ export default class PujaArxiusAmbTextRFR extends Component {
                                     margin: `.3em 1em`,
                                     width: `150px`,
                                     height: `200px`,
-                                    opacity: `.1`
+                                    opacity: `1`
                                 }}
                             >
                                 <span
@@ -271,7 +270,7 @@ class ImatgeAmbTextAAfegir extends Component {
             textAAfegir = ev.target.value
         ;
 
-        this.props.textsAlState(this.props.clau, textAAfegir);
+        this.props.textAlState(this.props.clau, textAAfegir);
     }
 
     render() {
