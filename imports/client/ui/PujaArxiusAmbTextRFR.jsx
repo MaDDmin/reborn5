@@ -13,75 +13,13 @@ export default class PujaArxiusAmbTextRFR extends Component {
 
         this.state = {
             imatgesTriadesNoText: [],
-            imatgesEstablertes: false,
-            textsImatges: []
+            imatgesEstablertes: false
         }
 
-        this.fileSelect = this.fileSelect.bind(this);
-        this.sendFiles = this.sendFiles.bind(this);
         this.handleFiles = this.handleFiles.bind(this);
         this.handleAfegeixImatges = this.handleAfegeixImatges.bind(this);
-        this.handleTaInput = this.handleTaInput.bind(this);
-        this.textAlState = this.textAlState.bind(this);
     }
 
-	fileSelect(ev) {
-		// const
-		// 	arxius = ev.target.files,
-		// 	preview = document.querySelector("#divPreview");
-        //
-        // let
-        //     arrImatgesPujadesAmbNoText = [];
-        //
-		// for (let i = 0; i < arxius.length; i++) {
-		// 	let
-        //         objImgTxtIterant = {
-        //             imgArx: {
-        //                 lastModified: arxius[i].lastModified,
-        //                 lastModifiedDate: arxius[i].lastModifiedDate,
-        //                 name: arxius[i].name,
-        //                 size: arxius[i].size,
-        //                 type: arxius[i].type,
-        //                 webkitRelativePath: arxius[i].webkitRelativePath
-        //             },
-        //             imgText: ""
-        //         },
-        //         arx = arxius[i],
-		// 		imageType = /^image\//;
-        //
-		// 	let divArx = document.createElement("div");
-		// 	divArx.classList.add("divArx");
-        //     let taArx = document.createElement("textarea");
-        //     taArx.classList.add("taArx");
-        //     taArx.setAttribute("id", `taArx_${i}`);
-		// 	preview.appendChild(divArx);
-        //
-		// 	let img = document.createElement("img");
-		// 	img.classList.add("obj");
-		// 	img.file = arx;
-		// 	divArx.appendChild(img);
-        //     divArx.appendChild(taArx);
-        //
-		// 	let reader = new FileReader();
-		// 	reader.onload = ((aImg) => {
-		// 		//let buffer = new Uint8Array(reader.result);
-		// 		//Meteor.call('saveFile', buffer);
-		// 		return (e) => {
-        //             aImg.src = e.target.result;
-        //             Object.assign(objImgTxtIterant.imgArx, {
-        //                 buffer: e.target.result
-        //             });
-        //             arrImatgesPujadesAmbNoText.push(objImgTxtIterant);
-        //         };
-		// 	})(img);
-		// 	reader.readAsDataURL(arx);
-		// }
-        //
-        // this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
-	}
-
-	sendFiles(arxius) {
-	}
 
     handleFiles(files) {
         let
@@ -104,6 +42,9 @@ export default class PujaArxiusAmbTextRFR extends Component {
         this.setState({
             imatgesTriadesNoText: arrNovesImatgesNoText
         });
+
+
+        //this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
     }
 
     handleAfegeixImatges() {
@@ -122,34 +63,12 @@ export default class PujaArxiusAmbTextRFR extends Component {
             });
         })
 
-        // Meteor.call('grups_musculars.imatges.afegeix',
-        //
-        // );
-    }
+        Meteor.call('grups_musculars.imatges.afegeix',
+            this.props.grup_muscular,
+            this.state.arrNovesImatgesAmbText
+        );
 
-    handleTaInput(ev) {
-        // this.setState((prevState, props) => {
-        //     let textIterat =
-        //
-        //     prevState.imatgesTriadesNoText.map(
-        //         (v,i,a) => {
-        //         }
-        //     );
-        //
-        //     return ({
-        //
-        //     });
-        // });
-    }
-
-    textAlState(clau, text) {
-        let
-            arrTexts = [];
-
-        arrTexts[clau] = text;
-        this.setState({
-            textsImatges: arrTexts
-        })
+        //this.props.afegitFet();
     }
 
 	render() {
@@ -169,7 +88,7 @@ export default class PujaArxiusAmbTextRFR extends Component {
                                 key={i}
                                 clau={i}
                                 v={v}
-                                textAlState={this.textAlState}
+                                textAlState={props.handleTaInput}
                             />
                         );
                     }
@@ -245,7 +164,7 @@ export default class PujaArxiusAmbTextRFR extends Component {
         			</div>
                 </ReactFileReader>
 
-                <PreviewsImatgesAmbTexts handleTaInput={this.handleTaInput} />
+                <PreviewsImatgesAmbTexts handleTaInput={this.textAlState} />
 
                 <BotoEstableix
                     grup_muscular={this.props.grup_muscular}
@@ -262,16 +181,16 @@ class ImatgeAmbTextAAfegir extends Component {
     constructor(props) {
         super(props);
 
-        this.handleTaInput = this.handleTaInput.bind(this);
+    //    this.handleTaInput = this.handleTaInput.bind(this);
     }
-
-    handleTaInput(ev) {
-        let
-            textAAfegir = ev.target.value
-        ;
-
-        this.props.textAlState(this.props.clau, textAAfegir);
-    }
+    //
+    // handleTaInput(ev) {
+    //     let
+    //         textAAfegir = ev.target.value
+    //     ;
+    //
+    //     this.props.textAlState(this.props.clau, textAAfegir);
+    // }
 
     render() {
         return (
@@ -294,10 +213,11 @@ class ImatgeAmbTextAAfegir extends Component {
                 <textarea
                     id={`taImgText_${this.props.clau}`}
                     className="taImgText"
+                    data-clau={this.props.clau}
                     style={{
                         alignSelf: `stretch`
                     }}
-                    onInput={this.handleTaInput}
+                    onInput={this.props.textAlState}
                 />
             </div>
         );

@@ -42,7 +42,8 @@ class GrupMuscularDetailsNoData extends Component {
         this.state = {
             editantTitol: false,
             editantDescrip: false,
-            editantImatge: NaN
+            editantImatge: NaN,
+            afegitFet: false
         };
 
         this.handleTapEventTitol = this.handleTapEventTitol.bind(this);
@@ -55,6 +56,7 @@ class GrupMuscularDetailsNoData extends Component {
         this.handleEditantImatge = this.handleEditantImatge.bind(this);
 
         this.handleImatgesPujades = this.handleImatgesPujades.bind(this);
+        this.afegitFet = this.afegitFet.bind(this);
     }
 
     handleTapEventTitol() {
@@ -114,6 +116,12 @@ class GrupMuscularDetailsNoData extends Component {
             this.props.grup_muscular[0],
             this.state.arrImatgesPujades
         );
+    }
+
+    afegitFet() {
+        this.setState({
+            afegitFet: true
+        })
     }
 
     render() {
@@ -189,8 +197,19 @@ class GrupMuscularDetailsNoData extends Component {
                         `Carregant...`
                     }
                 </div>
-
-                <AfegeixImatges />
+                <div
+                    style={{
+                        display:
+                        this.state.afegitFet
+                        ? `none`
+                        : `grid`
+                    }}
+                >
+                    <AfegeixImatges
+                        grup_muscular={this.props.grup_muscular[0]}
+                        afegitFet={this.afegitFet}
+                    />
+                </div>
             </div>
           );
     }
@@ -212,7 +231,10 @@ class AfegeixImatges extends Component {
                     display: `grid`
                 }}
             >
-                <PujaArxiusAmbTextRFR />
+                <PujaArxiusAmbTextRFR
+                    grup_muscular={this.props.grup_muscular}
+                    afegitFet={this.props.afegitFet}
+                />
 
             </div>
         );

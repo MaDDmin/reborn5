@@ -95,6 +95,7 @@ export default class GrupsMuscularsForm extends Component{
 
                     {/*// Introduir arxius i imatges. Cal fer un bon component que puga ser reutilitzat.*/}
                     <PujaArxiusAmbText onImatgesPujades={this.handleImatgesPujades} />
+
                     <input
                         type="submit"
                         value="Introduir"
