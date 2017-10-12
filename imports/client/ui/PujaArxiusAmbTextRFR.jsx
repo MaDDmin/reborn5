@@ -13,7 +13,8 @@ export default class PujaArxiusAmbTextRFR extends Component {
 
         this.state = {
             imatgesTriadesNoText: [],
-            imatgesEstablertes: false
+            imatgesEstablertes: false,
+            afegitFet: false
         }
 
         this.handleFiles = this.handleFiles.bind(this);
@@ -47,28 +48,42 @@ export default class PujaArxiusAmbTextRFR extends Component {
         //this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
     }
 
-    handleAfegeixImatges() {
-        let
-            arrNovesImatgesAmbText = this.state.imatgesTriadesNoText;
-
-        this.setState((prevState, props) => {
-            prevState.imatgesTriadesNoText.map(
-                (v,i,a) => {
-                    arrNovesImatgesAmbText[i].imgText = document.querySelector(`#taImgText_${i}`).value;
-                }
-            );
-
-            return ({
-                arrNovesImatgesAmbText
-            });
+    afegitFet() {
+        this.setState({
+            afegitFet: true
         })
+    }
 
-        Meteor.call('grups_musculars.imatges.afegeix',
-            this.props.grup_muscular,
-            this.state.arrNovesImatgesAmbText
-        );
+    handleAfegeixImatges() {
+        const
+            promiseArrNovesImatgesAmbText = new Promise( //<<<<<<<<<<<<<<< PROMISE!!!!
+                (resolve, reject) => {
+                    let
+                        arrNovesImatgesAmbText = this.state.imatgesTriadesNoText;
 
-        //this.props.afegitFet();
+                    this.setState(
+                        (prevState, props) => {
+                            prevState.imatgesTriadesNoText.map(
+                                (v,i,a) => {
+                                    arrNovesImatgesAmbText[i].imgText = document.querySelector(`#taImgText_${i}`).value;
+                                }
+                            );
+
+                            return ({
+                                arrNovesImatgesAmbText
+                            });
+                        }
+                    );
+                    resolve();
+                })
+                .then(() => {
+                    Meteor.call('grups_musculars.imatges.afegeix',
+                        this.props.grup_muscular,
+                        this.state.arrNovesImatgesAmbText
+                    );
+                });
+
+        this.afegitFet();
     }
 
 	render() {
@@ -114,7 +129,9 @@ export default class PujaArxiusAmbTextRFR extends Component {
 		return (
             <div
                 style={{
-                    display: `grid`
+                    display: !this.state.afegitFet
+                        ? `grid`
+                        : `none`
                 }}
             >
                 <ReactFileReader

@@ -68,7 +68,10 @@ Meteor.methods({
         );
     },
 
-    'grups_musculars.nom.update'(grup_muscular, grupMuscularNom) {
+    'grups_musculars.nom.update'(
+        grup_muscular,
+        grupMuscularNom
+    ) {
         if (Meteor.userId() !== grup_muscular.user) {
             throw new Meteor.Error('not-authorized');
         }
@@ -80,7 +83,10 @@ Meteor.methods({
         });
     },
 
-    'grups_musculars.descrip.update'(grup_muscular, grupMuscularDescripcio) {
+    'grups_musculars.descrip.update'(
+        grup_muscular,
+        grupMuscularDescripcio
+    ) {
         if (Meteor.userId() !== grup_muscular.user) {
             throw new Meteor.Error('not-authorized');
         }
