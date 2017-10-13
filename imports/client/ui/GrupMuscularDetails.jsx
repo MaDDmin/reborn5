@@ -152,7 +152,8 @@ class GrupMuscularDetailsNoData extends Component {
                         display: this.state.editantTitol ? `inline-block` : `none`
                     }}
                     onClick={this.handleEstableixTitol}
-                >Estableix el nom</button>
+                >Estableix el nom
+                </button>
 
                 <Tappable
                     onTap={this.handleTapEventDescrip}
