@@ -54,22 +54,30 @@ class GrupsMuscularsNoData extends Component {
                 }}
             >
                 <CSSTransitionGroup
-                    component="ul"
-                    className="ulGrupsMuscularsLlista"
+                    component="table"
+                    className="tableGrupsMusculars"
                     transitionName="route"
                     transitionEnterTimeout={600}
                     transitionLeaveTimeout={400}
                     style={{
-                        display: `grid`
+                        border: `ridge 2px orange`,
+                        borderRadius: `.3em`,
+                        background: `rgba(200,200,200,.5)`
                     }}
                 >
-                    {  this.props.grups_musculars.map((grup_muscular) => (
-                            <GrupMuscularSingle
-                                key={grup_muscular._id}
-                                grup_muscular={grup_muscular}
-                            />
-                        ))
-                    }
+                    <tbody>
+                        <tr>
+                            <th>Títol</th>
+                            <th>Accions</th>
+                        </tr>
+                        {  this.props.grups_musculars.map((grup_muscular) => 
+                                <GrupMuscularSingle
+                                    key={grup_muscular._id}
+                                    grup_muscular={grup_muscular}
+                                />
+                            )
+                        }
+                    </tbody>
                 </CSSTransitionGroup>
                 <div className="divPrintDeliverer">
                     <button className="btAddNew" onClick={this.activateForm}>Nou</button>

@@ -24,26 +24,28 @@ export default class GrupMuscularSingle extends Component {
 
         // Per als GMs, volem una llista amb els seus noms i botons
         return (
-            <li
-                className={grupMuscularClass}
-                style={{
-                    display: `grid`,
-                    gridAutoFlow: `column`,
-                    alignSelf: `center`
-                }}
-            >
-                <a className="aSingleGrupMuscular"
-                    href={`grup_muscular/${this.props.grup_muscular._id}`}
+            <tr className={grupMuscularClass} >
+                <td
+                    style={{
+                        border: `ridge 2px rgba(255,180,0,.3)`,
+                        borderRadius: `.3em`
+                    }}
                 >
-                    { this.props.grup_muscular.grupMuscularNom }
-                </a>
-                <button
-                    className="btDeleteGrupMuscular"
-                    onClick={this.deleteGrupMuscular}
-                >
-                    &times;
-                </button>
-            </li>
+                    <a className="aSingleGrupMuscular"
+                        href={`grup_muscular/${this.props.grup_muscular._id}`}
+                    >
+                        { this.props.grup_muscular.grupMuscularNom }
+                    </a>
+                </td>
+                <td>
+                    <button
+                        className="btDeleteGrupMuscular"
+                        onClick={this.deleteGrupMuscular}
+                    >
+                        &times;
+                    </button>
+                </td>
+            </tr>
         );
     }
 }

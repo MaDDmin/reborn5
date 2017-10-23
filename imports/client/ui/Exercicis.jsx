@@ -45,20 +45,35 @@ class ExercicisNoData extends Component{
                 transitionLeaveTimeout={400}
             >
                 <CSSTransitionGroup
-                    component="ul"
-                    className="ulLlistaExercicis"
+                    component="table"
+                    className="tableExercicis"
                     transitionName="route"
                     transitionEnterTimeout={600}
                     transitionLeaveTimeout={400}
+                    style={{
+                        border: `ridge 2px orange`,
+                        borderRadius: `.3em`,
+                        background: `rgba(200,200,200,.5)`
+                    }}
                 >
-                            {/*this.renderResolutions()*/}
-                    {
-                        this.props.exercicis.map((exercici) => (
-                            <ExerciciSingle key={exercici._id} exercici={exercici} />
-                        ))
-                    }
+                    <tbody>
+                        <tr>
+                            <th>Títol</th>
+                            <th>Grup Muscular</th>
+                            <th>Accions</th>
+                        </tr>
+                        {   this.props.exercicis.map((exercici) =>
+                                <ExerciciSingle
+                                    key={exercici._id}
+                                    exercici={exercici}
+                                />
+                            )
+                        }
+                    </tbody>
                 </CSSTransitionGroup>
-                <ExercicisForm grups_musculars={this.props.grups_musculars} />
+                <ExercicisForm
+                    grups_musculars={this.props.grups_musculars}
+                />
             </CSSTransitionGroup>
         );
     }
