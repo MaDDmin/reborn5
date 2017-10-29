@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
-//import jQuery from 'meteor/jquery';
+import Select from 'react-select';
+// Be sure to include styles at some point, probably during your bootstrapping
+import 'react-select/dist/react-select.css';
+
+// import './ExerciciSingle.scss';
 
 export default class ExerciciSingle extends Component{
     constructor(props) {
@@ -18,7 +22,7 @@ export default class ExerciciSingle extends Component{
         Meteor.call('exercicis.delete', this.props.exercici);
     }
 
-    render(){
+    render() {
         const
             exerciciClass = this.props.exercici.completed
                 ? "checked"
@@ -42,7 +46,10 @@ export default class ExerciciSingle extends Component{
                     </a>
                 </td>
                 <td>
-                    { this.props.exercici.exerciciGrupMuscular }
+                    <ExerciciGrupMuscularCampEditable
+                        exercici={this.props.exercici}
+                        grups_musculars={this.props.grups_musculars}
+                    />
                 </td>
                 <td>
                     <button
@@ -53,6 +60,44 @@ export default class ExerciciSingle extends Component{
                     </button>
                 </td>
             </tr>
+        );
+    }
+}
+
+class ExerciciGrupMuscularCampEditable extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            editant: true
+        };
+    }
+
+    render() {
+        let
+            arrGrupsMusculars = [];
+
+            this.props.grups_musculars.map(
+                (v,i,a) => {
+                    //console.log(JSON.stringify(client));
+                    arrGrupsMusculars.push({
+                        value: v.grupMuscularNom,
+                        label: v.grupMuscularNom
+                    });
+                }
+            )
+        ;
+        return (
+            <div>
+                {
+                    !this.state.editant
+                        ? this.props.exercici.exerciciGrupMuscular
+                        : <Select
+                            actual={this.props.exercici.exerciciGrupMuscular}
+                            options={arrGrupsMusculars}
+                        />
+                }
+            </div>
         );
     }
 }

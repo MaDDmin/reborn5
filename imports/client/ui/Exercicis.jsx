@@ -9,6 +9,15 @@ import { check, Match } from 'meteor/check';
 
 import { CSSTransitionGroup } from 'react-transition-group';
 
+NodeList.prototype.map = function(step){
+    return Array.prototype.map.call(this, step);
+};
+document.querySelectorAll(".Select").map(
+  (v,i,a) => {
+      v.style.zIndex = 10000 - (10000/a.length) * (i+1);
+  }
+);
+
 class ExercicisNoData extends Component{
     constructor(props) {
         super(props);
@@ -66,6 +75,7 @@ class ExercicisNoData extends Component{
                                 <ExerciciSingle
                                     key={exercici._id}
                                     exercici={exercici}
+                                    grups_musculars={this.props.grups_musculars}
                                 />
                             )
                         }
