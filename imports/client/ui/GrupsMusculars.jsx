@@ -34,7 +34,9 @@ class Taula extends Component {
             {
                 key: 'grupMuscularNom',
                 name: 'Title',
-                editable: true
+                editable: true,
+                resizable: true,
+                sortable: true
             }
         ];
 
@@ -43,6 +45,11 @@ class Taula extends Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            rows: nextProps.grups_musculars,
+        })
+    }
     // getRandomDate = (start, end) => {
     //     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime())).toLocaleDateString();
     // };
@@ -67,6 +74,21 @@ class Taula extends Component {
         return this.state.rows[i];
     };
 
+    handleGridSort = (sortColumn, sortDirection) => {
+        const
+            comparer = (a, b) => {
+                if (sortDirection === 'ASC') {
+                    return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
+                } else if (sortDirection === 'DESC') {
+                    return (a[sortColumn] < b[sortColumn]) ? 1 : -1;
+                }
+            },
+            rows = sortDirection === 'NONE' ? this.state.originalRows.slice(0) : this.state.rows.sort(comparer)
+        ;
+
+        this.setState({ rows });
+    };
+
     handleGridRowsUpdated = ({ fromRow, toRow, updated }) => {
         let rows = this.state.rows.slice();
 
@@ -81,14 +103,18 @@ class Taula extends Component {
 
     render() {
         return  (
-        <ReactDataGrid
-            enableCellSelect={true}
-            columns={this._columns}
-            rowGetter={this.rowGetter}
-            rowsCount={this.state.rows.length}
-            minHeight={400}
-            onGridRowsUpdated={this.handleGridRowsUpdated}
-        />);
+            <ReactDataGrid
+                enableCellSelect={true}
+                columns={this._columns}
+                rowGetter={this.rowGetter}
+                rowsCount={this.state.rows.length}
+                minHeight={400}
+                onGridRowsUpdated={this.handleGridRowsUpdated}
+                onGridSort={
+                   this.handleGridSort
+                }
+            />
+        );
     }
 }
 
