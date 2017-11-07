@@ -96,8 +96,45 @@ class Taula extends Component {
     };
 
     render() {
+        function onAfterInsertRow(row) {
+            let newRowStr = '';
+
+             for (const prop in row) {
+               newRowStr += prop + ': ' + row[prop] + ' \n';
+             }
+            alert('The new row is:\n ' + newRowStr);
+        }
+
+        function onAfterDeleteRow(rowKeys) {
+          alert('The rowkey you drop: ' + rowKeys);
+        }
+
+        function afterSearch(searchText, result) {
+          console.log('Your search text is ' + searchText);
+          console.log('Result is:');
+          for (let i = 0; i < result.length; i++) {
+            console.dir('Result: ', result[i]);
+          }
+        }
+
         return  (
-            <BootstrapTable data={this.state.rows} striped hover version='4'>
+            <BootstrapTable
+                data={this.state.rows}
+                options={{
+                    afterInsertRow: onAfterInsertRow,
+                    afterDeleteRow: onAfterDeleteRow,
+                    afterSearch: afterSearch
+                }}
+                striped
+                hover
+                search
+                insertRow
+                deleteRow
+                selectRow={{
+                    mode: `checkbox`
+                }}
+                version='4'
+            >
                 <TableHeaderColumn isKey dataField='grupMuscularNom'>Grup Muscular</TableHeaderColumn>
                 <TableHeaderColumn dataField='grupMuscularDescripcio'>Descripció</TableHeaderColumn>
             </BootstrapTable>
