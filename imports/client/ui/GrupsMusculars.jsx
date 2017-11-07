@@ -2,17 +2,21 @@ import { createContainer } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
-import './GrupsMusculars.scss';
-
 import GrupsMuscularsForm from './GrupsMuscularsForm.jsx';
 import GrupMuscularSingle from './GrupMuscularSingle.jsx';
 import { check, Match } from 'meteor/check';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-import ReactDataGrid from 'react-data-grid';
+//import ReactDataGrid from 'react-data-grid';
 import update from 'immutability-helper';
 
-
+import {
+    BootstrapTable,
+    TableHeaderColumn
+} from 'react-bootstrap-table';
+import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
+import './bootstrap.css';
+import './GrupsMusculars.scss';
 
 // const exampleDescription = (
 //     <p>To make a given column editable set <code>column.editable</code> and create a <code>onGridRowsUpdated</code> handler. Note that you will need to store your rows in state and update that state when a cell value changes.</p>
@@ -27,18 +31,8 @@ import update from 'immutability-helper';
 // });
 
 class Taula extends Component {
-    constructor(props) {
-        super(props);
-
-        this._columns = [
-            {
-                key: 'grupMuscularNom',
-                name: 'Title',
-                editable: true,
-                resizable: true,
-                sortable: true
-            }
-        ];
+    constructor(props, context) {
+        super(props, context);
 
         this.state = {
             rows: props.grups_musculars
@@ -103,17 +97,10 @@ class Taula extends Component {
 
     render() {
         return  (
-            <ReactDataGrid
-                enableCellSelect={true}
-                columns={this._columns}
-                rowGetter={this.rowGetter}
-                rowsCount={this.state.rows.length}
-                minHeight={400}
-                onGridRowsUpdated={this.handleGridRowsUpdated}
-                onGridSort={
-                   this.handleGridSort
-                }
-            />
+            <BootstrapTable data={this.state.rows} striped hover version='4'>
+                <TableHeaderColumn isKey dataField='grupMuscularNom'>Grup Muscular</TableHeaderColumn>
+                <TableHeaderColumn dataField='grupMuscularDescripcio'>Descripció</TableHeaderColumn>
+            </BootstrapTable>
         );
     }
 }
