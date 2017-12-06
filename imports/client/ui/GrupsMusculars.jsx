@@ -95,6 +95,111 @@ class Taula extends Component {
         this.setState({ rows });
     };
 
+    handleInsertButtonClick = (onClick) => {
+        // Custom your onClick event here,
+        // it's not necessary to implement this function if you have no any process before onClick
+        console.log('This is my custom function for InserButton click event');
+        onClick();
+    };
+
+    createCustomInsertButton = (onClick) => {
+        return (
+          <InsertButton
+            btnText='Nou'
+            className='my-custom-class'
+
+            onClick={ () => this.handleInsertButtonClick(onClick) }
+          />
+        );
+        // If you want have more power to custom the child of InsertButton,
+        // you can do it like following
+        // return (
+        //   <InsertButton
+        //     btnContextual='btn-warning'
+        //     className='my-custom-class'
+        //      btnContextual='btn-warning'
+        //      btnGlyphicon='glyphicon-edit'
+        //     onClick={ () => this.handleInsertButtonClick(onClick) }>
+        //     { ... }
+        //   </InsertButton>
+        // );
+    };
+
+    handleDeleteButtonClick = (onClick) => {
+      // Custom your onClick event here,
+      // it's not necessary to implement this function if you have no any process before onClick
+      console.log('This is my custom function for DeleteButton click event');
+      onClick();
+    };
+
+    createCustomDeleteButton = (onClick) => {
+      return (
+        <DeleteButton
+          btnText='Elimina'
+          className='my-custom-class'
+          onClick={ e => this.handleDeleteButtonClick(onClick) }/>
+      );
+      // If you want have more power to custom the child of DeleteButton,
+      // you can do it like following
+      // return (
+      //   <DeleteButton
+      //     btnContextual='btn-warning'
+      //     className='my-custom-class'
+          // btnGlyphicon='glyphicon-edit'
+          // btnContextual='btn-success'
+      //     onClick={ () => this.handleDeleteButtonClick(onClick) }>
+      //     { ... }
+      //   </DeleteButton>
+      // );
+  };
+
+    createCustomSearchField = (props) => {
+        return (
+          <SearchField
+            className='my-custom-class'
+            defaultValue={ props.defaultSearch }
+            placeholder="Busca els Grups Musculars..."
+          />
+        );
+    };
+
+    beforeClose = (e) => {
+      alert(`[Custom Event]: Before modal close event triggered!`);
+    };
+
+    handleModalClose = (closeModal) => {
+      // Custom your onCloseModal event here,
+      // it's not necessary to implement this function if you have no any process before modal close
+      console.log('This is my custom function for modal close event');
+      closeModal();
+    };
+
+    createCustomModalHeader = (onClose, onSave) => {
+        const headerStyle = {
+          fontWeight: 'bold',
+          fontSize: 'large',
+          textAlign: 'center',
+          backgroundColor: '#eeeeee'
+        };
+        return (
+          <div className='modal-header' style={ headerStyle }>
+            <h3>Nou Grup Muscular</h3>
+            <button className='btn btn-info' onClick={onClose}>&times;</button>
+          </div>
+        );
+    };
+
+    createCustomModalFooter = (onClose, onSave) => {
+      const style = {
+        backgroundColor: '#ffffff'
+      };
+      return (
+        <div className='modal-footer' style={ style }>
+          <button className='btn btn-xs ' onClick={ onSave }>Guardar</button>
+        </div>
+      );
+    };
+
     render() {
         function onAfterInsertRow(row) {
             let newRowStr = '';
@@ -123,7 +228,14 @@ class Taula extends Component {
                 options={{
                     afterInsertRow: onAfterInsertRow,
                     afterDeleteRow: onAfterDeleteRow,
-                    afterSearch: afterSearch
+                    afterSearch: afterSearch,
+                    insertBtn: this.createCustomInsertButton,
+                    deleteBtn: this.createCustomDeleteButton,
+                    clearSearch: false,
+                    searchField: this.createCustomSearchField,
+                    insertModalHeader: this.createCustomModalHeader,
+                    insertModalFooter: this.createCustomModalFooter,
+                    sortIndicator: false
                 }}
                 striped
                 hover
@@ -135,8 +247,8 @@ class Taula extends Component {
                 }}
                 version='4'
             >
-                <TableHeaderColumn isKey dataField='grupMuscularNom'>Grup Muscular</TableHeaderColumn>
-                <TableHeaderColumn dataField='grupMuscularDescripcio'>Descripció</TableHeaderColumn>
+                <TableHeaderColumn isKey dataSort dataField='grupMuscularNom'>Grup Muscular</TableHeaderColumn>
+                <TableHeaderColumn dataSort dataField='grupMuscularDescripcio'>Descripció</TableHeaderColumn>
             </BootstrapTable>
         );
     }
