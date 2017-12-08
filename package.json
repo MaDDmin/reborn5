@@ -2,7 +2,9 @@
   "name": "reborn5",
   "private": true,
   "scripts": {
-    "start": "meteor run"
+    "start": "meteor run",
+    "test": "jest",
+    "watch": "jest --watchAll"
   },
   "dependencies": {
     "bcrypt": "^0.8.7",
@@ -21,6 +23,7 @@
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-pure-render-mixin": "^15.3.1",
     "react-atellier": "^0.1.13",
+    "react-bootstrap": "^0.31.5",
     "react-bootstrap-table": "^4.1.1",
     "react-dom": "^15.6.2",
     "react-file-reader": "^1.1.2",
@@ -37,5 +40,7 @@
     "sanitize-html-react": "^1.13.0",
     "simpl-schema": "^0.3.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^21.2.1"
+  }
 }

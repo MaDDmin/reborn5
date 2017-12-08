@@ -17,6 +17,9 @@ import {
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import './bootstrap.css';
 import './GrupsMusculars.scss';
+import {
+    Button
+} from 'react-bootstrap';
 
 // const exampleDescription = (
 //     <p>To make a given column editable set <code>column.editable</code> and create a <code>onGridRowsUpdated</code> handler. Note that you will need to store your rows in state and update that state when a cell value changes.</p>
@@ -200,6 +203,39 @@ class Taula extends Component {
       );
     };
 
+    objecteIDs = (keyVal) => {
+        console.log("keyVal: ", keyVal);
+        console.dir("thisState: ", this.state);
+        const
+            idx = this.state.rows.findIndex((row) => row.grupMuscularNom === keyVal),
+            oId = this.state.rows[idx]._id,
+            uId = this.state.rows[idx].user
+        ;
+        //console.log("idx: ", idx);
+
+        return {
+            idx,
+            _id: oId,
+            user: uId
+        };
+    }
+
+    onDeleteRow = (rows) => {
+         //alert("Esborrant...");
+         console.dir("rows: ", rows);
+
+         rows.map(
+             (v,i,a) => {
+                let
+                    objIDs = this.objecteIDs(v)
+                ;
+                console.dir("objIDs: ", objIDs);
+                console.log("MUser: ", Meteor.user());
+                Meteor.call('grups_musculars.delete', objIDs);
+             }
+         )
+    }
+
     render() {
         function onAfterInsertRow(row) {
             let newRowStr = '';
@@ -210,8 +246,17 @@ class Taula extends Component {
             alert('The new row is:\n ' + newRowStr);
         }
 
-        function onAfterDeleteRow(rowKeys) {
-          alert('The rowkey you drop: ' + rowKeys);
+        function customConfirm(next, dropRowKeys) {
+          const dropRowKeysStr = dropRowKeys.join('\n ⇝ ');
+          if (confirm(`Vas a eliminar per complet ${dropRowKeys.length} element${dropRowKeys.length>1?"s":""}: \n ⇝ ${dropRowKeysStr} \n Estàs segur# de continuar?`)) {
+            // If the confirmation is true, call the function that
+            // continues the deletion of the record.
+            next();
+          }
+        }
+
+        function afterDeleteRow(rowKeys) {
+            console.dir("rowKeys: ", rowKeys);
         }
 
         function afterSearch(searchText, result) {
@@ -222,12 +267,20 @@ class Taula extends Component {
           }
         }
 
+        function linkFormatter(cell, row) {
+            return (
+                <a href={`/grup_muscular/${row._id}`}>{cell}</a>
+            );
+        }
+
         return  (
             <BootstrapTable
                 data={this.state.rows}
                 options={{
                     afterInsertRow: onAfterInsertRow,
-                    afterDeleteRow: onAfterDeleteRow,
+                    handleConfirmDeleteRow: customConfirm,
+                    onDeleteRow: this.onDeleteRow,
+                    afterDeleteRow,
                     afterSearch: afterSearch,
                     insertBtn: this.createCustomInsertButton,
                     deleteBtn: this.createCustomDeleteButton,
@@ -247,7 +300,7 @@ class Taula extends Component {
                 }}
                 version='4'
             >
-                <TableHeaderColumn isKey dataSort dataField='grupMuscularNom'>Grup Muscular</TableHeaderColumn>
+                <TableHeaderColumn isKey dataSort dataField='grupMuscularNom' dataFormat={linkFormatter}>Grup Muscular</TableHeaderColumn>
                 <TableHeaderColumn dataSort dataField='grupMuscularDescripcio'>Descripció</TableHeaderColumn>
             </BootstrapTable>
         );

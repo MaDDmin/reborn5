@@ -3,10 +3,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 // La col·lecció de les resolucions
-import '../../api/collections/Clients.js';
-import '../../api/collections/GrupsMusculars.js';
-import '../../api/collections/Exercicis.js';
-import '../../api/collections/Rutines.js';
+import '/imports/api/collections/Clients.js';
+import '/imports/api/collections/GrupsMusculars.js';
+import '/imports/api/collections/Exercicis.js';
+import '/imports/api/collections/Rutines.js';
 
 import {createContainer} from 'meteor/react-meteor-data';
 //import ClientsForm from './ClientsForm.jsx';
