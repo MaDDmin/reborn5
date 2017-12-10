@@ -21,6 +21,8 @@ import {
     Button
 } from 'react-bootstrap';
 
+import sanitizeHtml from 'sanitize-html-react';
+
 // const exampleDescription = (
 //     <p>To make a given column editable set <code>column.editable</code> and create a <code>onGridRowsUpdated</code> handler. Note that you will need to store your rows in state and update that state when a cell value changes.</p>
 // );
@@ -273,6 +275,10 @@ class Taula extends Component {
             );
         }
 
+        function descripFormatter(cell, row) {
+            return <div dangerouslySetInnerHTML={{__html: sanitizeHtml(row.grupMuscularDescripcio)}}></div>;
+        }
+
         return  (
             <BootstrapTable
                 data={this.state.rows}
@@ -301,7 +307,7 @@ class Taula extends Component {
                 version='4'
             >
                 <TableHeaderColumn isKey dataSort dataField='grupMuscularNom' dataFormat={linkFormatter}>Grup Muscular</TableHeaderColumn>
-                <TableHeaderColumn dataSort dataField='grupMuscularDescripcio'>Descripció</TableHeaderColumn>
+                <TableHeaderColumn dataSort dataField='grupMuscularDescripcio' dataFormat={descripFormatter}>Descripció</TableHeaderColumn>
             </BootstrapTable>
         );
     }
