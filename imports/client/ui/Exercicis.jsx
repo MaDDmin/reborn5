@@ -39,7 +39,8 @@ class ExerciciGrupMuscularCampEditable extends Component {
 
     updateValue = (nouVal) => {
         this.setState({
-            selectValue: nouVal
+            selectValue: nouVal,
+            editant: false
         });
     }
 
@@ -70,7 +71,7 @@ class ExerciciGrupMuscularCampEditable extends Component {
                             this.setState({
                                 editant: true
                             });
-                        }}>{gmNom}</div>
+                        }}>{this.state.selectValue.label}</div>
                         : <Select
                             value={this.state.selectValue}
                             onChange={this.updateValue}
@@ -321,7 +322,11 @@ class TaulaExercicis extends Component {
 
             linkFormatter = (cell, row) => <a href={`/exercici/${row._id}`}>{cell}</a>,
 
-            descripFormatter = (cell, row)  => <div dangerouslySetInnerHTML={{__html: sanitizeHtml(row.exerciciDescripcio)}}></div>,
+            descripFormatter = (cell, row)  => <div
+                dangerouslySetInnerHTML={{__html: sanitizeHtml(row.exerciciDescripcio)}}
+                style={{
+                    overflow: 'hidden'
+                }}></div>,
 
             gmFormatter = (cell, row) => {
                 const
@@ -406,43 +411,14 @@ class ExercicisNoData extends Component{
                 transitionEnterTimeout={600}
                 transitionLeaveTimeout={400}
             >
-                <CSSTransitionGroup
-                    component="table"
-                    className="tableExercicis"
-                    transitionName="route"
-                    transitionEnterTimeout={600}
-                    transitionLeaveTimeout={400}
-                    style={{
-                        border: `ridge 2px orange`,
-                        borderRadius: `.3em`,
-                        background: `rgba(200,200,200,.5)`
-                    }}
-                >
-                    <tbody>
-                        <tr>
-                            <th>Títol</th>
-                            <th>Grup Muscular</th>
-                            <th>Accions</th>
-                        </tr>
-                        {   this.props.exercicis.map((exercici) =>
-                                <ExerciciSingle
-                                    key={exercici._id}
-                                    exercici={exercici}
-                                    grups_musculars={this.props.grups_musculars}
-                                />
-                            )
-                        }
-                    </tbody>
-                </CSSTransitionGroup>
-
                 <TaulaExercicis
                     exercicis={this.props.exercicis}
                     grups_musculars={this.props.grups_musculars}
                 />
-
                 <ExercicisForm
                     grups_musculars={this.props.grups_musculars}
                 />
+
             </CSSTransitionGroup>
         );
     }
