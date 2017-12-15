@@ -355,7 +355,8 @@ class TaulaExercicis extends Component {
                     searchField: this.createCustomSearchField,
                     insertModalHeader: this.createCustomModalHeader,
                     insertModalFooter: this.createCustomModalFooter,
-                    sortIndicator: false
+                    sortIndicator: false,
+                    noDataText: "Sense dades"
                 }}
                 striped
                 hover
@@ -441,8 +442,9 @@ export default createContainer(() => {
         clients: Clients.find().fetch(),
         grups_musculars: GrupsMusculars.find().fetch(),
         exercicis: Exercicis.find().fetch(),
-        rutines: Rutines.find().fetch(),
-        imatges: Imatges.find().fetch()
+        rutines: Rutines.find().fetch()
+        // ,
+        // imatges: Imatges.find().fetch()
     }
 }, ExercicisNoData);
 

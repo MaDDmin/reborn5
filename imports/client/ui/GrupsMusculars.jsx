@@ -294,12 +294,13 @@ class Taula extends Component {
                     searchField: this.createCustomSearchField,
                     insertModalHeader: this.createCustomModalHeader,
                     insertModalFooter: this.createCustomModalFooter,
-                    sortIndicator: false
+                    sortIndicator: false,
+                    noDataText: "Sense dades"
                 }}
                 striped
                 hover
                 search
-                insertRow
+                //insertRow
                 deleteRow
                 selectRow={{
                     mode: `checkbox`

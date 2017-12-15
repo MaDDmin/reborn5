@@ -13,7 +13,7 @@ export default class PujaArxiusAmbText extends Component {
         }
 
         this.fileSelect = this.fileSelect.bind(this);
-        this.sendFiles = this.sendFiles.bind(this);
+        //this.sendFiles = this.sendFiles.bind(this);
     }
 
 	fileSelect(ev) {
@@ -76,8 +76,7 @@ export default class PujaArxiusAmbText extends Component {
         this.props.onImatgesPujades(arrImatgesPujadesAmbNoText);
 	}
 
-	sendFiles(arxius) {
-	}
+	//sendFiles(arxius) {}
 
 	render() {
 		return (

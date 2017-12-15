@@ -3,6 +3,17 @@ import { Meteor } from 'meteor/meteor';
 import ReactFileReader from 'react-file-reader';
 import Tappable from 'react-tappable';
 import sanitizeHtml from 'sanitize-html-react';
+//
+// import { ScaleModal as CropModal } from 'boron';
+//import { Button, Alert, Spinner, Modal as CropModal, ModalBody, ModalHeader, ModalFooter } from 'elemental';
+//import { Modal as CropModal } from 'react-bootstrap';
+//import {ModalContainer, ModalDialog} from 'react-modal-dialog';
+
+import CropModal from 'simple-react-modal';
+//import 'simple-react-modal/dist/modal';
+
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 
 
 export default class ImatgeModificableExercici extends Component {
@@ -12,8 +23,10 @@ export default class ImatgeModificableExercici extends Component {
         this.state = {
             editantImatge: false,
             editantImgText: false,
-            overImage: false
-        }
+            overImage: false,
+            crop: {},
+            cropping: false
+        };
 
         this.handlePressEventImatge = this.handlePressEventImatge.bind(this);
 
@@ -84,7 +97,36 @@ export default class ImatgeModificableExercici extends Component {
         }
     }
 
+    handleRetallaImatge = () => {
+        this.setState({
+            cropping: true
+        })
+    };
+
+    handleCropChange = (crop, pixelCrop) => {
+        this.setState({ crop });
+    };
+
+    toggleCropModal = () => {
+        //this.refs.cropModal.toggle();
+        this.setState({
+            cropping: true
+        });
+    };
+
+
+    handleClick = () => this.setState({isShowingModal: true});
+    handleClose = () => this.setState({isShowingModal: false});
+
     render() {
+
+        let crop = {
+            x: 20,
+            y: 10,
+            width: 30,
+            height: 10
+        };
+
         return (
             <div
                 className="divExerciciImatges"
@@ -109,6 +151,29 @@ export default class ImatgeModificableExercici extends Component {
                                 gridArea: `imatgeModificable`
                             }}
                         />
+
+                        <div
+                            style={{
+                                gridArea: `imatgeModificable`,
+                                position: `relative`,
+                                display: this.state.overImage
+                                    ? `inline-block`
+                                    : `none`
+                            }}
+                        >
+                            <button
+                                className="btDelImage"
+                                style={{
+                                    gridArea: `imatgeModificable`,
+                                    position: `relative`,
+                                    float: `left`,
+                                    bottom: `0`,
+                                    zIndex: `200`
+                                }}
+                                onClick={this.toggleCropModal}
+                            >Retallar</button>
+                        </div>
+
                         <div
                             style={{
                                 gridArea: `imatgeModificable`,
@@ -129,6 +194,7 @@ export default class ImatgeModificableExercici extends Component {
                                 onClick={this.handleEsborraImatge}
                             >x</button>
                         </div>
+
                         <div
                             style={{
                                 gridArea: `imatgeModificable`,
@@ -173,6 +239,18 @@ export default class ImatgeModificableExercici extends Component {
                     }}
                     onClick={this.handleEstableixImgText}
                 >Estableix</button>
+
+                        <CropModal
+                            show={this.state.cropping}
+                            onClose={this.handleClose}
+                        >
+                            <ReactCrop
+                                src={this.props.src}
+                                onChange={this.handleCropChange}
+                                crop={this.state.crop}
+                            />
+                        </CropModal>
+
             </div>
         );
     }
